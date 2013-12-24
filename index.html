@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Slothyx Music</title>
+    <meta content="text/html" charset="utf-8"/>
+    <script src="js/jquery-1.10.2.js"></script>
+    <script src="js/players.js"></script>
+    <script src="js/list.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/swfobject.js"></script>
+    <script src="https://apis.google.com/js/client.js?onload=googleApiCallback"></script>
+    <link href="css/main.css" rel="stylesheet" type="text/css"/>
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+</head>
+<body>
+<div id="header">
+</div>
+<div id="content">
+    <div id="searchPanel">
+        <div id="searchStrip" class="underline">
+            <input type="text" id="searchText"/>
+            <button id="searchButton" onclick="searchYoutube()">Search for Videos</button>
+            <button id="createPlaylistButton" onclick="createPlaylist()">Create Random Playlist</button>
+        </div>
+        <div id="searchResults">
+            <button onclick="playlist.addElement(['$1','$2'])">$3</button>
+        </div>
+        <div id="changelog">
+            <!--TODO change, this is not sustainable-->
+            <h1>Now with CHANGELIST!</h1>
+            <ul>
+                <li>Now with Changelist!</li>
+                <li>Saving Playlist when you restart Browser, isn't that EPIC???</li>
+                <li>Fixed bug, where video won't get unloaded</li>
+                <li>Sort your playlist with Drag&Drop (NOW FANCY)!!!</li>
+                <li>You can now load videos via URL!</li>
+                <li>Repeatable playlist!</li>
+                <li>Togglebuttoooon!</li>
+                <li>Want to watch the video fullscreen? NO PROBLEM!</li>
+                <li>Want to watch the video on a second monitor/beamer? NO PROBLEM!</li>
+                <li>Feeling lucky?</li>
+            </ul>
+            <img src="img/sloth_logo.jpg"/>
+        </div>
+    </div>
+    <div id="listPanel">
+        <div id="ytPlayer">
+            You need Flash player 8+ and JavaScript enabled to play videos.
+        </div>
+        <div id="control" class="underline">
+            <div class="line">
+                <button id="toggleVideo" onclick="toggleVideo()"><i class="fa fa-play"></i></button>
+                <label id="repeatLabel" for="repeat">Repeat Playlist:</label>
+                <input id="repeat" type="checkbox"/>
+                <button id="requestFullscreen" onclick="requestFullscreen()">Fullscreen</button>
+                <button id="openExternalPlayer" onclick="openExternalPlayer()">External Player</button>
+            </div>
+            <div class="line">
+                <label for="newVideoId">Video URL/Video ID:</label>
+                <input type="text" id="newVideoId" size="12"/>
+                <button onclick="loadVideo()">Load Video</button>
+                <button onclick="clearPlaylist()">Clear Playlist</button>
+            </div>
+        </div>
+        <div id="playlist">
+            <div data-videoId="$1">$2
+                <i onclick="playListRemove(event,'$0')" class="fa fa-times"></i>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
