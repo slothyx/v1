@@ -12,11 +12,11 @@ exec 2>&1
 unset GIT_DIR
 cd $BASE_DIR
 echo "Delete old..."
-rm -r $PROJECT_DIR
+rm -rf $PROJECT_DIR
 echo "Cloning Repository..."
 mkdir $PROJECT_DIR
 git clone -b master $BARE_REPOSITORY
 cd $PROJECT_DIR
 echo "Cleaning Repository..."
-rm -r .*
+rm -rf .*
 chmod -R a+rx . *
