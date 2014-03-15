@@ -1,143 +1,126 @@
 body {
-    margin: 0;
-    font-family: serif;
-    color: white;
+	margin: 0;
+	font-family: serif;
+	color: white;
 }
 
-div#header {
-    background-color: #000000;
-    position: static;
-    height: 50px;
+#header {
+	background-color: #000000;
+	width: 100%;
+	height: 50px;
 }
 
-div#content {
-    position: absolute;
-    top: 50px;
-    left: 0;
-    right: 0;
-    bottom: 0;
+#content {
+	position: absolute;
+	overflow: auto;
+	top: 50px;
+	bottom: 0;
+	width: 100%;
 }
 
-div#searchPanel, div#listPanel {
-    position: absolute;
-    top: 0;
-    bottom: 0;
+#searchPanel, #listPanel {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	overflow: auto;
 }
 
-div#listPanel {
-    background-color: #101010;
-    right: 0;
-    width: 425px;
-    overflow: auto;
+#listPanel {
+	background-color: #101010;
+	right: 0;
+	width: 425px;
 }
 
-div#searchPanel {
-    background-color: #202020;
-    left: 0;
-    right: 425px;
+#searchPanel {
+	background-color: #202020;
+	left: 0;
+	right: 425px;
 }
 
-div#control {
-    position: static;
-    padding-top: 10px;
-    padding-left: 20px;
+#searchResults {
+	position: absolute;
+	top: 35px;
+	bottom: 0;
+	width: 100%;
+	overflow: auto;
+}
+
+#control {
+	position: static;
+	padding-top: 10px;
+	padding-left: 20px;
 }
 
 button, button:active {
-    background-color: #303030;
-    border: solid 1px #000000;
-    border-radius: 4px;
-    color: #FFFFFF;
-    font-size: 12px;
-    padding: 3px;
-    cursor: pointer;
-    font-family: serif;
-    height: 25px;
+	background-color: #303030;
+	border: solid 1px #000000;
+	border-radius: 4px;
+	color: #FFFFFF;
+	font-size: 12px;
+	padding: 3px;
+	cursor: pointer;
+	font-family: serif;
+	height: 25px;
 }
 
 button:active {
-    background-color: #353535;
+	background-color: #353535;
 }
 
 input[type=text] {
-    background-color: #303030;
-    border: solid 1px #000000;
-    border-radius: 4px;
-    color: #FFFFFF;
-    font-size: 12px;
-    padding: 5px;
+	background-color: #303030;
+	border: solid 1px #000000;
+	border-radius: 4px;
+	color: #FFFFFF;
+	font-size: 12px;
+	padding: 5px;
 }
 
-div.line {
-    margin-top: 15px;
-    margin-bottom: 15px;
-    margin-left: 5px;
+.line {
+	margin-top: 15px;
+	margin-bottom: 15px;
+	margin-left: 5px;
 }
 
 label {
-    color: #FFFFFF;
+	color: #FFFFFF;
 }
 
-div#searchStrip {
-    padding: 2px;
+#searchStrip {
+	padding: 2px;
 }
 
-div#searchResults {
-    position: absolute;
-    top: 40px;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    padding: 10px;
-    overflow: auto;
-}
-
-div#searchResults ul {
-    list-style-type: none;
-    margin: 2px;
-    padding: 0px;
-}
-
-div#searchResults ul li {
-    margin: 2px;
+.searchResult {
+	margin: 2px;
 }
 
 #searchButton, #createPlaylistButton {
-    display: none;
+	display: none;
 }
 
-#playlist .slothyxlist {
-    padding: 10px;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+#playlist {
+	padding: 10px;
 }
 
-#playlist .slothyxlistitem {
-    list-style-type: none;
-    border: solid 1px #101010;
-    border-radius: 4px;
-    background-color: #202020;
-    color: #FFFFFF;
-    cursor: pointer;
+#playlist > .listItem {
+	list-style-type: none;
+	border: solid 1px #101010;
+	border-radius: 4px;
+	background-color: #202020;
+	color: #FFFFFF;
+	cursor: pointer;
+	padding: 2px;
 }
 
-#playlist .slothyxlistselecteditem, #playlist .slothyxlistitem:hover {
-    background-color: #303030;
+#playlist > .listItem.selected, #playlist > .listItem:hover {
+	background-color: #303030;
 }
 
 #playlist i.fa-times {
-    float: right;
-    color: black;
+	float: right;
+	color: black;
 }
 
-#changelog {
-    position: absolute;
-}
-
-.underline {
-    border-bottom: solid 2px #000000;
+.underlined {
+	border-bottom: solid 2px #000000;
 }

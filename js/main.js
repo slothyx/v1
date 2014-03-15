@@ -1,266 +1,270 @@
-$(document).ready(
-    function () {
-        //Load YoutubePlayer
-        var params = { allowScriptAccess: "always" };
-        var atts = { id: "myytPlayer" };
-        swfobject.embedSWF("http://www.youtube.com/apiplayer?enablejsapi=1&playerapiid=ytplayer&version=3",
-            "ytPlayer", "425", "356", "8", null, null, params, atts);
+/*globals $,ko,console,swfobject,gapi*/
 
-        //Init searchText
-        $('input#searchText').keyup(function (e) {
-            if (e.keyCode == 13) searchYoutube()
-        });
+$(function() {
+		"use strict";
 
-        //Init Playlist
-        setTimeout(function () {
-            playlist = slothyx.list.createList($('#playlist'), true, true, true,
-                function (element) {
-                    if (element) {
-                        //TODO add change title
-                        loadVideoById(element.attr("data-videoId"));
-                    } else {
-                        if ($('input#repeat').prop('checked')) {
-                            if (ytPlayer.isReady()) {
-                                playlist.selectNext();
-                            }
-                        } else {
-                            //TODO extract title
-                            ytPlayer.stopVideo();
-                            playing = false;
-                        }
-                    }
-                });
-            searchResults = slothyx.list.createList($('#searchResults'), false, false, false, null);
-        }, 1);
-    }
-);
+		console.log("start initializing...");
 
-var playing = false;
-var searchResults;
-var playlist;
-var apiLoaded = false;
-var API_KEY = "AIzaSyCdRfueQo-4w42pTRur9gFC0ammNREQ8QM";
-var ytPlayer;
-var localPlayer; //Only once loaded
+		//private functions
 
-function onYouTubePlayerReady(playerId) {
-    ytPlayer = new LocalPlayer($("#myytPlayer").get(0));
-    ytPlayer.activate();
-    ytPlayer.addEventListener("onStateChange", "onYtPlayerStateChange");
-}
+		function ListItem(id, title, description, thumbnail) {
+			var self = this;
+			self.id = id;
+			self.title = title;
+			self.description = description;
+			self.thumbnail = thumbnail;
+			self.play = function() {
+				loadVideo(self);
+			};
+			self.remove = function() {
+				remove(self);
+			};
+			self.addToPlaylist = function() {
+				addToPlaylist(self);
+			};
+		}
 
-function onYtPlayerStateChange(state) {
-    console.log("yt-playerstate:" + state);
-    if (state == 0) {
-        playlist.selectNext();
-    } else {
-        var toggleVideo = $("#toggleVideo").children();
-        if (state == 1) {
-            toggleVideo.removeClass("fa-play");
-            toggleVideo.addClass("fa-pause");
-        } else {
-            toggleVideo.addClass("fa-play");
-            toggleVideo.removeClass("fa-pause");
-        }
-    }
-}
+		function resetPlayback() { //TODO can you think of a better name?
+			loadVideo(null);
+		}
 
-//Player helpers
-function playVideo() {
-    if (ytPlayer) {
-        ytPlayer.playVideo();
-    }
-}
+		function loadVideo(listItem) {
+			viewModel.activeElement(listItem);
+			if(listItem !== null) {
+				viewModel.activePlayer().loadVideo(listItem);
+			} else {
+				viewModel.activePlayer().stop();
+			}
+		}
 
-function pauseVideo() {
-    if (ytPlayer) {
-        ytPlayer.pauseVideo();
-    }
-}
+		function remove(listItem) {
+			if(viewModel.activeElement() === listItem) {
+				playNext();
+			}
+			viewModel.playlist.remove(listItem);
+		}
 
-function toggleVideo() {
-    if (ytPlayer) {
-        var state = ytPlayer.getPlayerState();
-        if (state == 1) {
-            pauseVideo();
-        } else if (!playing) {
-            playing = true;
-            playlist.selectNext();
-        } else {
-            playVideo();
-        }
-    }
+		function addToPlaylist(listItem) {
+			viewModel.playlist.push(listItem);
+		}
 
-}
+		function playNext() {
+			var array = viewModel.playlist();
+			var newIndex = viewModel.selectedIndex() + 1;
+			var newItem = array[newIndex];
+			if(newItem === undefined) {
+				if(viewModel.repeatPlaylist()) {
+					newItem = array[0];
+				}
+			}
+			if(newItem !== undefined) {
+				loadVideo(newItem);
+			} else {
+				resetPlayback();
+			}
+		}
 
-function loadVideo() {
-    if (apiLoaded) {
-        var newVideo = $("#newVideoId");
-        var id = newVideo.val();
-        newVideo.val("");
+		function searchYoutube(query, callback) {
+			var request = gapi.client.youtube.search.list({
+				q: query,
+				part: 'snippet',
+				fields: 'items(id,snippet)',
+				maxResults: '5',
+				type: 'video'
+			});
+			request.execute(
+				function(data) {
+					var items = data.items;
+					var listItems = [];
+					for(var item in items) {
+						if(items.hasOwnProperty(item)) {
+							item = items[item];
+							listItems.push(new ListItem(item.id.videoId, item.snippet.title, item.snippet.description, item.snippet.thumbnails.default.url));
+						}
+					}
+					callback(listItems);
+				});
+		}
 
-        //Search for "v=***********"
-        if (id.length > 11) {
-            var index = id.search(/v=[a-zA-Z0-9_-]{11}/);
-            if (index == -1) return;
-            id = id.substring(index + 2, index + 13);
-        } else if (id.length < 11) {
-            return;
-        }
+		function getSearchText() {
+			return $('#searchText').val();
+		}
 
-        var request = gapi.client.youtube.videos.list({
-            id: id,
-            part: 'snippet',
-            fields: 'items(id,snippet)'
-        });
-        request.execute(function (response) {
-            if (response && response.items && response.items.length == 1) {
-                playlist.addElement([response.items[0].id, response.items[0].snippet.title]);
-            }
-        });
-    }
-}
+		function saveLocal(name, data) {
+			localStorage[name] = data;
+		}
 
-function loadVideoById(id, title) {
-    id = id ? id : "";
-    if (ytPlayer) {
-        ytPlayer.loadVideoById(id);
-        playing = true;
-    }
-    if (title) {
-        document.title = title;
-    }
-}
+		function getLocal(name) {
+			return localStorage[name];
+		}
 
+		function resetLocal(name) {
+			localStorage.removeItem(name);
+		}
+
+		function playerStateChanged(state) {
+//			console.log("yt-state: " + state);
+			if(state === 1) {
+				viewModel.nowPlaying(true);
+			} else {
+				viewModel.nowPlaying(false);
+			}
+			if(state === 0) {
+				playNext();
+			}
+		}
+
+		//Public Methods
+		var slothyx = window.slothyx || {};
+		window.slothyx = slothyx;
+
+		slothyx.toggleVideo = function() {
+			if(viewModel.nowPlaying()) {
+				viewModel.activePlayer().pause();
+			} else {
+				if(viewModel.activeElement() === null) {
+					playNext();
+				} else {
+					viewModel.activePlayer().play();
+				}
+			}
+		};
+		slothyx.requestFullscreen = function() {
+			//TODO
+		};
+		slothyx.openExternalPlayer = function() {
+			//TODO
+		};
+		slothyx.loadVideoById = function() {
+			var newVideo = $("#newVideoId");
+			var id = newVideo.val();
+			newVideo.val("");
+
+			//Search for "v=***********"
+			if(id.length > 11) {
+				var index = id.search(/v=[a-zA-Z0-9_-]{11}/);
+				if(index === -1) {
+					return;
+				}
+				id = id.substring(index + 2, index + 13);
+			} else if(id.length < 11) {
+				return;
+			}
+
+			var request = gapi.client.youtube.videos.list({
+				id: id,
+				part: 'snippet',
+				fields: 'items(id,snippet)'
+			});
+			request.execute(function(response) {
+				if(response && response.items && response.items.length === 1) {
+					var item = response.items[0];
+					viewModel.playlist.push(new ListItem(item.id.videoId, item.snippet.title, item.snippet.description, item.snippet.thumbnails.default.url));
+				}
+			});
+		};
+		slothyx.clearPlaylist = function() {
+			resetPlayback();
+			viewModel.playlist.removeAll();
+		};
+		slothyx.search = function() {
+			searchYoutube(getSearchText(), function(listItems) {
+				//TODO still temp
+				$('#changelog').remove();
+
+				var list = viewModel.searchResults;
+				list.removeAll();
+				for(var item in listItems) {
+					if(listItems.hasOwnProperty(item)) {
+						item = listItems[item];
+						list.push(item);
+					}
+				}
+			});
+		};
+		slothyx.createRandomPlaylist = function() {
+			//TODO
+		};
+
+
+		//Initializing stuff...
+
+		//Init searchText
+		$('#searchText').on("keyup", function(e) {
+			if(e.keyCode === 13) {
+				slothyx.search();
+			}
+		});
+
+		//startup knockout
+		var viewModel = slothyx.viewModel = {
+			playlist: ko.observableArray(),
+			searchResults: ko.observableArray(),
+			nowPlaying: ko.observable(false),
+			activeElement: ko.observable(null),
+			activePlayer: ko.observable(null),
+			repeatPlaylist: ko.observable(false)
+		};
+
+		viewModel.selectedIndex = ko.computed(function() {
+			var array = viewModel.playlist();
+			for(var i = 0; i < array.length; i++) {
+				if(viewModel.activeElement() === array[i]) {
+					return i;
+				}
+			}
+			return -1;
+		});
+
+		viewModel.playlist.subscribe(function(newList) {
+			saveLocal("playlist", JSON.stringify(ko.utils.unwrapObservable(newList)));
+		});
+
+		viewModel.activePlayer.subscribe(function(newPlayer) {
+			newPlayer.addStateListener(playerStateChanged);
+		});
+
+		var jsonMapping = {
+			playlist: {
+				'create': function(options) {
+					var data = options.data;
+					return new ListItem(data.id, data.title, data.description, data.thumbnail);
+				}
+			}
+		};
+
+		//load playlist (if existing)
+		var playlist = getLocal("playlist");
+		if(playlist !== undefined) {
+			try {
+				ko.mapping.fromJS({"playlist": JSON.parse(playlist)}, jsonMapping, viewModel);
+			} catch(e) {
+				console.log(e);
+				console.log("error loading playlist, resetting...");
+				resetLocal("playlist");
+			}
+		}
+
+		ko.applyBindings(slothyx.viewModel);
+
+	}
+
+)
+;
+
+//hate this
 //On Google API loaded
+var API_KEY = "AIzaSyCdRfueQo-4w42pTRur9gFC0ammNREQ8QM";
+
 function googleApiCallback() {
-    gapi.client.setApiKey(API_KEY);
-    gapi.client.load('youtube', 'v3', youTubeApiCallback);
+	"use strict";
+	gapi.client.setApiKey(API_KEY);
+	gapi.client.load('youtube', 'v3', youTubeApiCallback);
 }
 
 //Youtube Data API loaded
 function youTubeApiCallback() {
-    apiLoaded = true;
-    $('#searchButton').fadeIn();
-    $('#createPlaylistButton').fadeIn();
-}
-
-function searchYoutube() {
-    if (!apiLoaded) return;
-
-    //TODO not nice
-    $('#changelog').hide();
-
-    var request = gapi.client.youtube.search.list({
-        q: $('#searchText').val(),
-        part: 'snippet',
-        fields: 'items(id,snippet)',
-        maxResults: '30',
-        type: 'video'
-    });
-    request.execute(onSearchReturn);
-}
-
-function onSearchReturn(response) {
-    searchResults.clear();
-
-    for (var item in response.items) {
-        searchResults.addElement([response.items[item].id.videoId, slothyx.list.sanitize(response.items[item].snippet.title), response.items[item].snippet.title]);
-    }
-}
-
-function playListRemove(event, id) {
-    playlist.removeElementById(id);
-    event.stopPropagation();
-}
-
-function clearPlaylist() {
-    playlist.clear();
-}
-
-function openExternalPlayer() {
-    if (ytPlayer instanceof ExternalPlayer) return;
-
-    ytPlayer.deactivate();
-    localPlayer = ytPlayer;
-    //TODO make stop function to stop malfunction of replayPlaylist
-    playing = false;
-    playlist.selectIndex(-1);
-    $('#requestFullscreen').hide();
-    $('#openExternalPlayer').hide();
-
-    var commandMap = {};
-    commandMap["closed"] = onRemotePlayerClosed;
-    commandMap["statechanged"] = onYtPlayerStateChange;
-
-    ytPlayer = new ExternalPlayer(window.open("player.html"), commandMap);
-    ytPlayer.activate();
-}
-
-function onRemotePlayerClosed() {
-    ytPlayer.deactivate();
-    playing = false;
-    playlist.selectIndex(-1);
-    $('#requestFullscreen').show();
-    $('#openExternalPlayer').show();
-
-    ytPlayer = localPlayer;
-    ytPlayer.activate();
-}
-
-function requestFullscreen() {
-    if (ytPlayer) {
-        ytPlayer.requestFullscreen();
-    }
-}
-function cancelFullscreen() {
-    if (ytPlayer) {
-        ytPlayer.cancelFullscreen();
-    }
-}
-
-//TODO DEBUG function
-function skipToEnd() {
-    if (ytPlayer) {
-        ytPlayer.seekTo(ytPlayer.getDuration() - 1, true);
-    }
-}
-
-function createPlaylist() {
-    var artist = $('#searchText').val();
-
-    //TODO always -live?
-    var request = gapi.client.youtube.search.list({
-        q: artist + " -live",
-        part: 'snippet',
-        fields: 'items(id,snippet)',
-        maxResults: '50',
-        type: 'video'
-    });
-    request.execute(onCreatePlaylistSearchReturn);
-}
-
-function onCreatePlaylistSearchReturn(response) {
-    var size = response.items.length;
-    var maxSelectSize = 5;
-    var selectSize = maxSelectSize > size ? size : maxSelectSize; //TODO make changeable
-    var array = new Array(selectSize);
-    var i = 0;
-    var hit;
-
-    while (i < selectSize) {
-        array[i] = Math.floor(Math.random() * (size + 1));
-        hit = false;
-        for (var j = 0; j < i; j++) {
-            if (array[j] == array[i]) {
-                hit = true;
-                break;
-            }
-        }
-        if (!hit)i++;
-    }
-
-    for (i = 0; i < selectSize; i++) {
-        playlist.addElement([response.items[array[i]].id.videoId, response.items[array[i]].snippet.title]);
-    }
+	"use strict";
+	$('#searchButton').fadeIn();
+	$('#createPlaylistButton').fadeIn();
 }

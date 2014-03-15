@@ -1,146 +1,66 @@
+/*globals $,console,slothyx*/
+$(function() {
+	"use strict";
 
-//PlayerClasses
-LocalPlayer = function (ytPlayer) {
-    this.seekTo = function (time) {
-        ytPlayer.seekTo(time);
-    };
-    this.pauseVideo = function () {
-        ytPlayer.pauseVideo();
-    };
-    this.playVideo = function () {
-        ytPlayer.playVideo();
-    };
-    this.stopVideo = function () {
-        this.loadVideoById("");
-    };
-    this.getPlayerState = function () {
-        return ytPlayer.getPlayerState();
-    };
-    this.loadVideoById = function (id) {
-        ytPlayer.loadVideoById(id);
-    };
-    this.getDuration = function () {
-        return ytPlayer.getDuration();
-    };
-    this.addEventListener = function (event, handler) {
-        ytPlayer.addEventListener(event, handler);
-    };
-    this.activate = function () {
-        $(ytPlayer).show();
-    };
-    this.deactivate = function () {
-        this.stopVideo();
-        $(ytPlayer).hide();
-    };
-    this.requestFullscreen = function () {
-        if (ytPlayer.mozRequestFullScreen) {
-            ytPlayer.mozRequestFullScreen();
-        } else {
-            ytPlayer.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
-        }
-    };
-    this.cancelFullscreen = function () {
-        if (ytPlayer.mozCancelFullScreen) {
-            ytPlayer.mozCancelFullScreen();
-        } else if (ytPlayer.webkitCancelFullScreen) {
-            ytPlayer.webkitCancelFullScreen();
-        }
-    };
-    this.isReady = function () {
-        return true;
-    }
-};
+	var slothyx = window.slothyx || {};
+	window.slothyx = slothyx;
 
 
-//TODO review
-ExternalPlayer = function (externalPlayer, commandMap) {
-    var connected = false;
-    var ytPlayerState = -1;
-    this.seekTo = function (time) {
+	function LocalPlayer(id) {
+		var self = this;
+		var ytPlayer = $('#' + id)[0]; //cannot work with jQuery
+		var stateListener = [];
 
-    };
-    this.pauseVideo = function () {
-        if (connected) {
-            externalPlayer.postMessage("slothyxpause", "*");
-        }
-    };
-    this.playVideo = function () {
-        if (connected) {
-            externalPlayer.postMessage("slothyxplay", "*");
-        }
-    };
-    this.getPlayerState = function () {
-        return ytPlayerState;
-    };
-    this.stopVideo = function () {
-        this.loadVideoById("");
-    };
-    this.loadVideoById = function (id) {
-        if (connected) {
-            externalPlayer.postMessage("slothyxloadvideo:" + id, "*");
-        }
-    };
-    this.getDuration = function () {
+		self.pause = function() {
+			ytPlayer.pauseVideo();
+		};
+		self.play = function() {
+			ytPlayer.playVideo();
+		};
+		self.stop = function() {
+			ytPlayer.loadVideoById("");
+		};
+		self.seekTo = function(time) {
+			ytPlayer.seekTo(time);
+		};
+		self.loadVideo = function(listItem) {
+			ytPlayer.loadVideoById(listItem.id);
+		};
+		self.getDuration = function() {
+			return ytPlayer.getDuration();
+		};
+		self.addStateListener = function(listener) {
+			//dont allow duplicates
+			for(var i = 0; i < stateListener.length; i++) {
+				if(stateListener[i] === listener){
+					return;
+				}
+			}
+			stateListener.push(listener);
+		};
+		self.onYtPlayerStateChange = function(state) {
+			for(var i = 0; i < stateListener.length; i++) {
+				stateListener[i](state);
+			}
+		};
 
-    };
-    this.activate = function () {
-        $(window).on('message', onMessage);
-        initConnection();
-    };
-    this.deactivate = function () {
-        this.stopVideo();
-        $(window).off('message', onMessage);
-    };
-    this.requestClose = function () {
-        if (connected) {
-            externalPlayer.postMessage("slothyxclose");
-        }
-    };
-    this.requestFullscreen = function () {
-        //Cannot do
-    };
-    this.cancelFullscreen = function () {
-        //Cannot do
-    };
+		ytPlayer.addEventListener("onStateChange", "slothyx.localPlayer.onYtPlayerStateChange");
+	}
 
-    var onMessage = function (event) {
-        event = event.originalEvent;
-        console.log("main recieved: " + event.data);
-        if (!connected) {
-            if (event.data == "slothyxhello") {
-                connected = true;
-            }
-            return;
-        }
-        //TODO make library
-        var msg = event.data;
-        if (msg.indexOf("slothyx") == 0) {
-            var cmd = msg.substring("slothyx".length, msg.length);
-            if (cmd.indexOf(":") != -1) {
-                var para = cmd.substring(cmd.indexOf(":") + 1, cmd.length);
-                cmd = cmd.substring(0, cmd.indexOf(":"));
-                //TODO not library
-                if (cmd == "statechanged") {
-                    ytPlayerState = para;
-                }
-                //TODO library
-                commandMap[cmd](para);
-            } else {
-                commandMap[cmd]();
-            }
-        }
-    };
-    this.isReady = function () {
-        return connected;
-    };
+	//ugly, but has to be TODO maybe we can back away from single player
+	window.onYouTubePlayerReady = function(playerId) {
+		var player = slothyx.localPlayer = new LocalPlayer("myytPlayer");
+		console.log("playerinit");
+		//TODO not the nicest way
+		slothyx.viewModel.activePlayer(player);
+	};
 
-    var initConnection = function () {
-        if (!connected) {
-            console.log("send hello...");
-            externalPlayer.postMessage("slothyxhello", "*");
-            setTimeout(function () {
-                initConnection();
-            }, 1000);
-        }
-    };
-};
+	//Load YoutubePlayer
+	var params = { allowScriptAccess: "always" };
+	var atts = { id: "myytPlayer" };
+	swfobject.embedSWF("http://www.youtube.com/apiplayer?enablejsapi=1&playerapiid=ytplayer&version=3",
+		"ytPlayer", "425", "356", "8", null, null, params, atts);
+
+	//TODO remote player
+
+});
