@@ -32,11 +32,25 @@ $(function() {
 		self.addStateListener = function(listener) {
 			//dont allow duplicates
 			for(var i = 0; i < stateListener.length; i++) {
-				if(stateListener[i] === listener){
+				if(stateListener[i] === listener) {
 					return;
 				}
 			}
 			stateListener.push(listener);
+		};
+		self.requestFullscreen = function() {
+			if(ytPlayer.mozRequestFullScreen) {
+				ytPlayer.mozRequestFullScreen();
+			} else {
+				ytPlayer.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
+			}
+		};
+		self.cancelFullscreen = function() {
+			if(ytPlayer.mozCancelFullScreen) {
+				ytPlayer.mozCancelFullScreen();
+			} else if(ytPlayer.webkitCancelFullScreen) {
+				ytPlayer.webkitCancelFullScreen();
+			}
 		};
 		self.onYtPlayerStateChange = function(state) {
 			for(var i = 0; i < stateListener.length; i++) {

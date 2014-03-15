@@ -24,7 +24,7 @@ $(function() {
 			};
 		}
 
-		function resetPlayback() { //TODO can you think of a better name?
+		function stop() {
 			loadVideo(null);
 		}
 
@@ -60,18 +60,24 @@ $(function() {
 			if(newItem !== undefined) {
 				loadVideo(newItem);
 			} else {
-				resetPlayback();
+				stop();
 			}
 		}
 
-		function searchYoutube(query, callback) {
-			var request = gapi.client.youtube.search.list({
+		function searchYoutube(query, callback, options) {
+			var params = {
 				q: query,
 				part: 'snippet',
 				fields: 'items(id,snippet)',
 				maxResults: '5',
 				type: 'video'
-			});
+			};
+			for(var option in options) {
+				if(options.hasOwnProperty(option)) {
+					params[option] = options[option];
+				}
+			}
+			var request = gapi.client.youtube.search.list(params);
 			request.execute(
 				function(data) {
 					var items = data.items;
@@ -130,7 +136,10 @@ $(function() {
 			}
 		};
 		slothyx.requestFullscreen = function() {
-			//TODO
+			//we can only fullscreen players on this window!
+			if(viewModel.activePlayer() === slothyx.localPlayer) {
+				slothyx.localPlayer.requestFullscreen();
+			}
 		};
 		slothyx.openExternalPlayer = function() {
 			//TODO
@@ -164,7 +173,7 @@ $(function() {
 			});
 		};
 		slothyx.clearPlaylist = function() {
-			resetPlayback();
+			stop();
 			viewModel.playlist.removeAll();
 		};
 		slothyx.search = function() {
@@ -183,7 +192,26 @@ $(function() {
 			});
 		};
 		slothyx.createRandomPlaylist = function() {
-			//TODO
+			searchYoutube(getSearchText(), function(data) {
+				var maxTries = 50; //maybe dynamically?
+				var maxHits = 5;
+				while(maxHits > 0 && maxTries > 0) {
+					var playlist = viewModel.playlist();
+					var item = data[Math.floor(Math.random() * data.length)];
+					var hit = true;
+					for(var i = 0; i < playlist.length; i++) {
+						if(playlist[i].id === item.id) {
+							hit = false;
+							break;
+						}
+					}
+					if(hit) {
+						maxHits--;
+						viewModel.playlist.push(item);
+					}
+					maxTries--;
+				}
+			}, {maxResults: 50});
 		};
 
 

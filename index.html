@@ -5,9 +5,11 @@
 	<meta content="text/html" charset="utf-8"/>
 
 	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
 	<script src="https://raw.github.com/dtao/lazy.js/master/lazy.js"></script>
-	<script src="http://cdnjs.cloudflare.com/ajax/libs/knockout/3.0.0/knockout-min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/knockout/3.0.0/knockout-min.js"></script>
 	<script src="https://raw.github.com/SteveSanderson/knockout.mapping/master/build/output/knockout.mapping-latest.js"></script>
+	<script src="https://raw.github.com/rniemeyer/knockout-sortable/master/build/knockout-sortable.min.js"></script>
 
 	<script src="js/players.js"></script>
 	<script src="js/main.js"></script>
@@ -27,7 +29,10 @@
 			<button id="createPlaylistButton" onclick="slothyx.createRandomPlaylist()">Create Random Playlist</button>
 		</div>
 		<div id="searchResults" data-bind="foreach: searchResults">
-			<div class="searchResult">
+			<div class="searchResult" ><!--data-bind="click: addToPlaylist"--> <!--
+				<img data-bind="attr: {src: thumbnail}">
+				<h3 data-bind="text: title"></h3>
+				<span data-bind="text: description"></span>-->
 				<button data-bind="click: addToPlaylist"><span data-bind="text: title"></span></button>
 			</div>
 		</div>
@@ -68,8 +73,8 @@
 				<button onclick="slothyx.clearPlaylist()">Clear Playlist</button>
 			</div>
 		</div>
-		<div id="playlist" data-bind="foreach: playlist">
-			<div class="listItem" data-bind="click: play, css: {selected: $index() === $root.selectedIndex()}">
+		<div id="playlist" data-bind="sortable: playlist">
+			<div class="listItem" data-bind="click: play, css: {'selected': $index() === $root.selectedIndex()}">
 				<span data-bind="text: title"></span><i class="fa fa-times"
 																	   data-bind="click: remove"></i>
 			</div>

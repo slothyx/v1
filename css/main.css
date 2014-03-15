@@ -92,6 +92,15 @@ label {
 
 .searchResult {
 	margin: 2px;
+	clear: both;
+}
+
+.searchResult:active {
+	background: #353535;
+}
+
+.searchResult img {
+	float: right;
 }
 
 #searchButton, #createPlaylistButton {
