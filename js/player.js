@@ -1,86 +1,62 @@
-$(document).ready(
-    function () {
-        //Load YoutubePlayer
-        var params = { allowScriptAccess: "always" };
-        var atts = { id: "myytPlayer" };
-        swfobject.embedSWF("http://www.youtube.com/apiplayer?enablejsapi=1&playerapiid=ytplayer&version=3",
-            "ytPlayer", "425", "356", "8", null, null, params, atts);
+/*globals $,console,slothyx,ko*/
+$(function() {
+	"use strict";
 
-        $(window).on('message', onMessage);
-        $(window).unload(onUnload);
-    }
-);
+	var slothyx = window.slothyx || {};
+	window.slothyx = slothyx;
 
-var ytPlayer;
-var mainWindow;
-var commandMap = {};
-commandMap["pause"] = onPauseCommand;
-commandMap["play"] = onPlayCommand;
-commandMap["close"] = onCloseCommand;
-commandMap["loadvideo"] = onLoadVideoCommand;
-commandMap["fullscreen"] = onFullscreenCommand;
+	//startup knockout
+	var viewModel = slothyx.viewModel = {
+		activePlayer: ko.observable(null),
+		mainWindow: ko.observable(null)
+	};
 
-function onMessage(event) {
-    event = event.originalEvent;
-    console.log("player recieved: " + event.data);
-    if (!mainWindow) {
-        if (event.data == "slothyxhello") {
-            mainWindow = event.source;
-            mainWindow.postMessage("slothyxhello", "*");
-        }
-        return;
-    }
+	ko.applyBindings(viewModel);
 
-    var msg = event.data;
-    if (msg.indexOf("slothyx") == 0) {
-        var cmd = msg.substring("slothyx".length, msg.length);
-        if (cmd.indexOf(":") != -1) {
-            var para = cmd.substring(cmd.indexOf(":") + 1, cmd.length);
-            cmd = cmd.substring(0, cmd.indexOf(":"));
-            commandMap[cmd](para);
-        } else {
-            commandMap[cmd]();
-        }
-    }
-}
+	viewModel.activePlayer.subscribe(function(newPlayer) {
+		newPlayer.addStateListener(playerStateChanged);
+	});
 
-function onYouTubePlayerReady(playerId) {
-    ytPlayer = $("#myytPlayer").get(0);
-    ytPlayer.addEventListener("onStateChange", "onYtPlayerStateChange");
-}
+	function post(message, params) {
+		if(viewModel.mainWindow() !== null) {
+			var cmd = {cmd: message};
+			if(params !== undefined) {
+				for(var param in params) {
+					if(params.hasOwnProperty(param)) {
+						cmd[param] = params[param];
+					}
+				}
+			}
+			console.log("posting: " + JSON.stringify(cmd));
+			viewModel.mainWindow().postMessage(JSON.stringify(cmd), "*");
+		}
+	}
 
-function onYtPlayerStateChange(state) {
-    mainWindow.postMessage("slothyxstatechanged:" + state, "*");
-}
+	function playerStateChanged(state) {
+		post("stateChanged", {'state': state});
+	}
 
-function onUnload() {
-    mainWindow.postMessage("slothyxclosed", "*");
-}
+	$(window).on('message', function(event) {
+		if(viewModel.mainWindow() === null){
+			viewModel.mainWindow(event.originalEvent.source);
+			post("hello");
+		}else{
+			var data = event.originalEvent.data;
+			parseCommand(JSON.parse(data));
+		}
+	});
 
-function onPauseCommand() {
-    if (ytPlayer) {
-        ytPlayer.pauseVideo();
-    }
-}
-function onPlayCommand() {
-    if (ytPlayer) {
-        ytPlayer.playVideo();
-    }
-}
-function onCloseCommand() {
-    window.close();
-}
-function onLoadVideoCommand(id) {
-    if (ytPlayer) {
-        ytPlayer.loadVideoById(id);
-    }
-}
+	var handlermap = {
+		"pause":undefined//TODO
+	};
 
-function onFullscreenCommand() {
-    var videoElement = document.getElementById("myytPlayer");
-    if (videoElement.mozRequestFullScreen) {
-        videoElement.mozRequestFullScreen();
-    } else {
-        videoElement.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
-    }
-}
+	function parseCommand(cmd) {
+		var handler = handlermap[cmd.cmd];
+		if(handler === undefined){
+			console.log("unknown command: "+cmd.cmd);
+		}else{
+			handler(cmd);
+		}
+	}
+
+});

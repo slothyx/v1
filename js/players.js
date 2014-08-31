@@ -5,7 +5,6 @@ $(function() {
 	var slothyx = window.slothyx || {};
 	window.slothyx = slothyx;
 
-
 	function LocalPlayer(id) {
 		var self = this;
 		var ytPlayer = $('#' + id)[0]; //cannot work with jQuery
@@ -61,7 +60,7 @@ $(function() {
 		ytPlayer.addEventListener("onStateChange", "slothyx.localPlayer.onYtPlayerStateChange");
 	}
 
-	//ugly, but has to be TODO maybe we can back away from single player
+	//ugly, but has to be
 	window.onYouTubePlayerReady = function(playerId) {
 		var player = slothyx.localPlayer = new LocalPlayer("myytPlayer");
 		console.log("playerinit");
@@ -75,6 +74,76 @@ $(function() {
 	swfobject.embedSWF("http://www.youtube.com/apiplayer?enablejsapi=1&playerapiid=ytplayer&version=3",
 		"ytPlayer", "425", "356", "8", null, null, params, atts);
 
-	//TODO remote player
+	slothyx.NewWindowPlayer = function(onCloseCallback) {
+		var self = this;
+		var newWindow = window.open("player.html");
+		var initialized = false;
+		var stateListener = [];
 
+		function post(message, params) {
+			var cmd = {cmd: message};
+			if(params !== undefined) {
+				for(var param in params) {
+					if(params.hasOwnProperty(param)) {
+						cmd[param] = params[param];
+					}
+				}
+			}
+			console.log("posting: " + JSON.stringify(cmd));
+			newWindow.postMessage(JSON.stringify(cmd), "*");
+		}
+
+		self.pause = function() {
+			post("pause");
+		};
+		self.play = function() {
+			post("play");
+		};
+		self.stop = function() {
+			post("stop");
+		};
+		self.seekTo = function(time) {
+			post("seekTo", {'time': time});
+		};
+		self.loadVideo = function(listItem) {
+			post("loadVideo", {item: listItem});
+		};
+		self.getDuration = function() {
+//			post("getDuration"); TODO
+		};
+		self.addStateListener = function(listener) {
+			//dont allow duplicates
+			for(var i = 0; i < stateListener.length; i++) {
+				if(stateListener[i] === listener) {
+					return;
+				}
+			}
+			stateListener.push(listener);
+		};
+		self.requestFullscreen = function() {
+			throw "this cannot be done on remote players!";
+		};
+		self.cancelFullscreen = function() {
+			throw "this cannot be done on remote players!";
+		};
+		self.onYtPlayerStateChange = function(state) {
+			for(var i = 0; i < stateListener.length; i++) {
+				stateListener[i](state);
+			}
+		};
+
+		function onMessage(data){
+			initialized = true;
+			console.log(data);
+		}
+
+		function callHello(){
+			if(!initialized){
+				post("hello");
+				setTimeout(callHello, 1000);
+			}
+		}
+		$(window).on('message', onMessage);
+		callHello();
+	};
 });

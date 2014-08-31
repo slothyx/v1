@@ -142,12 +142,12 @@ $(function() {
 			}
 		};
 		slothyx.openExternalPlayer = function() {
-			//TODO
+			viewModel.activePlayer(new slothyx.NewWindowPlayer(function(){/*TODO*/}));
 		};
 		slothyx.loadVideoById = function() {
-			var newVideo = $("#newVideoId");
-			var id = newVideo.val();
-			newVideo.val("");
+			var $newVideo = $("#newVideoId");
+			var id = $newVideo.val();
+			$newVideo.val("");
 
 			//Search for "v=***********"
 			if(id.length > 11) {
@@ -168,7 +168,7 @@ $(function() {
 			request.execute(function(response) {
 				if(response && response.items && response.items.length === 1) {
 					var item = response.items[0];
-					viewModel.playlist.push(new ListItem(item.id.videoId, item.snippet.title, item.snippet.description, item.snippet.thumbnails.default.url));
+					viewModel.playlist.push(new ListItem(item.id, item.snippet.title, item.snippet.description, item.snippet.thumbnails.default.url));
 				}
 			});
 		};
@@ -252,7 +252,7 @@ $(function() {
 			newPlayer.addStateListener(playerStateChanged);
 		});
 
-		var jsonMapping = {
+		var knockoutMapping = {
 			playlist: {
 				'create': function(options) {
 					var data = options.data;
@@ -265,7 +265,7 @@ $(function() {
 		var playlist = getLocal("playlist");
 		if(playlist !== undefined) {
 			try {
-				ko.mapping.fromJS({"playlist": JSON.parse(playlist)}, jsonMapping, viewModel);
+				ko.mapping.fromJS({"playlist": JSON.parse(playlist)}, knockoutMapping, viewModel);
 			} catch(e) {
 				console.log(e);
 				console.log("error loading playlist, resetting...");
@@ -277,15 +277,14 @@ $(function() {
 
 	}
 
-)
-;
+);
 
 //hate this
 //On Google API loaded
-var API_KEY = "AIzaSyCdRfueQo-4w42pTRur9gFC0ammNREQ8QM";
 
 function googleApiCallback() {
 	"use strict";
+	var API_KEY = "AIzaSyCdRfueQo-4w42pTRur9gFC0ammNREQ8QM";
 	gapi.client.setApiKey(API_KEY);
 	gapi.client.load('youtube', 'v3', youTubeApiCallback);
 }
