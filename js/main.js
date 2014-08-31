@@ -69,7 +69,7 @@ $(function() {
 				q: query,
 				part: 'snippet',
 				fields: 'items(id,snippet)',
-				maxResults: '5',
+				maxResults: '25',
 				type: 'video'
 			};
 			for(var option in options) {

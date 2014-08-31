@@ -15,7 +15,7 @@ echo "Delete old..."
 rm -rf $PROJECT_DIR
 echo "Cloning Repository..."
 mkdir $PROJECT_DIR
-git clone -b master $BARE_REPOSITORY
+git clone -b release $BARE_REPOSITORY
 cd $PROJECT_DIR
 echo "Cleaning Repository..."
 rm -rf .*
