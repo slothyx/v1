@@ -14,7 +14,8 @@
 	<script src="js/swfobject.js"></script>
 	<script src="js/localPlayer.js"></script>
 	<script src="js/youtube.js"></script>
-	<script src="js/index.js"></script>
+	<script src="js/playlist.js"></script>
+	<script src="js/main.js"></script>
 	<script src="https://apis.google.com/js/client.js?onload=googleApiCallback"></script>
 	<link href="css/index.css" rel="stylesheet" type="text/css"/>
 	<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
@@ -26,10 +27,10 @@
 	<div id="searchPanel">
 		<div id="searchStrip" class="underlined">
 			<input type="text" id="searchText"/>
-			<button id="searchButton" onclick="slothyx.youtube.search($('#searchText').val(),function(asd){console.log(asd);})">Search for Videos</button>
+			<button id="searchButton" onclick="slothyx.searchYoutube()">Search for Videos</button>
 		</div>
 		<div id="searchResults" data-bind="foreach: searchResults">
-			<div class="searchResult"><!--data-bind="click: addToPlaylist"--> <!--
+			<div class="searchResult"> <!--data-bind="click: addToPlaylist" >
 				<img data-bind="attr: {src: thumbnail}">
 				<h3 data-bind="text: title"></h3>
 				<span data-bind="text: description"></span>-->
@@ -51,8 +52,8 @@
 		</div>
 		<div id="control" class="underlined">
 			<div class="line">
-				<button onclick="slothyx.localPlayer.player.play()"><i class="fa fa-play"></i></button>
-				<button onclick="slothyx.localPlayer.player.pause()"><i class="fa fa-pause"></i></button>
+				<button onclick="slothyx.play()"><i class="fa fa-play"></i></button>
+				<button onclick="slothyx.pause()"><i class="fa fa-pause"></i></button>
 				<!--<button id="toggleVideo" onclick="slothyx.toggleVideo()"><i class="fa" data-bind="css: {'fa-play': !nowPlaying(), 'fa-pause': nowPlaying()}"></i></button>-->
 				<!--<label id="repeatLabel" for="repeat">Repeat Playlist:</label>-->
 				<!--<input id="repeat" type="checkbox" data-bind="checked: repeatPlaylist"/>-->
@@ -62,12 +63,12 @@
 			<div class="line">
 				<label for="newVideoId">Video URL/Video ID:</label>
 				<input type="text" id="newVideoId" size="12"/>
-				<button onclick="slothyx.localPlayer.player.load($('#newVideoId').val())">Load Video</button>
+				<button onclick="slothyx.loadVideoFromTextField()">Load Video</button>
 				<!--<button onclick="slothyx.clearPlaylist()">Clear Playlist</button>-->
 			</div>
 		</div>
 		<div id="playlist" data-bind="sortable: playlist">
-			<div class="listItem" data-bind="click: play, css: {'selected': $index() === $root.selectedIndex()}">
+			<div class="listItem" data-bind="click: play"> <!--, css: {'selected': $index() === $root.selectedIndex()}-->
 				<span data-bind="text: title"></span><i class="fa fa-times"
 														data-bind="click: remove"></i>
 			</div>

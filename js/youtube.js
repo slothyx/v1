@@ -11,7 +11,8 @@
 		var options = {
 			q: query,
 			part: "id,snippet",
-			fields: "items(id,snippet)"
+			fields: "items(id,snippet)",
+			maxResults: "5"
 		};
 		var request = gapi.client.youtube.search.list(options);
 		request.execute(function(response) {

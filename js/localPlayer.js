@@ -13,6 +13,8 @@
 	window.slothyx = slothyx;
 	var localPlayer = slothyx.localPlayer = {};
 
+	var ytPlayer;
+
 	function LocalPlayer(id) {
 		var self = this;
 		var player = $("#" + id)[0];
@@ -31,17 +33,22 @@
 		};
 	}
 
-	localPlayer.Video = function(id, name, description, image) {
+	//TODO maybe move
+	localPlayer.Video = function(id, title, description, image) {
 		var self = this;
 		self.id = id;
-		self.name = name;
+		self.title = title;
 		self.description = description;
 		self.image = image;
 	};
 
 	localPlayer.onYouTubePlayerReady = function() {
-		localPlayer.player = new LocalPlayer(YT_PLAYER_ID);
+		ytPlayer = new LocalPlayer(YT_PLAYER_ID);
 		//TODO notify someone?
+	};
+
+	localPlayer.getPlayer = function() {
+		return ytPlayer;
 	};
 
 })(jQuery, window, swfobject);
