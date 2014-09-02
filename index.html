@@ -6,16 +6,17 @@
 
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-	<script src="//raw.github.com/dtao/lazy.js/master/lazy.js" type="text/javascript"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/knockout/3.0.0/knockout-min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/knockout.mapping/2.4.1/knockout.mapping.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/knockout-sortable/0.8.1/knockout-sortable.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js"></script>
 
-	<script src="js/players.js"></script>
-	<script src="js/main.js"></script>
 	<script src="js/swfobject.js"></script>
+	<script src="js/localPlayer.js"></script>
+	<script src="js/youtube.js"></script>
+	<script src="js/index.js"></script>
 	<script src="https://apis.google.com/js/client.js?onload=googleApiCallback"></script>
-	<link href="css/main.css" rel="stylesheet" type="text/css"/>
+	<link href="css/index.css" rel="stylesheet" type="text/css"/>
 	<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 </head>
 <body>
@@ -25,11 +26,10 @@
 	<div id="searchPanel">
 		<div id="searchStrip" class="underlined">
 			<input type="text" id="searchText"/>
-			<button id="searchButton" onclick="slothyx.search()">Search for Videos</button>
-			<button id="createPlaylistButton" onclick="slothyx.createRandomPlaylist()">Create Random Playlist</button>
+			<button id="searchButton" onclick="slothyx.youtube.search($('#searchText').val(),function(asd){console.log(asd);})">Search for Videos</button>
 		</div>
 		<div id="searchResults" data-bind="foreach: searchResults">
-			<div class="searchResult" ><!--data-bind="click: addToPlaylist"--> <!--
+			<div class="searchResult"><!--data-bind="click: addToPlaylist"--> <!--
 				<img data-bind="attr: {src: thumbnail}">
 				<h3 data-bind="text: title"></h3>
 				<span data-bind="text: description"></span>-->
@@ -40,18 +40,9 @@
 			<!--TODO change, this is not sustainable-->
 			<h1>Now with CHANGELIST!</h1>
 			<ul>
-				<li>Now with Changelist!</li>
-				<li>Saving Playlist when you restart Browser, isn't that EPIC???</li>
-				<li>Fixed bug, where video won't get unloaded</li>
-				<li>Sort your playlist with Drag&Drop (NOW FANCY)!!!</li>
-				<li>You can now load videos via URL!</li>
-				<li>Repeatable playlist!</li>
-				<li>Togglebuttoooon!</li>
-				<li>Want to watch the video fullscreen? NO PROBLEM!</li>
-				<li>Want to watch the video on a second monitor/beamer? NO PROBLEM!</li>
-				<li>Feeling lucky?</li>
+				<li>V2!</li>
 			</ul>
-			<img src="img/sloth_logo.jpg"/>
+			<img src="img/sloth_rework.gif"/>
 		</div>
 	</div>
 	<div id="listPanel">
@@ -60,23 +51,25 @@
 		</div>
 		<div id="control" class="underlined">
 			<div class="line">
-				<button id="toggleVideo" onclick="slothyx.toggleVideo()"><i class="fa" data-bind="css: {'fa-play': !nowPlaying(), 'fa-pause': nowPlaying()}"></i></button>
-				<label id="repeatLabel" for="repeat">Repeat Playlist:</label>
-				<input id="repeat" type="checkbox" data-bind="checked: repeatPlaylist"/>
-				<button id="requestFullscreen" onclick="slothyx.requestFullscreen()">Fullscreen</button>
-				<button id="openExternalPlayer" onclick="slothyx.openExternalPlayer()">External Player</button>
+				<button onclick="slothyx.localPlayer.player.play()"><i class="fa fa-play"></i></button>
+				<button onclick="slothyx.localPlayer.player.pause()"><i class="fa fa-pause"></i></button>
+				<!--<button id="toggleVideo" onclick="slothyx.toggleVideo()"><i class="fa" data-bind="css: {'fa-play': !nowPlaying(), 'fa-pause': nowPlaying()}"></i></button>-->
+				<!--<label id="repeatLabel" for="repeat">Repeat Playlist:</label>-->
+				<!--<input id="repeat" type="checkbox" data-bind="checked: repeatPlaylist"/>-->
+				<!--<button id="requestFullscreen" onclick="slothyx.requestFullscreen()">Fullscreen</button>-->
+				<!--<button id="openExternalPlayer" onclick="slothyx.openExternalPlayer()">External Player</button>-->
 			</div>
 			<div class="line">
 				<label for="newVideoId">Video URL/Video ID:</label>
 				<input type="text" id="newVideoId" size="12"/>
-				<button onclick="slothyx.loadVideoById()">Load Video</button>
-				<button onclick="slothyx.clearPlaylist()">Clear Playlist</button>
+				<button onclick="slothyx.localPlayer.player.load($('#newVideoId').val())">Load Video</button>
+				<!--<button onclick="slothyx.clearPlaylist()">Clear Playlist</button>-->
 			</div>
 		</div>
 		<div id="playlist" data-bind="sortable: playlist">
 			<div class="listItem" data-bind="click: play, css: {'selected': $index() === $root.selectedIndex()}">
 				<span data-bind="text: title"></span><i class="fa fa-times"
-																	   data-bind="click: remove"></i>
+														data-bind="click: remove"></i>
 			</div>
 		</div>
 	</div>
