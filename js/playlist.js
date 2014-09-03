@@ -53,11 +53,16 @@
 		playlistModel.playlist(playlist);
 		persistPlaylists();
 	};
+
 	lists.deleteCurrentPlaylist = function() {
 		var currentPlayListId = playlistModel.playlist().id;
 		playlistModel.playlists.remove(function(playlist) {
 			return playlist.id === currentPlayListId;
 		});
+		persistPlaylists();
+	};
+
+	lists.changed = function() {
 		persistPlaylists();
 	};
 
@@ -86,6 +91,7 @@
 		};
 	}
 
+	//TODO better difference between savable playlist(dto) and ko-playlist
 	function Playlist(playlist) {
 		var self = this;
 		self.id = playlistIdCount++;
@@ -110,22 +116,11 @@
 	}
 
 	function loadPlaylists() {
-		//TODO use PLAYLISTS_PERSIST_ID to load real data
 		return getPersist().get(PLAYLISTS_PERSIST_ID);
-		return [
-			{name: "Playlist 1", videos: [
-				{title: "Dummy Video 1/1"},
-				{title: "Dummy Video 1/2"}
-			]},
-			{name: "Playlist 2", videos: [
-				{title: "Dummy Video 2/1"},
-				{title: "Dummy Video 2/2"}
-			]}
-		];
 	}
 
 	function getDefaultPlaylists() {
-		return [null];
+		return [null]; //TODO this is NOT a good solution
 	}
 
 	function removeVideoByInternalId(id) {
@@ -136,6 +131,7 @@
 	}
 
 	function persistPlaylists() {
+		//TODO look at this method... it is ugly
 		var cleanedPlaylists = _.map(ko.unwrap(playlistModel.playlists), function(playlist) {
 			return {
 				name: playlist.name,
@@ -144,7 +140,7 @@
 				})
 			};
 		});
-		getPersist().put(PLAYLISTS_PERSIST_ID,cleanedPlaylists); //TODO CLEAN
+		getPersist().put(PLAYLISTS_PERSIST_ID, cleanedPlaylists);
 	}
 
 	function getPersist() {

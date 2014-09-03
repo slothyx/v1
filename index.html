@@ -6,8 +6,7 @@
 
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/knockout/3.0.0/knockout-min.js"></script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/knockout.mapping/2.4.1/knockout.mapping.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/knockout/3.2.0/knockout-min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/knockout-sortable/0.8.1/knockout-sortable.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js"></script>
 
@@ -73,7 +72,7 @@
 			<button onclick="slothyx.addPlaylist()">Add Playlist</button>
 			<button onclick="slothyx.deletePlaylist()">Delete Playlist</button>
 			<div data-bind="if: (playlist() !== null && playlist() !== undefined)">
-				<div data-bind="sortable: playlist().videos">
+				<div data-bind="sortable: {data: playlist().videos, afterMove: slothyx.lists.changed}">
 					<div class="listItem" data-bind="click: play">
 						<!--, css: {'selected': $index() === $root.selectedIndex()}-->
 						<span data-bind="text: video.title"></span><i class="fa fa-times"
