@@ -1,4 +1,4 @@
-/*globals jQuery, window, swfobject*/
+/*globals jQuery, window*/
 (function($, window, undefined) {
 	"use strict";
 
@@ -36,6 +36,12 @@
 		});
 	};
 
+	slothyx.addPlaylist = function() {
+		getLists().addPlaylist();
+	};
+	slothyx.deletePlaylist = function() {
+		getLists().deleteCurrentPlaylist();
+	};
 
 
 

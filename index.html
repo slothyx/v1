@@ -12,12 +12,13 @@
 	<script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js"></script>
 
 	<script src="js/swfobject.js"></script>
+	<script src="js/persist.js"></script>
 	<script src="js/localPlayer.js"></script>
 	<script src="js/youtube.js"></script>
 	<script src="js/playlist.js"></script>
 	<script src="js/main.js"></script>
 	<script src="https://apis.google.com/js/client.js?onload=googleApiCallback"></script>
-	<link href="css/index.css" rel="stylesheet" type="text/css"/>
+	<link href="css/main.css" rel="stylesheet" type="text/css"/>
 	<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 </head>
 <body>
@@ -34,7 +35,7 @@
 				<img data-bind="attr: {src: thumbnail}">
 				<h3 data-bind="text: title"></h3>
 				<span data-bind="text: description"></span>-->
-				<button data-bind="click: addToPlaylist"><span data-bind="text: title"></span></button>
+				<button data-bind="click: addToPlaylist"><span data-bind="text: video.title"></span></button>
 			</div>
 		</div>
 		<div id="changelog">
@@ -67,10 +68,18 @@
 				<!--<button onclick="slothyx.clearPlaylist()">Clear Playlist</button>-->
 			</div>
 		</div>
-		<div id="playlist" data-bind="sortable: playlist">
-			<div class="listItem" data-bind="click: play"> <!--, css: {'selected': $index() === $root.selectedIndex()}-->
-				<span data-bind="text: title"></span><i class="fa fa-times"
-														data-bind="click: remove"></i>
+		<div id="playlist">
+			<select data-bind="options: playlists, optionsText: 'name', value: playlist"></select>
+			<button onclick="slothyx.addPlaylist()">Add Playlist</button>
+			<button onclick="slothyx.deletePlaylist()">Delete Playlist</button>
+			<div data-bind="if: (playlist() !== null && playlist() !== undefined)">
+				<div data-bind="sortable: playlist().videos">
+					<div class="listItem" data-bind="click: play">
+						<!--, css: {'selected': $index() === $root.selectedIndex()}-->
+						<span data-bind="text: video.title"></span><i class="fa fa-times"
+																data-bind="click: remove"></i>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

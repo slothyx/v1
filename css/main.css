@@ -95,9 +95,9 @@ label {
 	clear: both;
 }
 
-.searchResult:active {
+/*.searchResult:active {
 	background: #353535;
-}
+} TODO maybe activate*/
 
 .searchResult img {
 	float: right;
@@ -111,7 +111,7 @@ label {
 	padding: 10px;
 }
 
-#playlist > .listItem {
+#playlist .listItem {
 	list-style-type: none;
 	border: solid 1px #101010;
 	border-radius: 4px;

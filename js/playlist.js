@@ -1,68 +1,154 @@
-/*globals jQuery, window, ko*/
-(function($, window, ko, undefined) {
+/*globals jQuery, window, ko, _*/
+(function($, window, ko, _, undefined) {
 	"use strict";
 
 	var PLAYLIST_HTML_ID = "#playlist";
 	var SEARCHRESULTS_HTML_ID = "#searchResults";
+	var PLAYLISTS_PERSIST_ID = "playlists";
+	var PLAYLIST_DEFAULT_NAME = "Slothyx Playlist";
+
+	var videoIdCount = 1;
+	var playlistIdCount = 1;
 
 	var slothyx = window.slothyx || {};
 	window.slothyx = slothyx;
 	var lists = slothyx.lists = {};
 
-	//TODO load on startup
 
-	var playlistModel = {
-		playlist: ko.observableArray()
+	var playlistModel = lists.playlistModel = {
+		playlists: null,
+		playlist: null
 	};
 
 	var searchResultsModel = {
 		searchResults: ko.observableArray()
 	};
 
+	initPlaylists();
+
 	$(function() {
-		ko.applyBindingsToNode($(PLAYLIST_HTML_ID).get(0), null, playlistModel);
-		ko.applyBindingsToNode($(SEARCHRESULTS_HTML_ID).get(0), null, searchResultsModel);
+		ko.applyBindings(playlistModel, $(PLAYLIST_HTML_ID).get(0));
+		ko.applyBindings(searchResultsModel, $(SEARCHRESULTS_HTML_ID).get(0));
 	});
 
 
 	/*****PUBLIC API*****/
-	lists.addVideo = function(originalVideo) {
-		//copies the object
-		var video = copy(originalVideo);
-		addVideoInternal(video);
+	lists.addVideo = function(video) {
+		var playListVideo = new PlaylistVideo(video);
+		playlistModel.playlist().videos.push(playListVideo);
+		persistPlaylists();
 	};
 
 	lists.setSearchResults = function(searchResults) {
 		searchResultsModel.searchResults.removeAll();
-		for(var index in searchResults) {
-			if(searchResults.hasOwnProperty(index)) {
-				(function(searchResults, index){
-					var searchResult = searchResults[index];
-					var newSearchResult = copy(searchResult);
-					newSearchResult.addToPlaylist = function() {
-						lists.addVideo(searchResult);
-					};
-					searchResultsModel.searchResults.push(newSearchResult);
-				})(searchResults, index);
-			}
-		}
+		_.forEach(searchResults, function(searchResult) {
+			var searchResultWrapper = new SearchResultWrapper(searchResult);
+			searchResultsModel.searchResults.push(searchResultWrapper);
+		});
+	};
+
+	lists.addPlaylist = function() {
+		var playlist = new Playlist(null);
+		playlistModel.playlists.push(playlist);
+		playlistModel.playlist(playlist);
+		persistPlaylists();
+	};
+	lists.deleteCurrentPlaylist = function() {
+		var currentPlayListId = playlistModel.playlist().id;
+		playlistModel.playlists.remove(function(playlist) {
+			return playlist.id === currentPlayListId;
+		});
+		persistPlaylists();
 	};
 
 
 	/*****PRIVATE HELPER*****/
-	function addVideoInternal(video) {
-		video.play = function() {
+
+	function PlaylistVideo(video) {
+		var self = this;
+		self.id = videoIdCount++;
+		self.video = video;
+		self.play = function() {
 			//TODO tmp
 			slothyx.localPlayer.getPlayer().load(video.id);
 		};
-		video.remove = function(){
-			//TODO do nothing now
+		self.remove = function() {
+			removeVideoByInternalId(self.id);
 		};
-		playlistModel.playlist.push(video);
 	}
 
-	function copy(object) {
-		return $.extend(true, {}, object);
+	function SearchResultWrapper(video) {
+		var self = this;
+		self.video = video;
+
+		self.addToPlaylist = function() {
+			lists.addVideo(video);
+		};
 	}
 
-})(jQuery, window, ko);
+	function Playlist(playlist) {
+		var self = this;
+		self.id = playlistIdCount++;
+		self.name = playlist !== null ? playlist.name : (PLAYLIST_DEFAULT_NAME + ' ' + self.id); //TODO naming
+		if(playlist !== null) {
+			self.videos = ko.observableArray(_.map(playlist.videos, function(video) {
+				return new PlaylistVideo(video);
+			}));
+		} else {
+			self.videos = ko.observableArray();
+		}
+	}
+
+	function initPlaylists() {
+		var loadedPlaylists = loadPlaylists() || getDefaultPlaylists();
+
+		playlistModel.playlists = ko.observableArray();
+		_.forEach(loadedPlaylists, function(playlist) {
+			playlistModel.playlists.push(new Playlist(playlist));
+		});
+		playlistModel.playlist = ko.observable(loadedPlaylists[0]);
+	}
+
+	function loadPlaylists() {
+		//TODO use PLAYLISTS_PERSIST_ID to load real data
+		return getPersist().get(PLAYLISTS_PERSIST_ID);
+		return [
+			{name: "Playlist 1", videos: [
+				{title: "Dummy Video 1/1"},
+				{title: "Dummy Video 1/2"}
+			]},
+			{name: "Playlist 2", videos: [
+				{title: "Dummy Video 2/1"},
+				{title: "Dummy Video 2/2"}
+			]}
+		];
+	}
+
+	function getDefaultPlaylists() {
+		return [null];
+	}
+
+	function removeVideoByInternalId(id) {
+		playlistModel.playlist().videos.remove(function(item) {
+			return id === item.id;
+		});
+		persistPlaylists();
+	}
+
+	function persistPlaylists() {
+		var cleanedPlaylists = _.map(ko.unwrap(playlistModel.playlists), function(playlist) {
+			return {
+				name: playlist.name,
+				videos: _.map(ko.unwrap(playlist.videos), function(video) {
+					return video.video;
+				})
+			};
+		});
+		getPersist().put(PLAYLISTS_PERSIST_ID,cleanedPlaylists); //TODO CLEAN
+	}
+
+	function getPersist() {
+		return slothyx.persist;
+	}
+
+})(jQuery, window, ko, _);
