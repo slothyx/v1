@@ -18,8 +18,11 @@
 
 		var playlistModel = lists.playlistModel = {
 			playlists: null,
-			playlist: null
+			playlist: null,
+			video: null
 		};
+
+		var videoSelectedEventHelper = createNewEventHelper();
 
 		var playlist = {};
 		playlist.addVideo = function(video) {
@@ -53,16 +56,28 @@
 			persistPlaylists();
 		};
 
+		playlist.selectNext = function(){
+			//TODO
+
+		};
+
+		playlist.addVideoSelectedListener = function(callback){
+			videoSelectedEventHelper.addListener(callback);
+		};
+
 		function PlaylistVideo(video) {
 			var self = this;
 			self.id = videoIdCount++;
 			self.video = video;
-			self.play = function() {
-				//TODO tmp
-				slothyx.localPlayer.getPlayer().load(video.id);
+			self.select = function() {
+				selectVideo(self);
 			};
 			self.remove = function() {
 				removeVideoByInternalId(self.id);
+			};
+			self.isSelected = function() {
+				var video = playlistModel.video();
+				return video !== undefined && self.id === video.id;
 			};
 		}
 
@@ -92,6 +107,8 @@
 				playlistModel.playlists.push(new PlaylistPlaylist(playlist));
 			});
 			playlistModel.playlist = ko.observable(loadedPlaylists[0]);
+
+			playlistModel.video = ko.observable();
 		}
 
 		function createNewPlaylist() {
@@ -106,6 +123,11 @@
 				return id === item.id;
 			});
 			persistPlaylists();
+		}
+
+		function selectVideo(video) {
+			playlistModel.video(video);
+			videoSelectedEventHelper.throwEvent(video.video);
 		}
 
 		function loadPlaylists() {
@@ -176,6 +198,10 @@
 	/*****PRIVATE HELPER*****/
 	function getPersister() {
 		return slothyx.persist.getPersister();
+	}
+
+	function createNewEventHelper(){
+		return new slothyx.util.EventHelper();
 	}
 
 })

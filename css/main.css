@@ -121,7 +121,7 @@ label {
 	padding: 2px;
 }
 
-#playlist > .listItem.selected, #playlist > .listItem:hover {
+#playlist .listItem.selected, #playlist .listItem:hover {
 	background-color: #303030;
 }
 

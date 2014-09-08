@@ -6,6 +6,8 @@
 	window.slothyx = slothyx;
 	var youtube = slothyx.youtube = {};
 
+	var Video = slothyx.util.Video;
+
 	youtube.search = function(query, callback) {
 		//TODO caching/paginating
 		var options = {
@@ -17,11 +19,12 @@
 		var request = gapi.client.youtube.search.list(options);
 		request.execute(function(response) {
 			callback(_.map(response.result.items, function(item) {
-				return new slothyx.localPlayer.Video(item.id.videoId, item.snippet.title, item.snippet.description,
+				return new Video(item.id.videoId, item.snippet.title, item.snippet.description,
 					item.snippet.thumbnails.default.url);
 			}));
 		});
 	};
+
 })(jQuery, window, _);
 
 

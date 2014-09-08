@@ -57,5 +57,12 @@
 		return slothyx.lists.getSearchResultList();
 	}
 
+	function onSelectedVideo(video) {
+		getYtPlayer().load(video.id);
+	}
+
+	/*****INIT*****/
+	getPlayList().addVideoSelectedListener(onSelectedVideo);
+
 })(jQuery, window);
 
