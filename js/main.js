@@ -10,7 +10,7 @@
 
 
 	/*****PUBLIC API*****/
-	slothyx.play = function(){
+	slothyx.play = function() {
 		getYtPlayer().play();
 	};
 
@@ -22,35 +22,39 @@
 		getYtPlayer().stop();
 	};
 
-	slothyx.loadVideoFromTextField= function() {
+	slothyx.loadVideoFromTextField = function() {
 		//TODO parse URL
 		getYtPlayer().load($(VIDEO_TEXTFIELD_ID).val());
 	};
 
 	slothyx.searchYoutube = function() {
-		slothyx.youtube.search($(SEARCH_TEXTFIELD_ID).val(),function(searchResult){
+		slothyx.youtube.search($(SEARCH_TEXTFIELD_ID).val(), function(searchResult) {
 			//TODO temporary
 			$('#changelog').hide();
-			getLists().setSearchResults(searchResult);
+			getSearchResultList().setSearchResults(searchResult);
 //			$('#searchResults').text(JSON.stringify(searchResult));
 		});
 	};
 
 	slothyx.addPlaylist = function() {
-		getLists().addPlaylist();
+		getPlayList().addPlaylist();
 	};
 	slothyx.deletePlaylist = function() {
-		getLists().deleteCurrentPlaylist();
+		getPlayList().deleteCurrentPlaylist();
 	};
-
 
 
 	/*****PRIVATE HELPER*****/
 	function getYtPlayer() {
 		return slothyx.localPlayer.getPlayer();
 	}
-	function getLists() {
-		return slothyx.lists;
+
+	function getPlayList() {
+		return slothyx.lists.getPlaylist();
+	}
+
+	function getSearchResultList() {
+		return slothyx.lists.getSearchResultList();
 	}
 
 })(jQuery, window);

@@ -8,23 +8,31 @@
 	window.slothyx = slothyx;
 	var persist = slothyx.persist = {};
 
-	persist.put = function(key, object) {
-		var objects = getIntern();
-		objects[key] = object;
-		putIntern(objects);
+	var persister = (function() {
+		var persister = {};
+		persister.put = function(key, object) {
+			var objects = getIntern();
+			objects[key] = object;
+			putIntern(objects);
+		};
+
+		persister.get = function(key) {
+			return getIntern()[key];
+		};
+
+		function putIntern(objects) {
+			window.localStorage.setItem(SLOTHYX_PERSIST_PREFIX, JSON.stringify(objects));
+		}
+
+		function getIntern() {
+			return JSON.parse(window.localStorage.getItem(SLOTHYX_PERSIST_PREFIX)) || {};
+		}
+
+		return persister;
+	})();
+
+	persist.getPersister = function() {
+		return persister;
 	};
-
-	persist.get = function(key) {
-		return getIntern()[key];
-	};
-
-	function putIntern(objects) {
-		window.localStorage.setItem(SLOTHYX_PERSIST_PREFIX, JSON.stringify(objects));
-	}
-
-	function getIntern() {
-		return JSON.parse(window.localStorage.getItem(SLOTHYX_PERSIST_PREFIX)) || {};
-	}
-
 
 })(jQuery, window);
