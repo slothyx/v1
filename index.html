@@ -72,7 +72,7 @@
 			<button onclick="slothyx.addPlaylist()">Add Playlist</button>
 			<button onclick="slothyx.deletePlaylist()">Delete Playlist</button>
 			<div data-bind="if: (playlist() !== null && playlist() !== undefined)">
-				<div data-bind="sortable: {data: playlist().videos, afterMove: slothyx.lists.changed}">
+				<div data-bind="sortable: {data: playlist().videos, afterMove: slothyx.lists.getPlaylist().changed}">
 					<div class="listItem" data-bind="click: play">
 						<!--, css: {'selected': $index() === $root.selectedIndex()}-->
 						<span data-bind="text: video.title"></span><i class="fa fa-times"

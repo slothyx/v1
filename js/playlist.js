@@ -29,7 +29,7 @@
 		};
 
 		playlist.addPlaylist = function() {
-			var playlist = new Playlist(null);
+			var playlist = new PlaylistPlaylist(createNewPlaylist());
 			playlistModel.playlists.push(playlist);
 			playlistModel.playlist(playlist);
 			persistPlaylists();
@@ -41,6 +41,12 @@
 				return playlist.id === currentPlayListId;
 			});
 			persistPlaylists();
+		};
+
+		playlist.getPlaylist = function() {
+			return _.map(ko.unwrap(playlistModel.playlists), function(playlist) {
+				return playlist.getPlaylist();
+			});
 		};
 
 		playlist.changed = function() {
@@ -60,36 +66,39 @@
 			};
 		}
 
-		//TODO better difference between savable playlist(dto) and ko-playlist
-		function Playlist(playlist) {
+		//playlist for playlist (knockout)
+		function PlaylistPlaylist(playlist) {
 			var self = this;
 			self.id = playlistIdCount++;
-			self.name = playlist !== null ? playlist.name : (PLAYLIST_DEFAULT_NAME + ' ' + self.id); //TODO naming
-			if(playlist !== null) {
-				self.videos = ko.observableArray(_.map(playlist.videos, function(video) {
-					return new PlaylistVideo(video);
-				}));
-			} else {
-				self.videos = ko.observableArray();
-			}
+			self.name = playlist.name;
+			self.videos = ko.observableArray(_.map(playlist.videos, function(video) {
+				return new PlaylistVideo(video);
+			}));
+			self.getPlaylist = function() {
+				return {
+					name: self.name,
+					videos: _.map(ko.unwrap(self.videos), function(video) {
+						return video.video;
+					})
+				};
+			};
 		}
 
 		function initPlaylists() {
-			var loadedPlaylists = loadPlaylists() || getDefaultPlaylists();
+			var loadedPlaylists = loadPlaylists() || [createNewPlaylist()];
 
 			playlistModel.playlists = ko.observableArray();
 			_.forEach(loadedPlaylists, function(playlist) {
-				playlistModel.playlists.push(new Playlist(playlist));
+				playlistModel.playlists.push(new PlaylistPlaylist(playlist));
 			});
 			playlistModel.playlist = ko.observable(loadedPlaylists[0]);
 		}
 
-		function loadPlaylists() {
-			return getPersister().get(PLAYLISTS_PERSIST_ID);
-		}
-
-		function getDefaultPlaylists() {
-			return [null]; //TODO this is NOT a good solution
+		function createNewPlaylist() {
+			return {
+				name: PLAYLIST_DEFAULT_NAME + " " + playlistIdCount,
+				videos: []
+			};
 		}
 
 		function removeVideoByInternalId(id) {
@@ -99,17 +108,12 @@
 			persistPlaylists();
 		}
 
+		function loadPlaylists() {
+			return getPersister().get(PLAYLISTS_PERSIST_ID);
+		}
+
 		function persistPlaylists() {
-			//TODO look at this method... it is ugly
-			var cleanedPlaylists = _.map(ko.unwrap(playlistModel.playlists), function(playlist) {
-				return {
-					name: playlist.name,
-					videos: _.map(ko.unwrap(playlist.videos), function(video) {
-						return video.video;
-					})
-				};
-			});
-			getPersister().put(PLAYLISTS_PERSIST_ID, cleanedPlaylists);
+			getPersister().put(PLAYLISTS_PERSIST_ID, playlist.getPlaylist());
 		}
 
 		/******INIT******/
@@ -174,4 +178,5 @@
 		return slothyx.persist.getPersister();
 	}
 
-})(jQuery, window, ko, _);
+})
+(jQuery, window, ko, _);
