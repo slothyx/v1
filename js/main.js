@@ -123,8 +123,16 @@
 		}
 	}
 
+	function onSearchRelated(video) {
+		slothyx.youtube.searchForRelated(video, function(result){
+			lastSearch = result;
+			getSearchResultList().setSearchResults(result.videos);
+		});
+	}
+
 	/*****INIT*****/
 	getPlayList().addVideoSelectedListener(onSelectedVideo);
+	getSearchResultList().addSearchRelatedListener(onSearchRelated);
 	slothyx.localPlayer.addYTPlayerListener(function(player) {
 		setYtPlayer(player);
 		player.addListener(onYTPlayerStateChange);

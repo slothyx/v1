@@ -9,10 +9,11 @@
 	var Video = slothyx.util.Video;
 
 	youtube.search = function(query, callback, optionOverride) {
-		//TODO caching/paginating
+		//TODO caching
 		var options = {
 			q: query,
 			part: "id,snippet",
+			type: "video",
 			fields: "nextPageToken, items(id,snippet)",
 			maxResults: "5"
 		};
@@ -39,7 +40,11 @@
 	};
 
 	youtube.loadMore = function(lastSearchResult, callback) {
-		youtube.search(null, callback, lastSearchResult.options);
+		youtube.search(undefined, callback, lastSearchResult.options);
+	};
+
+	youtube.searchForRelated = function(video, callback) {
+		youtube.search(undefined, callback, {relatedToVideoId: video.id});
 	};
 
 })(jQuery, window, _);

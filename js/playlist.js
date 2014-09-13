@@ -23,7 +23,7 @@
 		};
 
 		var playlist = {};
-		var videoSelectedEventHelper = createNewEventHelper(playlist);
+		var videoSelectedEventHelper = createNewEventHelper(playlist, "addVideoSelectedListener", "removeVideoSelectedListener");
 
 		playlist.addVideo = function(video) {
 			var playListVideo = new PlaylistVideo(video);
@@ -71,10 +71,6 @@
 					}
 				}
 			}
-		};
-
-		playlist.addVideoSelectedListener = function(callback) {
-			videoSelectedEventHelper.addListener(callback);
 		};
 
 		function PlaylistVideo(video) {
@@ -173,6 +169,7 @@
 		};
 
 		var searchResultList = {};
+		var events = createNewEventHelper(searchResultList,"addSearchRelatedListener","removeSearchRelatedListener");
 
 		searchResultList.setSearchResults = function(searchResults) {
 			searchResultsModel.searchResults.removeAll();
@@ -192,6 +189,10 @@
 
 			self.addToPlaylist = function() {
 				lists.getPlaylist().addVideo(video);
+			};
+
+			self.searchRelated = function() {
+				events.throwEvent(video);
 			};
 		}
 
@@ -218,8 +219,8 @@
 		return slothyx.persist.getPersister();
 	}
 
-	function createNewEventHelper(object) {
-		return new slothyx.util.EventHelper(object);
+	function createNewEventHelper(object, addName, removeName) {
+		return new slothyx.util.EventHelper(object, addName, removeName);
 	}
 
 })
