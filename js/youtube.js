@@ -8,21 +8,38 @@
 
 	var Video = slothyx.util.Video;
 
-	youtube.search = function(query, callback) {
+	youtube.search = function(query, callback, optionOverride) {
 		//TODO caching/paginating
 		var options = {
 			q: query,
 			part: "id,snippet",
-			fields: "items(id,snippet)",
+			fields: "nextPageToken, items(id,snippet)",
 			maxResults: "5"
 		};
+		if(optionOverride !== undefined) {
+			for(var option in optionOverride) {
+				if(optionOverride.hasOwnProperty(option)) {
+					options[option] = optionOverride[option];
+				}
+			}
+		}
+
 		var request = gapi.client.youtube.search.list(options);
 		request.execute(function(response) {
-			callback(_.map(response.result.items, function(item) {
+			var result = {};
+			result.options = options;
+			result.options.pageToken = response.result.nextPageToken;
+			result.videos = _.map(response.result.items, function(item) {
 				return new Video(item.id.videoId, item.snippet.title, item.snippet.description,
 					item.snippet.thumbnails.default.url);
-			}));
+			});
+
+			callback(result);
 		});
+	};
+
+	youtube.loadMore = function(lastSearchResult, callback) {
+		youtube.search(null, callback, lastSearchResult.options);
 	};
 
 })(jQuery, window, _);

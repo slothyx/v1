@@ -43,13 +43,31 @@
 		getYtPlayer().load($(VIDEO_TEXTFIELD_ID).val());
 	};
 
+	var lastSearch;
 	slothyx.searchYoutube = function() {
 		slothyx.youtube.search($(SEARCH_TEXTFIELD_ID).val(), function(searchResult) {
 			//TODO temporary
 			$('#changelog').hide();
-			getSearchResultList().setSearchResults(searchResult);
-//			$('#searchResults').text(JSON.stringify(searchResult));
+			$('#loadMore').show();
+			lastSearch = searchResult;
+			getSearchResultList().setSearchResults(searchResult.videos);
 		});
+	};
+	var loadMoreCount = 0;
+	slothyx.loadMore = function() {
+		if(lastSearch !== undefined) {
+			slothyx.youtube.loadMore(lastSearch, function(searchResult) {
+				lastSearch = searchResult;
+				getSearchResultList().addSearchResults(searchResult.videos);
+				if(loadMoreCount > 0) {
+					loadMoreCount--;
+					slothyx.loadMore();
+				}
+			});
+			lastSearch = undefined;
+		} else {
+			loadMoreCount++;
+		}
 	};
 
 	slothyx.addPlaylist = function() {
@@ -85,7 +103,6 @@
 	}
 
 	function onSelectedVideo(video) {
-		console.log("main.selectVideo: ", video);
 		if(video !== null) {
 			internalState = STATE_PLAYING;
 			getYtPlayer().load(video.id);
@@ -99,7 +116,6 @@
 	var internalState = STATE_STOPPED;
 
 	function onYTPlayerStateChange(state) {
-		console.log(state + " || " + internalState);
 		switch(state) {
 			case YT_STATE_STOPPED:
 				getPlayList().selectNext();

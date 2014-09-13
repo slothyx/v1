@@ -29,6 +29,7 @@
 		<div id="searchStrip" class="underlined">
 			<input type="text" id="searchText"/>
 			<button id="searchButton" onclick="slothyx.searchYoutube()">Search for Videos</button>
+			<button id="loadMore" onclick="slothyx.loadMore()" style="display: none">Show More</button>
 		</div>
 		<div id="searchResults" data-bind="foreach: searchResults">
 			<div class="searchResult"> <!--data-bind="click: addToPlaylist" >
@@ -78,7 +79,7 @@
 					<div class="listItem" data-bind="click: select, css: {selected: isSelected()}">
 						<!--, css: {'selected': $index() === $root.selectedIndex()}-->
 						<span data-bind="text: video.title"></span><i class="fa fa-times"
-																data-bind="click: remove"></i>
+																	  data-bind="click: remove"></i>
 					</div>
 				</div>
 			</div>

@@ -176,6 +176,10 @@
 
 		searchResultList.setSearchResults = function(searchResults) {
 			searchResultsModel.searchResults.removeAll();
+			searchResultList.addSearchResults(searchResults);
+		};
+
+		searchResultList.addSearchResults = function(searchResults) {
 			_.forEach(searchResults, function(searchResult) {
 				var searchResultWrapper = new SearchResultWrapper(searchResult);
 				searchResultsModel.searchResults.push(searchResultWrapper);
