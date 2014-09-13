@@ -22,9 +22,9 @@
 			video: null
 		};
 
-		var videoSelectedEventHelper = createNewEventHelper();
-
 		var playlist = {};
+		var videoSelectedEventHelper = createNewEventHelper(playlist);
+
 		playlist.addVideo = function(video) {
 			var playListVideo = new PlaylistVideo(video);
 			playlistModel.playlist().videos.push(playListVideo);
@@ -39,6 +39,7 @@
 		};
 
 		playlist.deleteCurrentPlaylist = function() {
+			//TODO there always has to be one!
 			var currentPlayListId = playlistModel.playlist().id;
 			playlistModel.playlists.remove(function(playlist) {
 				return playlist.id === currentPlayListId;
@@ -56,12 +57,23 @@
 			persistPlaylists();
 		};
 
-		playlist.selectNext = function(){
-			//TODO
-
+		playlist.selectNext = function() {
+			var videos = playlistModel.playlist().videos();
+			if(playlistModel.video() === null) {
+				if(videos.length !== 0) {
+					selectVideo(videos[0]);
+				}
+			} else {
+				var videoId = playlistModel.video().id;
+				for(var i = 0; i < videos.length; i++) {
+					if(videos[i].id === videoId) {
+						selectVideo(videos[i + 1] || null);
+					}
+				}
+			}
 		};
 
-		playlist.addVideoSelectedListener = function(callback){
+		playlist.addVideoSelectedListener = function(callback) {
 			videoSelectedEventHelper.addListener(callback);
 		};
 
@@ -77,7 +89,7 @@
 			};
 			self.isSelected = function() {
 				var video = playlistModel.video();
-				return video !== undefined && self.id === video.id;
+				return video !== null && self.id === video.id;
 			};
 		}
 
@@ -108,7 +120,7 @@
 			});
 			playlistModel.playlist = ko.observable(loadedPlaylists[0]);
 
-			playlistModel.video = ko.observable();
+			playlistModel.video = ko.observable(null);
 		}
 
 		function createNewPlaylist() {
@@ -126,8 +138,10 @@
 		}
 
 		function selectVideo(video) {
-			playlistModel.video(video);
-			videoSelectedEventHelper.throwEvent(video.video);
+			if(playlistModel.video() === null || video === null || playlistModel.video().id !== video.id) {
+				playlistModel.video(video);
+				videoSelectedEventHelper.throwEvent(video !== null ? video.video : null);
+			}
 		}
 
 		function loadPlaylists() {
@@ -200,8 +214,8 @@
 		return slothyx.persist.getPersister();
 	}
 
-	function createNewEventHelper(){
-		return new slothyx.util.EventHelper();
+	function createNewEventHelper(object) {
+		return new slothyx.util.EventHelper(object);
 	}
 
 })

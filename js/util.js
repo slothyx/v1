@@ -13,7 +13,7 @@
 		self.image = image;
 	};
 
-	util.EventHelper = function() {
+	util.EventHelper = function(object, addListenerName, removeListenerName) {
 		var self = this;
 		var listener = [];
 
@@ -32,6 +32,10 @@
 				callback(event);
 			});
 		};
+		if(object !== undefined) {
+			object[addListenerName || "addListener"] = self.addListener;
+			object[removeListenerName || "removeListener"] = self.removeListener;
+		}
 	};
 
 })(jQuery, window, _);

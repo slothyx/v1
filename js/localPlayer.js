@@ -14,10 +14,14 @@
 	var localPlayer = slothyx.localPlayer = {};
 
 	var ytPlayer;
+	var onStateChangeCallback;
+	var events = new slothyx.util.EventHelper(localPlayer,"addYTPlayerListener","removeYTPlayerListener");
 
 	function LocalPlayer(id) {
 		var self = this;
-		var player = $("#" + id)[0];
+		//TODO debug only (remove self.player)
+		var player = self.player = $("#" + id)[0];
+		var events = new slothyx.util.EventHelper(self);
 
 		self.load = function(id) {
 			player.loadVideoById(id);
@@ -29,18 +33,32 @@
 			player.playVideo();
 		};
 		self.stop = function() {
-			self.load(null);
+			self.load("");
 		};
+		onStateChangeCallback = function(state) {
+			events.throwEvent(state);
+		};
+		player.addEventListener("onStateChange","slothyx.localPlayer.onStateChange");
 	}
 
 	localPlayer.onYouTubePlayerReady = function() {
-		ytPlayer = new LocalPlayer(YTPLAYER_HTML_ID);
-		//TODO notify someone?
+		setYTPlayer(new LocalPlayer(YTPLAYER_HTML_ID));
 	};
 
 	localPlayer.getPlayer = function() {
 		return ytPlayer;
 	};
+
+	localPlayer.onStateChange = function(state){
+		if(onStateChangeCallback !== undefined){
+			onStateChangeCallback(state);
+		}
+	};
+
+	function setYTPlayer(player){
+		ytPlayer = player;
+		events.throwEvent(player);
+	}
 
 })(jQuery, window, swfobject);
 
