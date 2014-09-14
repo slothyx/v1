@@ -71,6 +71,7 @@
 			</div>
 		</div>
 		<div id="playlist">
+			<select data-bind="options:	playStrategies, optionsText: 'name', value: playStrategy"></select>
 			<select data-bind="options: playlists, optionsText: 'name', value: playlist"></select>
 			<button onclick="slothyx.addPlaylist()">Add Playlist</button>
 			<button onclick="slothyx.deletePlaylist()">Delete Playlist</button>
