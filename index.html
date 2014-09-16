@@ -36,7 +36,8 @@
 				<img data-bind="attr: {src: thumbnail}">
 				<h3 data-bind="text: title"></h3>
 				<span data-bind="text: description"></span>-->
-				<button data-bind="click: addToPlaylist"><span data-bind="text: video.title"></span></button><button data-bind="click: searchRelated">Search Related</button>
+				<button data-bind="click: addToPlaylist"><span data-bind="text: video.title"></span></button>
+				<button data-bind="click: searchRelated">Search Related</button>
 			</div>
 		</div>
 		<div id="changelog">
@@ -54,20 +55,12 @@
 		</div>
 		<div id="control" class="underlined">
 			<div class="line">
-				<button onclick="slothyx.play()"><i class="fa fa-play"></i></button>
-				<button onclick="slothyx.pause()"><i class="fa fa-pause"></i></button>
-				<button onclick="slothyx.skipToEnd()">Skip to End</button>
-				<!--<button id="toggleVideo" onclick="slothyx.toggleVideo()"><i class="fa" data-bind="css: {'fa-play': !nowPlaying(), 'fa-pause': nowPlaying()}"></i></button>-->
-				<!--<label id="repeatLabel" for="repeat">Repeat Playlist:</label>-->
-				<!--<input id="repeat" type="checkbox" data-bind="checked: repeatPlaylist"/>-->
-				<!--<button id="requestFullscreen" onclick="slothyx.requestFullscreen()">Fullscreen</button>-->
-				<!--<button id="openExternalPlayer" onclick="slothyx.openExternalPlayer()">External Player</button>-->
-			</div>
-			<div class="line">
+				<button id="toggleButton" onclick="slothyx.toggle()"><i class="fa"
+																		data-bind="css: {'fa-play': !playing(), 'fa-pause': playing()}"></i>
+				</button>
 				<label for="newVideoId">Video URL/Video ID:</label>
 				<input type="text" id="newVideoId" size="12"/>
 				<button onclick="slothyx.loadVideoFromTextField()">Load Video</button>
-				<!--<button onclick="slothyx.clearPlaylist()">Clear Playlist</button>-->
 			</div>
 		</div>
 		<div id="playlist">
@@ -78,7 +71,6 @@
 			<div data-bind="if: (playlist() !== null && playlist() !== undefined)">
 				<div data-bind="sortable: {data: playlist().videos, afterMove: slothyx.lists.getPlaylist().changed}">
 					<div class="listItem" data-bind="click: select, css: {selected: isSelected()}">
-						<!--, css: {'selected': $index() === $root.selectedIndex()}-->
 						<span data-bind="text: video.title"></span><i class="fa fa-times"
 																	  data-bind="click: remove"></i>
 					</div>

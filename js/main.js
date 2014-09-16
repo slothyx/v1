@@ -1,10 +1,12 @@
-/*globals jQuery, window, YT*/
+/*globals jQuery, window, YT, ko*/
 (function($, window, undefined) {
 	"use strict";
 
 	/***** CONSTANTS *****/
 	var SEARCH_TEXTFIELD_ID = '#searchText';
 	var VIDEO_TEXTFIELD_ID = '#newVideoId';
+	var TOGGLE_BUTTON_ID = '#toggleButton';
+	var SPACE_LISTENER_ID = 'html';
 
 	var STATE_STOPPED = 0;
 	var STATE_PLAYING = 1;
@@ -13,33 +15,45 @@
 	var YT_STATE_PLAYING = 1;
 	var YT_STATE_PAUSE = 2;
 
+	var ENTER_KEY_CODE = 13;
+	var ENTER_SPACE_CODE = 32;
+
 
 	var slothyx = window.slothyx || {};
 	window.slothyx = slothyx;
 
 
 	/*****PUBLIC API*****/
+
+	slothyx.toggle = function() {
+		if(stateModel.internalState() === STATE_PLAYING) {
+			slothyx.pause();
+		} else {
+			slothyx.play();
+		}
+	};
+
 	slothyx.play = function() {
-		if(internalState === STATE_STOPPED) {
+		if(stateModel.internalState() === STATE_STOPPED) {
 			getPlayList().selectNext();
 		} else {
-			internalState = STATE_PLAYING;
+			stateModel.internalState(STATE_PLAYING);
 			getYtPlayer().play();
 		}
 	};
 
 	slothyx.pause = function() {
-		internalState = STATE_PAUSE;
+		stateModel.internalState(STATE_PAUSE);
 		getYtPlayer().pause();
 	};
 
 	slothyx.stop = function() {
-		internalState = STATE_STOPPED;
+		stateModel.internalState(STATE_STOPPED);
 		getYtPlayer().stop();
 	};
 
 	slothyx.loadVideoFromTextField = function() {
-		//TODO parse URL
+		//TODO parse URL - add to playlist, not play it
 		getYtPlayer().load($(VIDEO_TEXTFIELD_ID).val());
 	};
 
@@ -104,27 +118,37 @@
 
 	function onSelectedVideo(video) {
 		if(video !== null) {
-			internalState = STATE_PLAYING;
+			stateModel.internalState(STATE_PLAYING);
 			getYtPlayer().load(video.id);
 		} else {
 			// TODO check "replay"
-			internalState = STATE_STOPPED;
+			stateModel.internalState(STATE_STOPPED);
 			getYtPlayer().stop();
 		}
 	}
 
-	var internalState = STATE_STOPPED;
+	var stateModel = {
+		internalState: ko.observable(YT_STATE_STOPPED)
+	};
+	stateModel.playing = ko.pureComputed(function() {
+		return stateModel.internalState() === YT_STATE_PLAYING;
+	});
 
 	function onYTPlayerStateChange(state) {
 		switch(state) {
 			case YT_STATE_STOPPED:
 				getPlayList().selectNext();
 				break;
+			case YT_STATE_PLAYING:
+				stateModel.internalState(STATE_PLAYING);
+				break;
+			case YT_STATE_PAUSE:
+				stateModel.internalState(STATE_PAUSE);
 		}
 	}
 
 	function onSearchRelated(video) {
-		slothyx.youtube.searchForRelated(video, function(result){
+		slothyx.youtube.searchForRelated(video, function(result) {
 			lastSearch = result;
 			getSearchResultList().setSearchResults(result.videos);
 		});
@@ -136,6 +160,28 @@
 	slothyx.localPlayer.addYTPlayerListener(function(player) {
 		setYtPlayer(player);
 		player.addListener(onYTPlayerStateChange);
+	});
+
+	$(function() {
+		ko.applyBindings(stateModel, $(TOGGLE_BUTTON_ID).get(0));
+		$(SEARCH_TEXTFIELD_ID).on("keypress", function(event) {
+			if(event.originalEvent.keyCode === ENTER_KEY_CODE) {
+				slothyx.searchYoutube();
+				return false;
+			}
+		});
+		$(VIDEO_TEXTFIELD_ID).on("keypress", function(event) {
+			if(event.originalEvent.keyCode === ENTER_KEY_CODE) {
+				slothyx.loadVideoFromTextField();
+				return false;
+			}
+		});
+		$(SPACE_LISTENER_ID).on("keypress", function(event) {
+			if(event.originalEvent.charCode === ENTER_SPACE_CODE && event.target.tagName !== "INPUT") {
+				slothyx.toggle();
+				return false;
+			}
+		});
 	});
 
 })(jQuery, window);

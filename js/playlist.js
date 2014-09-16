@@ -137,7 +137,7 @@
 			playlistModel.playlist().videos.remove(function(item) {
 				return id === item.id;
 			});
-			if(playlistModel.video().id === id) {
+			if(playlistModel.video() !== null && playlistModel.video().id === id) {
 				playlist.selectNext();
 			}
 			persistPlaylists();

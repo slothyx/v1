@@ -27,6 +27,10 @@
 
 		var request = gapi.client.youtube.search.list(options);
 		request.execute(function(response) {
+			if(response === undefined) {
+				//TODO maybe empty callback?
+				return;
+			}
 			var result = {};
 			result.options = options;
 			result.options.pageToken = response.result.nextPageToken;
