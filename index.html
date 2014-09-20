@@ -58,6 +58,9 @@
 				<button id="toggleButton" onclick="slothyx.toggle()"><i class="fa"
 																		data-bind="css: {'fa-play': !playing(), 'fa-pause': playing()}"></i>
 				</button>
+				<button onclick="slothyx.skipToEnd()">Skip to End</button>
+			</div>
+			<div class="line">
 				<label for="newVideoId">Video URL/Video ID:</label>
 				<input type="text" id="newVideoId" size="12"/>
 				<button onclick="slothyx.loadVideoFromTextField()">Load Video</button>

@@ -177,7 +177,7 @@
 			}
 		});
 		$(SPACE_LISTENER_ID).on("keypress", function(event) {
-			if(event.originalEvent.charCode === ENTER_SPACE_CODE && event.target.tagName !== "INPUT") {
+			if(event.originalEvent.charCode === ENTER_SPACE_CODE && event.target.tagName !== "INPUT" && event.target.tagName !== "BUTTON") {
 				slothyx.toggle();
 				return false;
 			}

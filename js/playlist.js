@@ -123,6 +123,9 @@
 			playlistModel.playStrategy = ko.observable(playlistModel.playStrategies()[0]);
 			playlistModel.playStrategy.subscribe(function(strategy) {
 				strategy.reset();
+				if(playlistModel.video() !== null) {
+					strategy.select(playlistModel.video());
+				}
 			});
 		}
 
@@ -134,18 +137,26 @@
 		}
 
 		function removeVideoByInternalId(id) {
-			playlistModel.playlist().videos.remove(function(item) {
-				return id === item.id;
-			});
 			if(playlistModel.video() !== null && playlistModel.video().id === id) {
 				playlist.selectNext();
 			}
+			playlistModel.playlist().videos.remove(function(item) {
+				return id === item.id;
+			});
 			persistPlaylists();
 		}
 
 		function selectVideo(video) {
 			if(playlistModel.video() === null || video === null || playlistModel.video().id !== video.id) {
 				playlistModel.video(video);
+				var strategy = playlistModel.playStrategy();
+				if(strategy !== null) {
+					if(video !== null) {
+						strategy.select(video);
+					} else {
+						strategy.reset();
+					}
+				}
 				videoSelectedEventHelper.throwEvent(video !== null ? video.video : null);
 			}
 		}
@@ -162,6 +173,8 @@
 		function ForwardStrategy() {
 			var self = this;
 			self.name = "Default";
+			self.select = function(video) {
+			};
 			self.reset = function() {
 			};
 			self.selectNext = function() {
@@ -184,6 +197,9 @@
 		function ShuffleStrategy() {
 			var self = this;
 			self.name = "Shuffle";
+			self.select = function(video) {
+				alreadyPlayed.push(video.id);
+			};
 			self.reset = function() {
 				alreadyPlayed = [];
 			};
@@ -200,7 +216,6 @@
 					selectVideo(null);
 				} else {
 					var random = _.random(0, available.length - 1);
-					alreadyPlayed.push(available[random].id);
 					selectVideo(available[random]);
 				}
 			};
@@ -209,6 +224,8 @@
 		function BackwardStrategy() {
 			var self = this;
 			self.name = "Backward";
+			self.select = function(video) {
+			};
 			self.reset = function() {
 			};
 			self.selectNext = function() {
