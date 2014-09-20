@@ -59,6 +59,8 @@
 																		data-bind="css: {'fa-play': !playing(), 'fa-pause': playing()}"></i>
 				</button>
 				<button onclick="slothyx.skipToEnd()">Skip to End</button>
+				<button onclick="slothyx.generatePlaylistCode()">Generate Code</button>
+				<input id="playlistCode" type="text" size="5" />
 			</div>
 			<div class="line">
 				<label for="newVideoId">Video URL/Video ID:</label>

@@ -57,6 +57,10 @@
 			});
 		};
 
+		playlist.getCurrentPlaylist = function() {
+			return playlistModel.playlist().getPlaylist();
+		};
+
 		playlist.changed = function() {
 			persistPlaylists();
 		};

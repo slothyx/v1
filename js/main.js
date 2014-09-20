@@ -1,4 +1,4 @@
-/*globals jQuery, window, YT, ko*/
+/*globals jQuery, window, YT, ko, _*/
 (function($, window, undefined) {
 	"use strict";
 
@@ -6,6 +6,7 @@
 	var SEARCH_TEXTFIELD_ID = '#searchText';
 	var VIDEO_TEXTFIELD_ID = '#newVideoId';
 	var TOGGLE_BUTTON_ID = '#toggleButton';
+	var PLAYLIST_CODE_ID = '#playlistCode';
 	var SPACE_LISTENER_ID = 'html';
 
 	var STATE_STOPPED = 0;
@@ -53,8 +54,25 @@
 	};
 
 	slothyx.loadVideoFromTextField = function() {
-		//TODO parse URL - add to playlist, not play it
-		getYtPlayer().load($(VIDEO_TEXTFIELD_ID).val());
+		var callback = function(result) {
+			_.forEach(result.videos, function(video) {
+				getPlayList().addVideo(video);
+			});
+			$(VIDEO_TEXTFIELD_ID).val("");
+		};
+		var text = $(VIDEO_TEXTFIELD_ID).val();
+		var regexResult = /v=([A-Za-z0-9_]{11})/.exec(text);
+		if(regexResult !== null) {
+			slothyx.youtube.loadVideoData([regexResult[1]], callback);
+		} else {
+			if(text.length % 11 === 0) {
+				var videoIds = [];
+				for(var i = 0; i <= text.length; i += 11) {
+					videoIds.push(text.substring(i, i + 11));
+				}
+				slothyx.youtube.loadVideoData(videoIds, callback);
+			}
+		}
 	};
 
 	var lastSearch;
@@ -89,6 +107,13 @@
 	};
 	slothyx.deletePlaylist = function() {
 		getPlayList().deleteCurrentPlaylist();
+	};
+
+	slothyx.generatePlaylistCode = function() {
+		$(PLAYLIST_CODE_ID).val(_.reduce(getPlayList().getCurrentPlaylist().videos, function(code, video) {
+			return code + video.id;
+		}, ""));
+		$(PLAYLIST_CODE_ID).get(0).select();
 	};
 
 	//TODO debug only
