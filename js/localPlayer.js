@@ -15,7 +15,7 @@
 
 	var ytPlayer;
 	var onStateChangeCallback;
-	var events = new slothyx.util.EventHelper(localPlayer,"addYTPlayerListener","removeYTPlayerListener");
+	var events = new slothyx.util.EventHelper(localPlayer, "addYTPlayerListener", "removeYTPlayerListener");
 
 	function LocalPlayer(id) {
 		var self = this;
@@ -38,7 +38,7 @@
 		onStateChangeCallback = function(state) {
 			events.throwEvent(state);
 		};
-		player.addEventListener("onStateChange","slothyx.localPlayer.onStateChange");
+		player.addEventListener("onStateChange", "slothyx.localPlayer.onStateChange");
 	}
 
 	localPlayer.onYouTubePlayerReady = function() {
@@ -49,13 +49,13 @@
 		return ytPlayer;
 	};
 
-	localPlayer.onStateChange = function(state){
-		if(onStateChangeCallback !== undefined){
+	localPlayer.onStateChange = function(state) {
+		if(onStateChangeCallback !== undefined) {
 			onStateChangeCallback(state);
 		}
 	};
 
-	function setYTPlayer(player){
+	function setYTPlayer(player) {
 		ytPlayer = player;
 		events.throwEvent(player);
 	}

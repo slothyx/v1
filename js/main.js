@@ -7,7 +7,9 @@
 	var VIDEO_TEXTFIELD_ID = '#newVideoId';
 	var TOGGLE_BUTTON_ID = '#toggleButton';
 	var PLAYLIST_CODE_ID = '#playlistCode';
+	var PLAYLIST_NAME_ID = '#newPlaylistName';
 	var SPACE_LISTENER_ID = 'html';
+	var DEFAULT_WINDOW_TITLE = "Slothyx Music";
 
 	var STATE_STOPPED = 0;
 	var STATE_PLAYING = 1;
@@ -54,6 +56,7 @@
 	};
 
 	slothyx.loadVideoFromTextField = function() {
+		//TODO move to youtube? do we need to know / should we know how to parse this?
 		var callback = function(result) {
 			_.forEach(result.videos, function(video) {
 				getPlayList().addVideo(video);
@@ -61,7 +64,7 @@
 			$(VIDEO_TEXTFIELD_ID).val("");
 		};
 		var text = $(VIDEO_TEXTFIELD_ID).val();
-		var regexResult = /v=([A-Za-z0-9_]{11})/.exec(text);
+		var regexResult = /v=([A-Za-z0-9_-]{11})/.exec(text);
 		if(regexResult !== null) {
 			slothyx.youtube.loadVideoData([regexResult[1]], callback);
 		} else {
@@ -77,6 +80,7 @@
 
 	var lastSearch;
 	slothyx.searchYoutube = function() {
+		lastSearch = undefined;
 		slothyx.youtube.search($(SEARCH_TEXTFIELD_ID).val(), function(searchResult) {
 			//TODO temporary
 			$('#changelog').hide();
@@ -116,6 +120,10 @@
 		$(PLAYLIST_CODE_ID).get(0).select();
 	};
 
+	slothyx.renameCurrentPlaylist = function() {
+		getPlayList().renameCurrentPlaylist($(PLAYLIST_NAME_ID).val());
+	};
+
 	//TODO debug only
 	slothyx.skipToEnd = function() {
 		getYtPlayer().player.seekTo(getYtPlayer().player.getDuration() - 2, true);
@@ -145,11 +153,17 @@
 		if(video !== null) {
 			stateModel.internalState(STATE_PLAYING);
 			getYtPlayer().load(video.id);
+			setWindowTitle(video.title);
 		} else {
 			// TODO check "replay"
 			stateModel.internalState(STATE_STOPPED);
 			getYtPlayer().stop();
+			setWindowTitle(DEFAULT_WINDOW_TITLE);
 		}
+	}
+
+	function setWindowTitle(title) {
+		window.document.title = title;
 	}
 
 	var stateModel = {
@@ -169,6 +183,7 @@
 				break;
 			case YT_STATE_PAUSE:
 				stateModel.internalState(STATE_PAUSE);
+				break;
 		}
 	}
 

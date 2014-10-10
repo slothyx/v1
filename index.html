@@ -60,12 +60,17 @@
 				</button>
 				<button onclick="slothyx.skipToEnd()">Skip to End</button>
 				<button onclick="slothyx.generatePlaylistCode()">Generate Code</button>
-				<input id="playlistCode" type="text" size="5" />
+				<input id="playlistCode" type="text" size="5"/>
 			</div>
 			<div class="line">
 				<label for="newVideoId">Video URL/Video ID:</label>
 				<input type="text" id="newVideoId" size="12"/>
 				<button onclick="slothyx.loadVideoFromTextField()">Load Video</button>
+			</div>
+			<div class="line">
+				<label for="newPlaylistName">New playlistname</label>
+				<input type="text" id="newPlaylistName" size="12"/>
+				<button onclick="slothyx.renameCurrentPlaylist()">Rename</button>
 			</div>
 		</div>
 		<div id="playlist">

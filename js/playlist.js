@@ -72,6 +72,11 @@
 			}
 		};
 
+		playlist.renameCurrentPlaylist = function(newName) {
+			playlistModel.playlist().name(newName);
+			persistPlaylists();
+		};
+
 		function PlaylistVideo(video) {
 			var self = this;
 			self.id = videoIdCount++;
@@ -92,13 +97,13 @@
 		function PlaylistPlaylist(playlist) {
 			var self = this;
 			self.id = playlistIdCount++;
-			self.name = playlist.name;
+			self.name = ko.observable(playlist.name);
 			self.videos = ko.observableArray(_.map(playlist.videos, function(video) {
 				return new PlaylistVideo(video);
 			}));
 			self.getPlaylist = function() {
 				return {
-					name: self.name,
+					name: self.name(),
 					videos: _.map(ko.unwrap(self.videos), function(video) {
 						return video.video;
 					})
@@ -271,7 +276,7 @@
 		};
 
 		var searchResultList = {};
-		var events = createNewEventHelper(searchResultList, "addSearchRelatedListener", "removeSearchRelatedListener");
+		var searchRelatedEvents = createNewEventHelper(searchResultList, "addSearchRelatedListener", "removeSearchRelatedListener");
 
 		searchResultList.setSearchResults = function(searchResults) {
 			searchResultsModel.searchResults.removeAll();
@@ -294,7 +299,7 @@
 			};
 
 			self.searchRelated = function() {
-				events.throwEvent(video);
+				searchRelatedEvents.throwEvent(video);
 			};
 		}
 
