@@ -124,21 +124,20 @@
 		getPlayList().renameCurrentPlaylist($(PLAYLIST_NAME_ID).val());
 	};
 
+	slothyx.openRemotePlayer = function() {
+		slothyx.remotePlayer.initActivePlayer();
+	};
+
 	//TODO debug only
 	slothyx.skipToEnd = function() {
-		getYtPlayer().player.seekTo(getYtPlayer().player.getDuration() - 2, true);
+		slothyx.localPlayer.player.seekTo(slothyx.localPlayer.player.getDuration() - 2, true);
 	};
 
 
 	/*****PRIVATE HELPER*****/
-	var ytPlayer;
 
 	function getYtPlayer() {
-		return ytPlayer;
-	}
-
-	function setYtPlayer(player) {
-		ytPlayer = player;
+		return slothyx.localPlayer.getPlayer();
 	}
 
 	function getPlayList() {
@@ -197,10 +196,7 @@
 	/*****INIT*****/
 	getPlayList().addVideoSelectedListener(onSelectedVideo);
 	getSearchResultList().addSearchRelatedListener(onSearchRelated);
-	slothyx.localPlayer.addYTPlayerListener(function(player) {
-		setYtPlayer(player);
-		player.addListener(onYTPlayerStateChange);
-	});
+	getYtPlayer().addListener(onYTPlayerStateChange);
 
 	$(function() {
 		ko.applyBindings(stateModel, $(TOGGLE_BUTTON_ID).get(0));

@@ -4,16 +4,19 @@
 	<title>Slothyx Music</title>
 	<meta content="text/html" charset="utf-8"/>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/knockout/3.0.0/knockout-min.js"></script>
-	<script src="js/player.js"></script>
-	<script src="js/players.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js"></script>
+
 	<script src="js/swfobject.js"></script>
+	<script src="js/util.js"></script>
+	<script src="js/localPlayer.js"></script>
+	<script src="js/remotePlayer.js"></script>
+	<script src="js/player.js"></script>
 	<link href="css/player.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="ytPlayer"></div>
 <div>
-	<button onclick="onFullscreenCommand()">FULLSCREEN</button>
+	<button onclick="slothyx.requestFullscreen()">FULLSCREEN</button>
 </div>
 </body>
 </html>
