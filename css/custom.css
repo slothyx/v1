@@ -11,6 +11,7 @@
     margin-left: 290px;
     padding-left: 2.5%;
     padding-top: 10px;
+    height: 100%;
 }
 
 #mascot {
@@ -59,7 +60,7 @@ td {
 a {
     color: #7ee504;
 }
-yx {
+.yx {
     color: #70d104;
 }
 
@@ -165,14 +166,18 @@ div ul li {
 }
 
 #results {
+    float:left;
     display:inline-block;
     margin-top: 10px;
     height: 810px;
     width: 34.7%;
     min-width: 305px;
+
+    padding: 1% 15px 1% 15px;
 }
 
 #playlist {
+    float:left;
     display: inline-block;
     margin-top: 10px;
     height: 810px;
@@ -180,16 +185,32 @@ div ul li {
     min-width: 305px;
     margin-left: 0.6%;
 
+    padding: 1% 15px 1% 15px;
+
+}
+
+#player {
+    margin-left: 1%;
+    margin-top: 10px;
+    width: 320px;
+    position: fixed;
+    display: inline-block;
+    float:left;
 }
 
 #tvset {
-    position: absolute;
-    display: inline-block;
-    margin-left: 0.6%;
-    margin-top: 10px;
-    width: 17%;
-    min-width: 200px;
-    height: 300px;
+    width: 320px;
+    height:300px;
+}
+
+#controlTV {
+    margin-top: 5px;
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-top: 5px;
+    height: 40px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
     background-color: rgba(220, 220, 220, 0.46);
 }
 
@@ -332,8 +353,7 @@ address {
     background-color: #6bcb04;
 }
 * {
-    border: 1px dashed #8428ff;
-    overlay:hidden;
+    /*border: 1px dashed #8428ff;*/
 
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;

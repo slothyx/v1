@@ -8,8 +8,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/costum.css" rel="stylesheet">
+    <link href="css/custom.css" rel="stylesheet">
     <link rel="icon" href="/img/favicon.ico" type="image/x-icon">
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/knockout/3.2.0/knockout-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/knockout-sortable/0.8.1/knockout-sortable.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js"></script>
+
+    <script src="js/swfobject.js"></script>
+    <script src="js/util.js"></script>
+    <script src="js/persist.js"></script>
+    <script src="js/localPlayer.js"></script>
+    <script src="js/youtube.js"></script>
+    <script src="js/playlist.js"></script>
+    <script src="js/remotePlayer.js"></script>
+    <script src="js/main.js"></script>
+    <script src="https://apis.google.com/js/client.js?onload=googleApiCallback"></script>
 
 
 </head>
@@ -17,7 +33,7 @@
 <body id="background">
 
 <div id="leftcontainer">
-    <div id="header_font">sloth<yx>yx</yx>.com<span> BETA</span>
+    <div id="header_font">sloth<span class="yx">yx</span>.com<span> BETA</span>
     </div>
 
     <p>Welcome to slothyx.com <br> Your free Website <br> for Playlists!
@@ -30,20 +46,24 @@
     <p>Search for your favourite videos here</p>
     <label for="searchText"></label><input type="text" id="searchText">
     <button onclick="slothyx.searchYoutube()" id="searchButton" style="display: inline-block;">Search Videos</button>
+    <button id="loadMore" onclick="slothyx.loadMore()" style="display: none">Show More</button>
 
     <hr>
 
-    <h2>Load Video</h2>
+    <h2>Load Video/Playlist</h2>
 
-    <p>Load a specific video here</p>
+    <p>Load a specific video/playlist here</p>
     <label for="newVideoId"></label><input type="text" size="12" id="newVideoId">
     <button onclick="slothyx.loadVideoFromTextField()">Load Video</button>
-    <hr>
-    <h2>Load Playlist</h2>
-
-    <p>Enter your Playlist-Code here</p>
     <label for="playlistCode"></label><input id="playlistCode" size="20" type="text">
-    <button onclick="slothyx.generatePlaylistCode()">Load Playlist</button>
+    <button onclick="slothyx.generatePlaylistCode()">Generate Code</button>
+
+    <hr>
+
+
+    <label for="newPlaylistName">New playlistname</label>
+    <input type="text" id="newPlaylistName" size="12"/>
+    <button onclick="slothyx.renameCurrentPlaylist()">Rename</button>
 
     <hr>
 
@@ -108,8 +128,45 @@
 
 <div class="backgroundcontainer" id="prim"></div>
 
-    <div class="backgroundcontainer" id="results"><p>TEST1</p></div>
-    <div class="backgroundcontainer" id="playlist"><p>TEST2</p></div>
+    <div id="results" class="backgroundcontainer" data-bind="foreach: searchResults">
+        <div class="searchResult"><!-- data-bind="click: addToPlaylist" >-->
+            <h3 data-bind="text: video.title"></h3>
+            <img data-bind="attr: {src: video.image}">
+            <span data-bind="text: video.description"></span>
+            <button data-bind="click: addToPlaylist"><span data-bind="text: video.title"></span></button>
+            <button data-bind="click: searchRelated">Search Related</button>
+        </div>
+    </div>
+
+
+    <div id="playlist"  class="backgroundcontainer">
+        <select data-bind="options:	playStrategies, optionsText: 'name', value: playStrategy"></select>
+        <select data-bind="options: playlists, optionsText: 'name', value: playlist"></select>
+        <button onclick="slothyx.addPlaylist()">Add Playlist</button>
+        <button onclick="slothyx.deletePlaylist()">Delete Playlist</button>
+        <div data-bind="if: (playlist() !== null && playlist() !== undefined)">
+            <div data-bind="sortable: {data: playlist().videos, afterMove: slothyx.lists.getPlaylist().changed}">
+                <div class="listItem" data-bind="click: select, css: {selected: isSelected()}">
+                    <span data-bind="text: video.title"></span><i class="glyphicon glyphicon-remove"
+                                                                  data-bind="click: remove"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="player">
+        <div id="tvset" class="backgroundcontainer">
+            <div id="ytPlayer">
+                You need Flash player 8+ and JavaScript enabled to play videos.
+            </div>
+        </div>
+        <div id="controlTV">
+            <button id="toggleButton" onclick="slothyx.toggle()"><i class="glyphicon"
+                                                                    data-bind="css: {'glyphicon-play': !playing(), 'glyphicon-pause': playing()}"></i>
+            </button>
+            <button onclick="slothyx.openRemotePlayer()">Remote Player</button>
+        </div>
+    </div>
 
 
 
