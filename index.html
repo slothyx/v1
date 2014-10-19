@@ -149,7 +149,7 @@
 		<select data-bind="options: playlists, optionsText: 'name', value: playlist"></select>
 		<button onclick="slothyx.addPlaylist()">Add Playlist</button>
 		<button onclick="slothyx.deletePlaylist()">Delete Playlist</button>
-		<div data-bind="if: (playlist() !== null && playlist() !== undefined)">
+		<div id="playlistItems" data-bind="if: (playlist() !== null && playlist() !== undefined)">
 			<div data-bind="sortable: {data: playlist().videos, afterMove: slothyx.lists.getPlaylist().changed}">
 				<div class="listItem" data-bind="click: select, css: {selected: isSelected()}">
 					<span data-bind="text: video.title"></span><i class="glyphicon glyphicon-remove"
@@ -263,7 +263,7 @@
 
 
 			<tr>
-				<td>Function: Java/Html/Css</td>
+				<td>Function: JavaScript/Html/Css</td>
 				<td>Function: Html/Css</td>
 				<td> E-Mail: <a href="mailto: info@slothyx.com" class="mails">info@slothyx.com</a></td>
 			</tr>

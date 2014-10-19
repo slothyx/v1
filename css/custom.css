@@ -190,7 +190,13 @@ div ul li {
 
 }
 
-#playlist div.listItem.selected, #playlist div.listItem:hover {
+#playlistItems {
+	overflow-y: auto;
+	overflow-x: hidden;
+	height: 95%;
+}
+
+#playlistItems div.listItem.selected, #playlistItems div.listItem:hover {
 	background-color: #414141;
 }
 
