@@ -6,19 +6,16 @@
     background-color: #262626;
 }
 
+.maxwidth {
+    width:100%;
+}
+
 #conti {
     position: absolute;
     margin-left: 290px;
     padding-left: 2.5%;
     padding-top: 10px;
     height: 100%;
-}
-
-#mascot {
-    float:right;
-    transform: rotate(15deg);
-    -moz-transform: rotate(15deg);
-    -webkit-transform: rotate(15deg);
 }
 
 #maincontainer {
@@ -61,7 +58,11 @@ a {
     color: #7ee504;
 }
 .yx {
-    color: #70d104;
+    color: #7ee504;
+    font-family: Bookman Old Style, serif;
+    font-size: 35px;
+    font-weight: bold;
+    margin-bottom: 1.8%;
 }
 
 a:hover {
@@ -198,7 +199,18 @@ div ul li {
     float:left;
 }
 
+#mascot {
+    z-index: 0;
+    position: absolute;
+    margin-top: -462px;
+    left: 30px;
+    width: 310px;
+    height:295px;
+    /*transform: rotate(90deg);*/
+}
+
 #tvset {
+    z-index: 5;
     width: 320px;
     height:300px;
 }
@@ -255,7 +267,7 @@ div ul li {
 
 #contact {
     clear:both;
-    height: 20%;
+    height: 130px;
     margin-top: 0.6%;
     margin-bottom: 0.6%;
     padding: 1% 15px 1% 15px;
@@ -267,7 +279,6 @@ footer {
     clear:both;
     width: 70%;
     min-width:680px;
-    height: 100px;
     background-color: rgba(220, 220, 220, 0.46);
     text-align: center;
     padding-top: 26px;
