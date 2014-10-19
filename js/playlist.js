@@ -269,7 +269,7 @@
 	/*****SEARCHRESULTLIST API*****/
 	var searchResultList = (function() {
 
-		var SEARCHRESULTS_HTML_ID = "#searchResults";
+		var SEARCHRESULTS_HTML_ID = "#searchResultsss";
 
 		var searchResultsModel = {
 			searchResults: ko.observableArray()
