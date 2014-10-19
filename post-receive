@@ -3,6 +3,7 @@
 PROJECT_NAME=yt-player
 BASE_DIR=/var/slothyx
 PROJECT_DIR=$BASE_DIR/$PROJECT_NAME
+DEV_DIR=$BASE_DIR/$PROJECT_NAME-dev
 LOG_FILE=$BASE_DIR/$PROJECT_NAME.log
 BARE_REPOSITORY=/opt/git/repositories/$PROJECT_NAME.git
 
@@ -17,6 +18,18 @@ echo "Cloning Repository..."
 mkdir $PROJECT_DIR
 git clone -b release $BARE_REPOSITORY
 cd $PROJECT_DIR
+echo "Cleaning Repository..."
+rm -rf .*
+chmod -R a+rx . *
+
+
+cd $BASE_DIR
+echo "Delete old..."
+rm -rf $DEV_DIR
+echo "Cloning Repository..."
+mkdir $DEV_DIR
+git clone -b master $BARE_REPOSITORY $DEV_DIR
+cd $DEV_DIR
 echo "Cleaning Repository..."
 rm -rf .*
 chmod -R a+rx . *
