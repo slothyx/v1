@@ -112,7 +112,7 @@
 		};
 		self.stop = function() {
 			if(player !== null) {
-				self.stop();
+				player.stop();
 			}
 		};
 		self.setPlayer = function(newPlayer) {
