@@ -6,7 +6,7 @@
 	var SEARCH_TEXTFIELD_ID = '#searchText';
 	var VIDEO_TEXTFIELD_ID = '#newVideoId';
 	var TOGGLE_BUTTON_ID = '#toggleButton';
-	var PLAYLIST_CODE_ID = '#playlistCode';
+	var PLAYLIST_CODE_ID = '#newVideoId';
 	var PLAYLIST_NAME_ID = '#newPlaylistName';
 	var SPACE_LISTENER_ID = 'html';
 	var DEFAULT_WINDOW_TITLE = "Slothyx Music";

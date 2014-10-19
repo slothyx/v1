@@ -190,6 +190,10 @@ div ul li {
 
 }
 
+#playlist div.listItem.selected, #playlist div.listItem:hover {
+	background-color: #414141;
+}
+
 #player {
 	margin-left: 1%;
 	margin-top: 10px;

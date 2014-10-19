@@ -56,7 +56,6 @@
 	<p>Load a specific video/playlist here</p>
 	<label for="newVideoId"></label><input type="text" size="12" id="newVideoId">
 	<button onclick="slothyx.loadVideoFromTextField()">Load Video</button>
-	<label for="playlistCode"></label><input id="playlistCode" size="20" type="text">
 	<button onclick="slothyx.generatePlaylistCode()">Generate Code</button>
 
 	<hr>
@@ -133,7 +132,7 @@
 		<div id="searchResults" data-bind="foreach: searchResults">
 			<div class="searchResult"><!-- data-bind="click: addToPlaylist" >-->
 				<h3 data-bind="text: video.title"></h3>
-				<img data-bind="attr: {src: video.image}">
+				<img class="pull-left" data-bind="attr: {src: video.image}">
 				<span data-bind="text: video.description"></span>
 				<button data-bind="click: addToPlaylist"><span data-bind="text: video.title"></span></button>
 				<button data-bind="click: searchRelated">Search Related</button>
