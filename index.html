@@ -130,7 +130,7 @@
 
 	<div class="results backgroundcontainer">
 		<div class="searchResults" data-bind="foreach: searchResults">
-			<div class="searchResult"><!-- data-bind="click: addToPlaylist" >-->
+			<div class="searchResultbox searchResult2"><!-- data-bind="click: addToPlaylist" >-->
 				<h3 class="results-title" data-bind="text: video.title"></h3>
 				<div class="resultcontainer">
                     <img class="results-image pull-left" data-bind="attr: {src: video.image}">
@@ -139,7 +139,7 @@
 			</div>
             <div class="resultbuttoncontainer"><button class="resultbutton1" data-bind="click: addToPlaylist">Add to current Playlist</button>
                 <button class="resultbutton2" data-bind="click: searchRelated">Search Related</button></div>
-            <div id="stardivider" class="glyphicon glyphicon-asterisk"></div>
+            <div class="stardivider glyphicon glyphicon-asterisk"></div>
 		</div>
 		<div>
 			<button id="loadMore" style="display:none;" onclick="slothyx.loadMore()">Load More</button>
