@@ -26,7 +26,7 @@
 
 	function ActivePlayer() {
 		var self = this;
-		var otherWindow = window.open("/player.html", "remotePlayer");
+		var otherWindow = window.open("player.html", "remotePlayer");
 		var stateChangedEvents = new slothyx.util.EventHelper(self);
 
 		self.load = function(id) {

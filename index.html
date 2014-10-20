@@ -129,8 +129,8 @@
 	<div class="backgroundcontainer" id="prim"></div>
 
 	<div class="results backgroundcontainer">
-		<div class="searchResults" data-bind="foreach: searchResults">
-			<div class="searchResultbox searchResult2"><!-- data-bind="click: addToPlaylist" >-->
+		<div id="searchResults" data-bind="foreach: searchResults">
+			<div class="searchResultbox searchResult"><!-- data-bind="click: addToPlaylist" >-->
 				<h3 class="results-title" data-bind="text: video.title"></h3>
 				<div class="resultcontainer">
                     <img class="results-image pull-left" data-bind="attr: {src: video.image}">

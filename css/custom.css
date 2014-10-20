@@ -1,5 +1,6 @@
 #background {
 	background-color: #7db920;
+    /*background-color: #7cb9b4;*/
 }
 
 .backgroundcontainer {
@@ -9,7 +10,7 @@
 .maxwidth {
     width:100%;
 }
-.searchResult2 {
+.searchResultbox {
     height: 135px;
     width:100%;
 }
@@ -35,14 +36,12 @@
 }
 
 .resultcontainer {
-    display:inline-block;
     height: 110px;
     width: 100%;
 }
 
 .resultbuttoncontainer {
     clear:both;
-    display:block;
     height: 20px;
 }
 
@@ -57,7 +56,7 @@
 }
 
 .stardivider {
-    color:brown;
+    color: #7db920;
     clear:both;
     margin-left: 50%;
     margin-bottom: 20px;
@@ -80,11 +79,13 @@
 }
 
 .results-description {
+    text-overflow: ellipsis;
     color: white;
     font-size: 14px;
     float:right;
     display:inline-block;
     width:68%;
+    height: 110px;
 }
 
 .results-image {
