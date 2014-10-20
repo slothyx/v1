@@ -390,13 +390,13 @@ footer {
 	margin-bottom: 1.8%;
 }
 
-#xdelete {
+.xdelete {
     float:right;
-    color:#8f0000;
+    color: #7f250a;
 }
 
-#xdelete:hover {
-    color: #c50000;
+.xdelete:hover {
+    color: #a50000;
     cursor: pointer;
 }
 

@@ -155,7 +155,7 @@
 		<div id="playlistItems" data-bind="if: (playlist() !== null && playlist() !== undefined)">
 			<div data-bind="sortable: {data: playlist().videos, afterMove: slothyx.lists.getPlaylist().changed}">
 				<div class="listItem" data-bind="click: select, css: {selected: isSelected()}">
-					<span id="playlist-title"data-bind="text: video.title"></span><i id="xdelete" class="glyphicon glyphicon-remove"
+					<span id="playlist-title"data-bind="text: video.title"></span><i class="xdelete glyphicon glyphicon-remove"
 																  data-bind="click: remove"></i>
 				</div>
 			</div>
