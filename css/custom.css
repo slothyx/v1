@@ -9,6 +9,22 @@
 .maxwidth {
     width:100%;
 }
+.searchResult {
+    height: 135px;
+    width:100%;
+}
+
+.textleft {
+    text-align: left;
+}
+
+.textright {
+    text-align: right;
+}
+
+.textcenter {
+    text-align: center;
+}
 
 #conti {
 	position: absolute;
@@ -16,6 +32,70 @@
 	padding-left: 25px;
 	padding-top: 10px;
 	height: 100%;
+}
+
+#resultcontainer {
+    display:inline-block;
+    height: 110px;
+    width: 100%;
+}
+
+#resultbuttoncontainer {
+    clear:both;
+    display:block;
+    height: 20px;
+}
+
+.resultbutton1 {
+    float:right;
+    display:inline-block;
+}
+
+.resultbutton2 {
+    float:right;
+    display:inline-block;
+}
+
+#stardivider {
+    color:brown;
+    clear:both;
+    margin-left: 50%;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+#stardivider:hover {
+    cursor: default;
+}
+
+#results-title {
+    margin-top: 0;
+    margin-bottom: 3.5px;
+    clear:both;
+    color: white;
+    font-size: 18px;
+    top:0;
+    left:0;
+
+}
+
+#results-description {
+    color: white;
+    font-size: 14px;
+    float:right;
+    display:inline-block;
+    width:68%;
+}
+
+#results-image {
+    height:110px;
+    float:left;
+    width: 30%;
+}
+
+#playlist-title {
+    color:white;
+
 }
 
 #maincontainer {
@@ -67,7 +147,7 @@ a {
     margin-bottom: 1.8%;
 }
 
-a:hover {
+.a:hover {
 	color: #8eff00;
 }
 
@@ -83,6 +163,7 @@ p {
 	letter-spacing: 1px;
 }
 
+
 h2 {
 	color: #7ee504;
 	font-size: 20px;
@@ -90,7 +171,9 @@ h2 {
 	margin-bottom: 12px;
 }
 
-hf2 {
+
+.headerfont2 {
+    margin-top: 0px;
 	color: #7ee504;
 	font-size: 20px;
 	font-family: Bookman Old Style, serif;
@@ -207,13 +290,13 @@ div ul li {
 	width: 320px;
 	position: fixed;
 	display: inline-block;
-	float: left;
+
 }
 
 #mascot {
     z-index: 0;
     position: absolute;
-    margin-top: -462px;
+    margin-top: -465px;
     left: 30px;
     width: 310px;
     height:295px;
@@ -307,10 +390,26 @@ footer {
 	margin-bottom: 1.8%;
 }
 
+#xdelete {
+    float:right;
+    color:#8f0000;
+}
+
+#xdelete:hover {
+    color: #c50000;
+    cursor: pointer;
+}
+
 span {
 	color: #878482;
 	font-size: 15px;
 	font-weight: normal;
+}
+
+.BETAfont {
+    color: #878482;
+    font-size: 15px;
+    font-weight: normal;
 }
 
 address {
@@ -386,6 +485,7 @@ address {
 	color: #000000;
 	text-align: right;
 }
+
 
 .onoffswitch-switch {
 	display: block;

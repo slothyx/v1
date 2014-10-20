@@ -35,7 +35,7 @@
 <body id="background">
 
 <div id="leftcontainer">
-	<div id="header_font">sloth<span class="yx">yx</span>.com<span> BETA</span>
+	<div id="header_font">sloth<span class="yx">yx</span>.com<span class="BETAfont">BETA</span>
 	</div>
 
 	<p>Welcome to slothyx.com <br/> Your free Website <br/> for Playlists!
@@ -69,7 +69,7 @@
 
 	<h2>Custom settings</h2>
 
-	<table style="text-align: left">
+	<table class="textleft">
 		<tr>
 			<td><p class="settings">image</p></td>
 			<td>
@@ -131,12 +131,15 @@
 	<div id="results" class="backgroundcontainer">
 		<div id="searchResults" data-bind="foreach: searchResults">
 			<div class="searchResult"><!-- data-bind="click: addToPlaylist" >-->
-				<h3 data-bind="text: video.title"></h3>
-				<img class="pull-left" data-bind="attr: {src: video.image}">
-				<span data-bind="text: video.description"></span>
-				<button data-bind="click: addToPlaylist"><span data-bind="text: video.title"></span></button>
-				<button data-bind="click: searchRelated">Search Related</button>
+				<h3 id="results-title" data-bind="text: video.title"></h3>
+				<div id="resultcontainer">
+                    <img id="results-image" class="pull-left" data-bind="attr: {src: video.image}">
+                    <span id="results-description" data-bind="text: video.description"></span></div>
+
 			</div>
+            <div id="resultbuttoncontainer"><button class="resultbutton1" data-bind="click: addToPlaylist">Add to current Playlist</button>
+                <button class="resultbutton2" data-bind="click: searchRelated">Search Related</button></div>
+            <div id="stardivider" class="glyphicon glyphicon-asterisk"></div>
 		</div>
 		<div>
 			<button id="loadMore" style="display:none;" onclick="slothyx.loadMore()">Load More</button>
@@ -152,7 +155,7 @@
 		<div id="playlistItems" data-bind="if: (playlist() !== null && playlist() !== undefined)">
 			<div data-bind="sortable: {data: playlist().videos, afterMove: slothyx.lists.getPlaylist().changed}">
 				<div class="listItem" data-bind="click: select, css: {selected: isSelected()}">
-					<span data-bind="text: video.title"></span><i class="glyphicon glyphicon-remove"
+					<span id="playlist-title"data-bind="text: video.title"></span><i id="xdelete" class="glyphicon glyphicon-remove"
 																  data-bind="click: remove"></i>
 				</div>
 			</div>
@@ -177,19 +180,19 @@
 
 
 	<div class="backgroundcontainer" id="hrdivide">
-		<table style="width:100%">
+		<table class="maxwidth">
 			<tr>
 				<td class="equalcolumns">News & Updates</td>
-				<td class="equalcolumns" style="text-align: center">Feedback</td>
-				<td class="equalcolumns" style="text-align: center">FAQ</td>
-				<td class="equalcolumns" style="text-align: right">Contact</td>
+				<td class="equalcolumns" class="textcenter">Feedback</td>
+				<td class="equalcolumns" class="textcenter">FAQ</td>
+				<td class="equalcolumns" class="textright">Contact</td>
 			</tr>
 		</table>
 	</div>
 
 
 	<div class="backgroundcontainer" id="newscontainer">
-		<hf2>News & Updates</hf2>
+		<h3 class="headerfont2">News & Updates</h3>
 
 		<table>
 			<th>
@@ -226,7 +229,7 @@
 	</div>
 
 	<div class="backgroundcontainer" id="feedback">
-		<hf2>Feedback</hf2>
+        <h3 class="headerfont2">Feedback</h3>
 
 		<table>
 			<th><span>You're on the spot</span></th>
@@ -249,10 +252,10 @@
 	</div>
 
 	<div class="backgroundcontainer" id="faq">
-		<hf2>FAQ</hf2>
+        <h3 class="headerfont2">FAQ</h3>
 	</div>
 	<div class="backgroundcontainer" id="contact">
-		<hf2>Contact</hf2>
+        <h3 class="headerfont2">Contact</h3>
 
     <table class="maxwidth">
 
