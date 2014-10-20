@@ -128,16 +128,16 @@
 
 	<div class="backgroundcontainer" id="prim"></div>
 
-	<div id="results" class="backgroundcontainer">
-		<div id="searchResults" data-bind="foreach: searchResults">
+	<div class="results backgroundcontainer">
+		<div class="searchResults" data-bind="foreach: searchResults">
 			<div class="searchResult"><!-- data-bind="click: addToPlaylist" >-->
-				<h3 id="results-title" data-bind="text: video.title"></h3>
-				<div id="resultcontainer">
-                    <img id="results-image" class="pull-left" data-bind="attr: {src: video.image}">
-                    <span id="results-description" data-bind="text: video.description"></span></div>
+				<h3 class="results-title" data-bind="text: video.title"></h3>
+				<div class="resultcontainer">
+                    <img class="results-image pull-left" data-bind="attr: {src: video.image}">
+                    <span class="results-description" data-bind="text: video.description"></span></div>
 
 			</div>
-            <div id="resultbuttoncontainer"><button class="resultbutton1" data-bind="click: addToPlaylist">Add to current Playlist</button>
+            <div class="resultbuttoncontainer"><button class="resultbutton1" data-bind="click: addToPlaylist">Add to current Playlist</button>
                 <button class="resultbutton2" data-bind="click: searchRelated">Search Related</button></div>
             <div id="stardivider" class="glyphicon glyphicon-asterisk"></div>
 		</div>
@@ -155,7 +155,7 @@
 		<div id="playlistItems" data-bind="if: (playlist() !== null && playlist() !== undefined)">
 			<div data-bind="sortable: {data: playlist().videos, afterMove: slothyx.lists.getPlaylist().changed}">
 				<div class="listItem" data-bind="click: select, css: {selected: isSelected()}">
-					<span id="playlist-title"data-bind="text: video.title"></span><i class="xdelete glyphicon glyphicon-remove"
+					<span class="playlist-title"data-bind="text: video.title"></span><i class="xdelete glyphicon glyphicon-remove"
 																  data-bind="click: remove"></i>
 				</div>
 			</div>
