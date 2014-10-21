@@ -128,12 +128,7 @@
 	slothyx.openRemotePlayer = function() {
 		slothyx.remotePlayer.initActivePlayer();
 	};
-
-	//TODO debug only
-	slothyx.skipToEnd = function() {
-		slothyx.localPlayer.player.seekTo(slothyx.localPlayer.player.getDuration() - 2, true);
-	};
-
+	
 
 	/*****PRIVATE HELPER*****/
 

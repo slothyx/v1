@@ -70,7 +70,7 @@
 
 .results-title {
 	margin-top: 0;
-	margin-bottom: 3.5px;
+	margin-bottom: 3px;
 	clear: both;
 	color: white;
 	font-size: 18px;
@@ -167,7 +167,7 @@ h2 {
 }
 
 .headerfont2 {
-	margin-top: 0px;
+	margin-top: 0;
 	color: #7ee504;
 	font-size: 20px;
 	font-family: Bookman Old Style, serif;
@@ -337,7 +337,7 @@ div ul li {
 #newscontainer {
 	float: left;
 	width: 40%;
-	min-width: 389.5792507204611px;
+	min-width: 390px;
 	height: 300px;
 	padding: 1% 15px 1% 15px;
 }
@@ -346,7 +346,7 @@ div ul li {
 	float: left;
 	width: 29.4%;
 	height: 300px;
-	min-width: 286.3407492795389px;
+	min-width: 286px;
 	margin-left: 0.6%;
 	padding: 1% 15px 1% 15px;
 }
@@ -511,7 +511,7 @@ address {
 }
 
 .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
-	right: 0px;
+	right: 0;
 	background-color: #6bcb04;
 }
 

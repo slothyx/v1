@@ -56,7 +56,8 @@
 	<h2>Load Video/Playlist</h2>
 
 	<p>Load a specific video/playlist here</p>
-	<label for="newVideoId"></label><input type="text" size="12" id="newVideoId" data-enterevent="loadVideoFromTextField">
+	<label for="newVideoId"></label><input type="text" size="12" id="newVideoId"
+										   data-enterevent="loadVideoFromTextField">
 	<button onclick="slothyx.loadVideoFromTextField()">Load Video</button>
 	<button onclick="slothyx.generatePlaylistCode()">Generate Code</button>
 
@@ -134,14 +135,17 @@
 		<div id="searchResults" data-bind="foreach: searchResults">
 			<div class="searchResultbox searchResult"><!-- data-bind="click: addToPlaylist" >-->
 				<h3 class="results-title" data-bind="text: video.title"></h3>
+
 				<div class="resultcontainer">
-                    <img class="results-image pull-left" data-bind="attr: {src: video.image}">
-                    <span class="results-description" data-bind="text: video.description"></span></div>
+					<img class="results-image pull-left" data-bind="attr: {src: video.image}">
+					<span class="results-description" data-bind="text: video.description"></span></div>
 
 			</div>
-            <div class="resultbuttoncontainer"><button class="resultbutton1" data-bind="click: addToPlaylist">Add to current Playlist</button>
-                <button class="resultbutton2" data-bind="click: searchRelated">Search Related</button></div>
-            <div class="stardivider glyphicon glyphicon-asterisk"></div>
+			<div class="resultbuttoncontainer">
+				<button class="resultbutton1" data-bind="click: addToPlaylist">Add to current Playlist</button>
+				<button class="resultbutton2" data-bind="click: searchRelated">Search Related</button>
+			</div>
+			<div class="stardivider glyphicon glyphicon-asterisk"></div>
 		</div>
 		<div>
 			<button id="loadMore" style="display:none;" onclick="slothyx.loadMore()">Load More</button>
@@ -157,8 +161,9 @@
 		<div id="playlistItems" data-bind="if: (playlist() !== null && playlist() !== undefined)">
 			<div data-bind="sortable: {data: playlist().videos, afterMove: slothyx.lists.getPlaylist().changed}">
 				<div class="listItem" data-bind="click: select, css: {selected: isSelected()}">
-					<span class="playlist-title"data-bind="text: video.title"></span><i class="xdelete glyphicon glyphicon-remove"
-																  data-bind="click: remove"></i>
+					<span class="playlist-title" data-bind="text: video.title"></span><i
+						class="xdelete glyphicon glyphicon-remove"
+						data-bind="click: remove"></i>
 				</div>
 			</div>
 		</div>
@@ -171,7 +176,8 @@
 				You need Flash player 8+ and JavaScript enabled to play videos.
 			</div>
 		</div>
-        <img id="mascot" src="img/sloth.gif" alt="slothyx.com">
+		<img id="mascot" src="img/sloth.gif" alt="slothyx.com">
+
 		<div id="progressSlider"></div>
 		<div id="controlTV">
 			<button id="toggleButton" onclick="slothyx.toggle()"><i class="glyphicon"
@@ -187,9 +193,9 @@
 		<table class="maxwidth">
 			<tr>
 				<td class="equalcolumns">News & Updates</td>
-				<td class="equalcolumns" class="textcenter">Feedback</td>
-				<td class="equalcolumns" class="textcenter">FAQ</td>
-				<td class="equalcolumns" class="textright">Contact</td>
+				<td class="equalcolumns textcenter">Feedback</td>
+				<td class="equalcolumns textcenter">FAQ</td>
+				<td class="equalcolumns textright">Contact</td>
 			</tr>
 		</table>
 	</div>
@@ -199,9 +205,11 @@
 		<h3 class="headerfont2">News & Updates</h3>
 
 		<table>
-			<th>
-				v. 1.0 - BETA
-			</th>
+			<tr>
+				<th>
+					v. 1.0 - BETA
+				</th>
+			</tr>
 			<tr>
 				<td>
 					<ul>
@@ -232,11 +240,13 @@
 		</table>
 	</div>
 
-	<div class="backgroundcontainer" id="feedback">
-        <h3 class="headerfont2">Feedback</h3>
+	<div id="feedback" class="backgroundcontainer">
+		<h3 class="headerfont2">Feedback</h3>
 
 		<table>
-			<th><span>You're on the spot</span></th>
+			<tr>
+				<th><span>You're on the spot</span></th>
+			</tr>
 
 			<tr>
 				<td>
@@ -244,7 +254,7 @@
 						It's time to send us your feedback. We highly appreciate positive as well as negative
 						acknowledgements.
 						Thank you
-						<yx><strong>yx</strong></yx>
+						<span class="yx"><strong>yx</strong></span>
 						-much for your support!
 
 					</p>
@@ -256,12 +266,12 @@
 	</div>
 
 	<div class="backgroundcontainer" id="faq">
-        <h3 class="headerfont2">FAQ</h3>
+		<h3 class="headerfont2">FAQ</h3>
 	</div>
 	<div class="backgroundcontainer" id="contact">
-        <h3 class="headerfont2">Contact</h3>
+		<h3 class="headerfont2">Contact</h3>
 
-    <table class="maxwidth">
+		<table class="maxwidth">
 
 			<tr>
 				<td>Name: Matthias Ableidinger alias <i>"Codemonkey"</i></td>
@@ -271,7 +281,7 @@
 			</tr>
 
 			<tr>
-            <td>Function: JavaScript/Html/Css</td>
+				<td>Function: JavaScript/Html/Css</td>
 				<td>Function: Html/Css</td>
 				<td> E-Mail: <a href="mailto: info@slothyx.com" class="mails">info@slothyx.com</a></td>
 			</tr>

@@ -51,8 +51,7 @@
 
 	function LocalPlayer(id) {
 		var self = this;
-		//TODO debug only (remove self.player)
-		var player = localPlayer.player = $(id)[0];
+		var player = $(id)[0];
 		var events = new slothyx.util.EventHelper(self);
 		var progressEvents = new slothyx.util.EventHelper(self, "addProgressListener", "removeProgressListener");
 		var timerId;
