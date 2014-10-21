@@ -4,6 +4,8 @@
 	var slothyx = window.slothyx || {};
 	window.slothyx = slothyx;
 	var util = slothyx.util = {};
+	var ENTER_KEY_CODE = 13;
+	var DATA_ATTRIBUTE ="enterevent";
 
 	util.Video = function(id, title, description, image) {
 		var self = this;
@@ -36,6 +38,18 @@
 			object[addListenerName || "addListener"] = self.addListener;
 			object[removeListenerName || "removeListener"] = self.removeListener;
 		}
+	};
+
+	util.initTextFields = function(object){
+		$('input[data-'+DATA_ATTRIBUTE+']').each(function(){
+			var self = $(this);
+			self.on("keypress",function(event){
+				if(event.originalEvent.keyCode === ENTER_KEY_CODE) {
+					object[self.data(DATA_ATTRIBUTE)]();
+					return false;
+				}
+			});
+		});
 	};
 
 })(jQuery, window, _);

@@ -18,7 +18,6 @@
 	var YT_STATE_PLAYING = 1;
 	var YT_STATE_PAUSE = 2;
 
-	var ENTER_KEY_CODE = 13;
 	var ENTER_SPACE_CODE = 32;
 
 
@@ -200,18 +199,9 @@
 
 	$(function() {
 		ko.applyBindings(stateModel, $(TOGGLE_BUTTON_ID).get(0));
-		$(SEARCH_TEXTFIELD_ID).on("keypress", function(event) {
-			if(event.originalEvent.keyCode === ENTER_KEY_CODE) {
-				slothyx.searchYoutube();
-				return false;
-			}
-		});
-		$(VIDEO_TEXTFIELD_ID).on("keypress", function(event) {
-			if(event.originalEvent.keyCode === ENTER_KEY_CODE) {
-				slothyx.loadVideoFromTextField();
-				return false;
-			}
-		});
+
+		slothyx.util.initTextFields(slothyx);
+
 		$(SPACE_LISTENER_ID).on("keypress", function(event) {
 			if(event.originalEvent.charCode === ENTER_SPACE_CODE && event.target.tagName !== "INPUT" && event.target.tagName !== "BUTTON") {
 				slothyx.toggle();

@@ -46,7 +46,7 @@
 	<h2>Search Video</h2>
 
 	<p>Search for your favourite videos here</p>
-	<label for="searchText"></label><input type="text" id="searchText">
+	<label for="searchText"></label><input type="text" id="searchText" data-enterevent="searchYoutube">
 	<button onclick="slothyx.searchYoutube()" id="searchButton" style="display: inline-block;">Search Videos</button>
 
 	<hr>
@@ -54,7 +54,7 @@
 	<h2>Load Video/Playlist</h2>
 
 	<p>Load a specific video/playlist here</p>
-	<label for="newVideoId"></label><input type="text" size="12" id="newVideoId">
+	<label for="newVideoId"></label><input type="text" size="12" id="newVideoId" data-enterevent="loadVideoFromTextField">
 	<button onclick="slothyx.loadVideoFromTextField()">Load Video</button>
 	<button onclick="slothyx.generatePlaylistCode()">Generate Code</button>
 
@@ -62,7 +62,7 @@
 
 
 	<label for="newPlaylistName">New playlistname</label>
-	<input type="text" id="newPlaylistName" size="12"/>
+	<input type="text" id="newPlaylistName" size="12" data-enterevent="renameCurrentPlaylist"/>
 	<button onclick="slothyx.renameCurrentPlaylist()">Rename</button>
 
 	<hr>
