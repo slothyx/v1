@@ -3,6 +3,8 @@
 	"use strict";
 	var YTPLAYER_RAW_HTML_ID = "slothyxPlayer";
 	var YTPLAYER_HTML_ID = "#" + YTPLAYER_RAW_HTML_ID;
+	var UPDATE_INTERVAL_MS = 1000;
+
 	$(function() {
 		var params = { allowScriptAccess: "always" };
 		var atts = { id: YTPLAYER_RAW_HTML_ID };
@@ -52,6 +54,8 @@
 		//TODO debug only (remove self.player)
 		var player = localPlayer.player = $(id)[0];
 		var events = new slothyx.util.EventHelper(self);
+		var progressEvents = new slothyx.util.EventHelper(self, "addProgressListener", "removeProgressListener");
+		var timerId;
 
 		self.load = function(id) {
 			player.loadVideoById(id);
@@ -72,9 +76,11 @@
 			player.setVolume(percentage);
 		};
 		self.hide = function() {
+			stopProgressUpdater();
 			$(id).hide();
 		};
 		self.show = function() {
+			startProgressUpdater();
 			$(id).show();
 		};
 		self.requestFullscreen = function() {
@@ -93,12 +99,24 @@
 			events.throwEvent(state);
 		};
 		player.addEventListener("onStateChange", "slothyx.localPlayer.onLocalPlayerStateChange");
+		startProgressUpdater();
+
+		function startProgressUpdater() {
+			timerId = setInterval(function() {
+				progressEvents.throwEvent(player.getCurrentTime() * 100 / player.getDuration());
+			}, UPDATE_INTERVAL_MS);
+		}
+
+		function stopProgressUpdater() {
+			clearInterval(timerId);
+		}
 	}
 
 	function PlayerProxy() {
 		//TODO buffer commands
 		var self = this;
 		var events = new slothyx.util.EventHelper(self);
+		var progressEvents = new slothyx.util.EventHelper(self, "addProgressListener", "removeProgressListener");
 		var player = null;
 
 		self.load = function(id) {
@@ -134,13 +152,19 @@
 		self.setPlayer = function(newPlayer) {
 			if(player !== null) {
 				player.removeListener(onStateChange);
+				player.removeProgressListener(onProgressChange);
 				player.stop();
 			}
 			player = newPlayer;
 			player.addListener(onStateChange);
+			player.addProgressListener(onProgressChange);
 		};
 		function onStateChange(newState) {
 			events.throwEvent(newState);
+		}
+
+		function onProgressChange(newState) {
+			progressEvents.throwEvent(newState);
 		}
 	}
 

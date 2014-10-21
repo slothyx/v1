@@ -219,6 +219,9 @@
 				getYtPlayer().setProgress(ui.value);
 			}
 		});
+		getYtPlayer().addProgressListener(function(progress) {
+			$(PROGRESS_SLIDER_ID).slider("value", progress);
+		});
 
 		$(VOLUME_SLIDER_ID).slider({
 			orientation: "vertical",

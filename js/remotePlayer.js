@@ -28,6 +28,7 @@
 		var self = this;
 		var otherWindow = window.open("player.html", "remotePlayer");
 		var stateChangedEvents = new slothyx.util.EventHelper(self);
+		var progressEvents = new slothyx.util.EventHelper(self, "addProgressListener", "removeProgressListener");
 
 		self.load = function(id) {
 			post("load", id);
@@ -63,7 +64,13 @@
 			} else {
 				var command = JSON.parse(message.data);
 				//only one command
-				stateChangedEvents.throwEvent(command.params[0]);
+				if(command.command === "stateChanged") {
+					stateChangedEvents.throwEvent(command.params[0]);
+				} else {
+					if(command.command === "progressChanged") {
+						progressEvents.throwEvent(command.params[0]);
+					}
+				}
 			}
 		}
 
@@ -109,6 +116,11 @@
 		getLocalPlayer().addListener(onStateChanged);
 		function onStateChanged(state) {
 			post("stateChanged", state);
+		}
+
+		getLocalPlayer().addProgressListener(onProgressChanged);
+		function onProgressChanged(progress) {
+			post("progressChanged", progress);
 		}
 
 		function post(command) {
