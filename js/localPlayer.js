@@ -65,6 +65,9 @@
 		self.stop = function() {
 			self.load("");
 		};
+		self.setProgress = function(percentage) {
+			player.seekTo(player.getDuration() / 100 * percentage, true);
+		};
 		self.hide = function() {
 			$(id).hide();
 		};
@@ -113,6 +116,11 @@
 		self.stop = function() {
 			if(player !== null) {
 				player.stop();
+			}
+		};
+		self.setProgress = function(percentage) {
+			if(player !== null) {
+				player.setProgress(percentage);
 			}
 		};
 		self.setPlayer = function(newPlayer) {

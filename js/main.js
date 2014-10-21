@@ -8,6 +8,7 @@
 	var TOGGLE_BUTTON_ID = '#toggleButton';
 	var PLAYLIST_CODE_ID = '#newVideoId';
 	var PLAYLIST_NAME_ID = '#newPlaylistName';
+	var PROGRESS_SLIDER_ID = '#progressSlider';
 	var SPACE_LISTENER_ID = 'html';
 	var DEFAULT_WINDOW_TITLE = "Slothyx Music";
 
@@ -152,11 +153,13 @@
 			stateModel.internalState(STATE_PLAYING);
 			getYtPlayer().load(video.id);
 			setWindowTitle(video.title);
+			$(PROGRESS_SLIDER_ID).slider('enable');
 		} else {
 			// TODO check "replay"
 			stateModel.internalState(STATE_STOPPED);
 			getYtPlayer().stop();
 			setWindowTitle(DEFAULT_WINDOW_TITLE);
+			$(PROGRESS_SLIDER_ID).slider('disable');
 		}
 	}
 
@@ -206,6 +209,13 @@
 			if(event.originalEvent.charCode === ENTER_SPACE_CODE && event.target.tagName !== "INPUT" && event.target.tagName !== "BUTTON") {
 				slothyx.toggle();
 				return false;
+			}
+		});
+
+		$(PROGRESS_SLIDER_ID).slider({
+			disabled: true,
+			stop: function(event,ui){
+				getYtPlayer().setProgress(ui.value);
 			}
 		});
 	});

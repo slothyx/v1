@@ -41,6 +41,9 @@
 		self.stop = function() {
 			post("stop");
 		};
+		self.setProgress = function(percentage) {
+			post("setProgress",percentage);
+		};
 
 		self.close = function() {
 			postRaw("close");
