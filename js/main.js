@@ -9,6 +9,7 @@
 	var PLAYLIST_CODE_ID = '#newVideoId';
 	var PLAYLIST_NAME_ID = '#newPlaylistName';
 	var PROGRESS_SLIDER_ID = '#progressSlider';
+	var VOLUME_SLIDER_ID = '#volumeSlider';
 	var SPACE_LISTENER_ID = 'html';
 	var DEFAULT_WINDOW_TITLE = "Slothyx Music";
 
@@ -214,8 +215,16 @@
 
 		$(PROGRESS_SLIDER_ID).slider({
 			disabled: true,
-			stop: function(event,ui){
+			stop: function(event, ui) {
 				getYtPlayer().setProgress(ui.value);
+			}
+		});
+
+		$(VOLUME_SLIDER_ID).slider({
+			orientation: "vertical",
+			value: 100,
+			slide: function(event, ui) {
+				getYtPlayer().setVolume(ui.value);
 			}
 		});
 	});

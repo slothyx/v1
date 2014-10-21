@@ -42,7 +42,10 @@
 			post("stop");
 		};
 		self.setProgress = function(percentage) {
-			post("setProgress",percentage);
+			post("setProgress", percentage);
+		};
+		self.setVolume = function(percentage) {
+			post("setVolume", percentage);
 		};
 
 		self.close = function() {
