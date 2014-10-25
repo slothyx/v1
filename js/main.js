@@ -128,7 +128,7 @@
 	slothyx.openRemotePlayer = function() {
 		slothyx.remotePlayer.initActivePlayer();
 	};
-	
+
 
 	/*****PRIVATE HELPER*****/
 
@@ -184,6 +184,14 @@
 		}
 	}
 
+	var progressSliderDragging = false;
+
+	function onProgressChanged(progress) {
+		if(!progressSliderDragging) {
+			$(PROGRESS_SLIDER_ID).slider("value", progress);
+		}
+	}
+
 	function onSearchRelated(video) {
 		slothyx.youtube.searchForRelated(video, function(result) {
 			lastSearch = result;
@@ -210,13 +218,15 @@
 
 		$(PROGRESS_SLIDER_ID).slider({
 			disabled: true,
+			start: function(){
+				progressSliderDragging = true;
+			},
 			stop: function(event, ui) {
+				progressSliderDragging = false;
 				getYtPlayer().setProgress(ui.value);
 			}
 		});
-		getYtPlayer().addProgressListener(function(progress) {
-			$(PROGRESS_SLIDER_ID).slider("value", progress);
-		});
+		getYtPlayer().addProgressListener(onProgressChanged);
 
 		$(VOLUME_SLIDER_ID).slider({
 			orientation: "vertical",
