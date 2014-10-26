@@ -2,6 +2,8 @@
 (function($, window, undefined) {
 	"use strict";
 
+	var DEFAULT_TIMEOUT = 100;
+
 	var slothyx = window.slothyx || {};
 	window.slothyx = slothyx;
 	var remotePlayer = slothyx.remotePlayer = {};
@@ -26,6 +28,7 @@
 
 	function ActivePlayer() {
 		var self = this;
+		var ready = false;
 		var otherWindow = window.open("player.html", "remotePlayer");
 		var stateChangedEvents = new slothyx.util.EventHelper(self);
 		var progressEvents = new slothyx.util.EventHelper(self, "addProgressListener", "removeProgressListener");
@@ -54,21 +57,27 @@
 			cleanup();
 		};
 
+		self.isReady = function() {
+			return ready;
+		};
+
 		window.addEventListener("message", recieve);
 
 		function recieve(message) {
-			otherWindow = message.source;
 			console.log(message);
+			otherWindow = message.source;
 			if(message.data === "close") {
 				cleanup();
 			} else {
 				var command = JSON.parse(message.data);
-				//only one command
+				//TODO change to switch
 				if(command.command === "stateChanged") {
 					stateChangedEvents.throwEvent(command.params[0]);
 				} else {
 					if(command.command === "progressChanged") {
 						progressEvents.throwEvent(command.params[0]);
+					} else if(command.command === "hello") {
+						ready = true;
 					}
 				}
 			}
@@ -87,6 +96,19 @@
 		function postRaw(string) {
 			otherWindow.postMessage(string, "*");
 		}
+
+		//start init function
+		(function() {
+			function sayHello() {
+				if(ready) {
+					clearInterval(intervalId);
+				} else {
+					postRaw("hello");
+				}
+			}
+
+			var intervalId = setInterval(sayHello, DEFAULT_TIMEOUT);
+		})();
 	}
 
 	function PassivePlayer() {
@@ -95,9 +117,13 @@
 		var otherWindow;
 
 		function recieve(message) {
+			console.log(message);
 			otherWindow = message.source;
+			//TODO close and hello into commands
 			if(message.data === "close") {
 				cleanup();
+			} else if(message.data === "hello") {
+				post("hello");
 			} else {
 				var command = JSON.parse(message.data);
 				var func = command.command;
@@ -136,10 +162,7 @@
 		}
 	}
 
-	function Command(command, params) {
-		this.command = command;
-		this.params = params;
-	}
+	var Command = slothyx.util.Command;
 
 	function getLocalPlayer() {
 		return slothyx.localPlayer.getPlayer();
