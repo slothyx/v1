@@ -36,100 +36,136 @@
 
 <body id="background">
 
-<div id="leftcontainer">
-	<div id="header_font">sloth<span class="yx">yx</span>.com<span class="BETAfont">BETA</span>
-	</div>
-
-	<p>Welcome to slothyx.com <br/> Your free Website <br/> for Playlists!
-	</p>
-
-	<hr>
-
-	<h2>Search Video</h2>
-
-	<p>Search for your favourite videos here</p>
-	<label for="searchText"></label><input type="text" id="searchText" data-enterevent="searchYoutube">
-	<button onclick="slothyx.searchYoutube()" id="searchButton" style="display: inline-block;">Search Videos</button>
-
-	<hr>
-
-	<h2>Load Video/Playlist</h2>
-
-	<p>Load a specific video/playlist here</p>
-	<label for="newVideoId"></label><input type="text" size="12" id="newVideoId"
-										   data-enterevent="loadVideoFromTextField">
-	<button onclick="slothyx.loadVideoFromTextField()">Load Video</button>
-	<button onclick="slothyx.generatePlaylistCode()">Generate Code</button>
-
-	<hr>
 
 
-	<label for="newPlaylistName">New playlistname</label>
-	<input type="text" id="newPlaylistName" size="12" data-enterevent="renameCurrentPlaylist"/>
-	<button onclick="slothyx.renameCurrentPlaylist()">Rename</button>
-
-	<hr>
-
-	<h2>Custom settings</h2>
-
-	<table class="textleft">
-		<tr>
-			<td><p class="settings">image</p></td>
-			<td>
-				<div class="onoffswitch">
-					<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked>
-					<label class="onoffswitch-label" for="myonoffswitch">
-						<span class="onoffswitch-inner"></span>
-						<span class="onoffswitch-switch"></span>
-					</label>
-				</div>
-			</td>
-		</tr>
-
-		<tr>
-			<td><p class="settings">title</p></td>
-			<td>
-				<div class="onoffswitch">
-					<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch2" checked>
-					<label class="onoffswitch-label" for="myonoffswitch2">
-						<span class="onoffswitch-inner"></span>
-						<span class="onoffswitch-switch"></span>
-					</label>
-				</div>
-			</td>
-		</tr>
+<div id="leftcolum">
 
 
-		<tr>
-			<td><p style="margin-right:10px" class="settings">description</p></td>
-			<td>
-				<div class="onoffswitch">
-					<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch3" checked>
-					<label class="onoffswitch-label" for="myonoffswitch3">
-						<span class="onoffswitch-inner"></span>
-						<span class="onoffswitch-switch"></span>
-					</label>
-				</div>
-			</td>
-		</tr>
-	</table>
 
-	<hr>
+    <ul class="controllist">
+        <li id="unus">
 
-	<h2>About</h2>
+            <!--<p>slothyx.com
+           </p><span class="BETAfont">BETA</span>*/-->
 
-	<p>www.slothyx.com is a free website, <br>designed to provide a fast and easy way to create video-playlists. Neither
-		do we want your money, nor your data.<br> <br> Enjoy the website! </p>
 
-	<p id="copyright">Copyright &copy; is for Losers.<br>
-		~Banksy</p>
-	<!--<img src="img/sloth_rework.gif" alt="slothyx.com">-->
+
+        </li>
+
+        <li id="duo">
+            <p>Welcome to slothyx.com <br/> Your free Website <br/> for Playlists!
+            </p>
+
+
+        </li>
+
+
+
+        <li class="itemslots" id="tres">
+
+            <p>Search for your favourite videos</p>
+
+            <label for="searchText"></label><input type="text" class="search rounded" placeholder="search..." id="searchText" data-enterevent="searchYoutube">
+            <!--<button onclick="slothyx.searchYoutube()" id="searchButton">Search Videos</button>-->
+
+        </li>
+
+        <li class="itemslots" id="quattuor">
+
+            <p>Load a specific video/playlist</p>
+            <label for="newVideoId"></label><input type="text" class="rounded" placeholder="load..." id="newVideoId"
+                                                   data-enterevent="loadVideoFromTextField">
+            <!--<button onclick="slothyx.loadVideoFromTextField()">Load Video</button>-->
+            <!--<button onclick="slothyx.generatePlaylistCode()">Generate Code</button>-->
+
+        </li>
+
+        <li class="itemslots" id="quinque">
+
+            <p>Rename a playlist</p>
+            <label for="newPlaylistName"></label>
+            <input type="text" class="rounded" placeholder="rename..." id="newPlaylistName" data-enterevent="renameCurrentPlaylist"/>
+            <!-- <button onclick="slothyx.renameCurrentPlaylist()">Rename</button>-->
+
+        </li>
+
+        <li id="sex">
+
+            <p>Custom settings</p>
+
+            <table class="textleft">
+                <tr>
+                    <td><p class="settings">image</p></td>
+                    <td>
+                        <div class="onoffswitch">
+                            <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked>
+                            <label class="onoffswitch-label" for="myonoffswitch">
+                                <span class="onoffswitch-inner"></span>
+                                <span class="onoffswitch-switch"></span>
+                            </label>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><p class="settings">title</p></td>
+                    <td>
+                        <div class="onoffswitch">
+                            <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch2" checked>
+                            <label class="onoffswitch-label" for="myonoffswitch2">
+                                <span class="onoffswitch-inner"></span>
+                                <span class="onoffswitch-switch"></span>
+                            </label>
+                        </div>
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td><p style="margin-right:10px" class="settings">description</p></td>
+                    <td>
+                        <div class="onoffswitch">
+                            <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch3" checked>
+                            <label class="onoffswitch-label" for="myonoffswitch3">
+                                <span class="onoffswitch-inner"></span>
+                                <span class="onoffswitch-switch"></span>
+                            </label>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+
+
+        </li>
+
+        <li id="septem">
+            <div class="glyphicon glyphicon-ok-sign"></div>
+            <div class="glyphicon glyphicon-ok-sign"></div>
+        </li>
+
+        <li id="octo" style="padding-top: 10px">
+            <p>About</p>
+            <p>www.slothyx.com is a free website, <br>designed to provide a fast and easy way to create video-playlists. Neither
+                do we want your money, nor your data.<br> <br> Enjoy the website! </p>
+
+            <p id="copyright">Copyright &copy; is for Losers.<br>
+                ~Banksy</p>
+            <!--<img src="img/sloth_rework.gif" alt="slothyx.com">-->
+
+        </li>
+
+    </ul>
+
 </div>
 
-<div id="conti">
+<div id="main">
 
+    <div class="circle">
+        <div class="redcircle"></div>
+    </div>
 
-	<div class="backgroundcontainer" id="prim"></div>
+    <div id="sizeHolder">
 
 	<div class="results backgroundcontainer">
 		<div id="searchResults" data-bind="foreach: searchResults">
@@ -145,7 +181,6 @@
 				<button class="resultbutton1" data-bind="click: addToPlaylist">Add to current Playlist</button>
 				<button class="resultbutton2" data-bind="click: searchRelated">Search Related</button>
 			</div>
-			<div class="stardivider glyphicon glyphicon-asterisk"></div>
 		</div>
 		<div>
 			<button id="loadMore" style="display:none;" onclick="slothyx.loadMore()">Load More</button>
@@ -154,52 +189,67 @@
 
 
 	<div id="playlist" class="backgroundcontainer">
-		<select data-bind="options:	playStrategies, optionsText: 'name', value: playStrategy"></select>
-		<select data-bind="options: playlists, optionsText: 'name', value: playlist"></select>
-		<button onclick="slothyx.addPlaylist()">Add Playlist</button>
-		<button onclick="slothyx.deletePlaylist()">Delete Playlist</button>
-		<div id="playlistItems" data-bind="if: (playlist() !== null && playlist() !== undefined)">
-			<div data-bind="sortable: {data: playlist().videos, afterMove: slothyx.lists.getPlaylist().changed}">
-				<div class="listItem" data-bind="click: select, css: {selected: isSelected()}">
-					<span class="playlist-title" data-bind="text: video.title"></span><i
-						class="xdelete glyphicon glyphicon-remove"
-						data-bind="click: remove"></i>
-				</div>
-			</div>
-		</div>
+
+        <div id="playlistitemscontainer">
+
+            <div>
+
+                <div id="tvset">
+                    <div id="ytPlayer">
+                        You need Flash player 8+ and JavaScript enabled to play videos.
+                    </div>
+                </div>
+
+            </div>
+
+            <div id="progressSlider"></div>
+
+            <div id="volumeSlider"></div>
+
+            <div id="controlTV">
+
+                <button onclick="slothyx.openRemotePlayer()">Remote Player</button>
+
+                <button  onclick="slothyx.toggle()"> <!--<i class="glyphicon"
+                                                                        data-bind="css: {'glyphicon-play': !playing(), 'glyphicon-pause': playing()}"></i>
+                                                                        SHIT DOESTN WORK FOR SOME REASON! deletes results in the "resultscontainer" and "playlist"-->
+                    </button>
+
+                <div style="font-size: 20px" class="glyphicon glyphicon-fullscreen "></div>
+            </div>
+
+		    <select data-bind="options:	playStrategies, optionsText: 'name', value: playStrategy"></select>
+		    <select data-bind="options: playlists, optionsText: 'name', value: playlist"></select>
+		    <button onclick="slothyx.addPlaylist()"><div style="font-size: 15px float:left" class="glyphicon glyphicon-plus"></div></button>
+		    <button onclick="slothyx.deletePlaylist()"><div style="font-size:15px float:right" class="glyphicon glyphicon-trash"></div></button>
+
+		    <div id="playlistItems" data-bind="if: (playlist() !== null && playlist() !== undefined)">
+			    <div data-bind="sortable: {data: playlist().videos, afterMove: slothyx.lists.getPlaylist().changed}">
+				    <div class="listItem" data-bind="click: select, css: {selected: isSelected()}">
+					    <span class="playlist-title" data-bind="text: video.title"></span><i
+						    class="xdelete glyphicon glyphicon-remove"
+						    data-bind="click: remove"></i>
+				    </div>
+			    </div>
+		    </div>
+
+            <!--<button id="toggleButton" onclick="slothyx.toggle()"><i class="glyphicon"
+                                                                    data-bind="css: {'glyphicon-play': !playing(), 'glyphicon-pause': playing()}"></i>
+            </button>-->
+
+
+
+         </div>
 	</div>
 
-	<div id="player">
-
-		<div id="tvset" class="backgroundcontainer">
-			<div id="ytPlayer">
-				You need Flash player 8+ and JavaScript enabled to play videos.
-			</div>
-		</div>
-		<img id="mascot" src="img/sloth.gif" alt="slothyx.com">
-
-		<div id="progressSlider"></div>
-		<div id="controlTV">
-			<button id="toggleButton" onclick="slothyx.toggle()"><i class="glyphicon"
-																	data-bind="css: {'glyphicon-play': !playing(), 'glyphicon-pause': playing()}"></i>
-			</button>
-			<button onclick="slothyx.openRemotePlayer()">Remote Player</button>
-		</div>
-		<div id="volumeSlider"></div>
-	</div>
+    <!--<div id="player">
 
 
-	<div class="backgroundcontainer" id="hrdivide">
-		<table class="maxwidth">
-			<tr>
-				<td class="equalcolumns">News & Updates</td>
-				<td class="equalcolumns textcenter">Feedback</td>
-				<td class="equalcolumns textcenter">FAQ</td>
-				<td class="equalcolumns textright">Contact</td>
-			</tr>
-		</table>
-	</div>
+         <img id="mascot" src="img/sloth.gif" alt="slothyx.com">
 
+
+
+    </div> -->
 
 	<div class="backgroundcontainer" id="newscontainer">
 		<h3 class="headerfont2">News & Updates</h3>
@@ -254,7 +304,7 @@
 						It's time to send us your feedback. We highly appreciate positive as well as negative
 						acknowledgements.
 						Thank you
-						<span class="yx"><strong>yx</strong></span>
+						yx
 						-much for your support!
 
 					</p>
@@ -265,8 +315,14 @@
 		<div id="emailusbutton"><a href="mailto:info@slothyx.com">E-Mail us here</a></div>
 	</div>
 
+    <div id="new">
+
+    </div>
+
 	<div class="backgroundcontainer" id="faq">
 		<h3 class="headerfont2">FAQ</h3>
+
+        <img src="img/slothcopy.gif">
 	</div>
 	<div class="backgroundcontainer" id="contact">
 		<h3 class="headerfont2">Contact</h3>
@@ -293,11 +349,12 @@
 		</table>
 	</div>
 
-	<footer>
+	<!--<footer>
 		<div id="footer_font">
 			<address>Webdesign by: Matthias Ableidinger & Patrick Obermüller</address>
 		</div>
-	</footer>
+	</footer>-->
+</div>
 
 </div>
 

@@ -9,7 +9,7 @@
 		var params = { allowScriptAccess: "always" };
 		var atts = { id: YTPLAYER_RAW_HTML_ID };
 		swfobject.embedSWF("http://www.youtube.com/apiplayer?enablejsapi=1&playerapiid=ytplayer&version=3",
-			"ytPlayer", "320", "300", "8", null, null, params, atts);
+			"ytPlayer", "100%", "250", "8", null, null, params, atts);
 	});
 
 	var slothyx = window.slothyx || {};
