@@ -5,7 +5,6 @@
 	/***** CONSTANTS *****/
 	var SEARCH_TEXTFIELD_ID = '#searchText';
 	var VIDEO_TEXTFIELD_ID = '#newVideoId';
-	var TOGGLE_BUTTON_ID = '#toggleButton';
 	var PLAYLIST_CODE_ID = '#newVideoId';
 	var PLAYLIST_NAME_ID = '#newPlaylistName';
 	var PROGRESS_SLIDER_ID = '#progressSlider';
@@ -199,13 +198,17 @@
 		});
 	}
 
+	function getModel(){
+		return slothyx.knockout.getModel();
+	}
+
 	/*****INIT*****/
 	getPlayList().addVideoSelectedListener(onSelectedVideo);
 	getSearchResultList().addSearchRelatedListener(onSearchRelated);
 	getYtPlayer().addListener(onYTPlayerStateChange);
+	getModel().contribute({stateModel: stateModel});
 
-	$(function() {
-		ko.applyBindings(stateModel, $(TOGGLE_BUTTON_ID).get(0));
+	slothyx.util.onStartUp(function() {
 
 		slothyx.util.initTextFields(slothyx);
 
@@ -218,7 +221,7 @@
 
 		$(PROGRESS_SLIDER_ID).slider({
 			disabled: true,
-			start: function(){
+			start: function() {
 				progressSliderDragging = true;
 			},
 			stop: function(event, ui) {

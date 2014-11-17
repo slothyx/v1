@@ -145,26 +145,12 @@ input[type=text]{
 
 }
 
-.circle {
-    border-radius: 100%;
-    position: absolute;
-}
-
-.redcircle {
-    background-color: darkred;
-    height: 200px;
-    width: 200px;
-
-}
-
-
 #octo {
     padding-bottom: 13.6px;
     min-height: 150px;
     text-align: center;
 
 }
-
 
 #octo p:first-child {
     text-decoration: underline;

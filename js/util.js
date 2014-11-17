@@ -41,6 +41,7 @@
 	};
 
 	util.initTextFields = function(object) {
+		//TODO make data-attribute parameter
 		$('input[data-' + DATA_ATTRIBUTE + ']').each(function() {
 			var self = $(this);
 			self.on("keypress", function(event) {
@@ -50,6 +51,10 @@
 				}
 			});
 		});
+	};
+
+	util.onStartUp = function(callback){
+		$(callback);
 	};
 
 })(jQuery, window, _);

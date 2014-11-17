@@ -9,7 +9,6 @@
 	/*****PLAYLIST API*****/
 	var playlist = (function() {
 
-		var PLAYLIST_HTML_ID = "#playlist";
 		var PLAYLISTS_PERSIST_ID = "playlists";
 		var PLAYLIST_DEFAULT_NAME = "Slothyx Playlist";
 
@@ -258,9 +257,7 @@
 		initPlaylists();
 		initPlayStrategies();
 
-		$(function() {
-			ko.applyBindings(playlistModel, $(PLAYLIST_HTML_ID).get(0));
-		});
+		slothyx.knockout.getModel().contribute({playlist: {playlistModel: playlistModel}});
 
 		return playlist;
 	})();
@@ -268,8 +265,6 @@
 
 	/*****SEARCHRESULTLIST API*****/
 	var searchResultList = (function() {
-
-		var SEARCHRESULTS_HTML_ID = "#searchResults";
 
 		var searchResultsModel = {
 			searchResults: ko.observableArray()
@@ -304,10 +299,7 @@
 		}
 
 		/******INIT******/
-		$(function() {
-			ko.applyBindings(searchResultsModel, $(SEARCHRESULTS_HTML_ID).get(0));
-		});
-
+		slothyx.knockout.getModel().contribute({playlist: {searchResultsModel: searchResultsModel}});
 		return searchResultList;
 	})();
 
