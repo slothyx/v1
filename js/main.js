@@ -198,7 +198,7 @@
 		});
 	}
 
-	function getModel(){
+	function getModel() {
 		return slothyx.knockout.getModel();
 	}
 

@@ -1,160 +1,161 @@
 #background {
-    background-color: #0d141b;
+	background-color: #0d141b;
 	/*background-color: #7cb9b4;*/
 }
 
 .backgroundcontainer {
 	background-color: #262626;
 }
+
 #contact td {
-    color: black;
+	color: black;
 }
 
 #contact tr {
-    text-align: left;
+	text-align: left;
 }
 
 #contact h3 {
-    margin-bottom: 30px;
+	margin-bottom: 30px;
 }
 
 #leftcolum {
-    padding-top: 30px;
-    position: fixed;
-    float:left;
-    width: 250px;
-    height: 100%;
-    min-height: 800px;
-    top: 0;
-    left:0;
+	padding-top: 30px;
+	position: fixed;
+	float: left;
+	width: 250px;
+	height: 100%;
+	min-height: 800px;
+	top: 0;
+	left: 0;
 
-    background-color: #0d141b;
-   /* box-shadow: 5px 0 50px #292929; */
+	background-color: #0d141b;
+	/* box-shadow: 5px 0 50px #292929; */
 }
 
 #leftcolum p {
-    color:white;
+	color: white;
 }
 
 #leftcolum img {
 }
-
 
 .controllist {
-    list-style: none;
-    width:100%;
-    height:100%;
-    padding: 0px;
-    margin: 0px;
+	list-style: none;
+	width: 100%;
+	height: 100%;
+	padding: 0px;
+	margin: 0px;
 }
 
 #leftcolum img {
-    position: relative;
-    display: inline-block;
-    margin-left: 0px;
+	position: relative;
+	display: inline-block;
+	margin-left: 0px;
 }
 
 #leftcolum ul {
-    width:100%;
+	width: 100%;
 }
 
-#leftcolum ul li{
-    width:100%;
-    margin:0px;
-    padding-left: 5px;
-    padding-right: 5px;
+#leftcolum ul li {
+	width: 100%;
+	margin: 0px;
+	padding-left: 5px;
+	padding-right: 5px;
 }
 
-#leftcolum ul li p{
-    margin: 0;
+#leftcolum ul li p {
+	margin: 0;
 }
 
-#leftcolum ul li h2{
-    margin: 0;
+#leftcolum ul li h2 {
+	margin: 0;
 }
 
 .itemslots {
 
-    text-align: center;
-    border-top: 3px solid #0d141b;
-    height: 75px;
-    background-color: #4676a2;
+	text-align: center;
+	border-top: 3px solid #0d141b;
+	height: 75px;
+	background-color: #4676a2;
 
 }
 
 #unus {
-    text-align: center;
+	text-align: center;
 
 }
 
 #duo {
-    text-align: center;
-    height: 125px;
+	text-align: center;
+	height: 125px;
 
 }
 
 #tres {
 
-
 }
+
 #quattuor {
 
 }
+
 #quinque {
 
 }
 
 #sex {
-    padding-top: 20px;
-    height: 200px;
-    text-align: center;
+	padding-top: 20px;
+	height: 200px;
+	text-align: center;
 
 }
 
 #sex p:first-child {
-    margin-bottom: 10px
+	margin-bottom: 10px
 }
 
 #septem {
-    text-align: center;
-    font-size: 30px;
-    height: 10%;
-    min-height: 150px;
-    color: #f5f5f5;
+	text-align: center;
+	font-size: 30px;
+	height: 10%;
+	min-height: 150px;
+	color: #f5f5f5;
 }
 
-input[type=text]{
-    color: #020202;
-    border: solid black 1px;
-    padding-left: 9px;
-    height: 30px;
-    width: 70%;
-    margin-top: 5px;
-    margin-bottom: 5px;
+input[type=text] {
+	color: #020202;
+	border: solid black 1px;
+	padding-left: 9px;
+	height: 30px;
+	width: 70%;
+	margin-top: 5px;
+	margin-bottom: 5px;
 }
 
 .search {
-    padding:6px 15px 6px 30px;
-    margin:3px;
+	padding: 6px 15px 6px 30px;
+	margin: 3px;
 }
 
 .rounded {
-    border-radius:15px;
-    -moz-border-radius:15px;
-    -webkit-border-radius:15px;
+	border-radius: 15px;
+	-moz-border-radius: 15px;
+	-webkit-border-radius: 15px;
 
 }
 
 #octo {
-    padding-bottom: 13.6px;
-    min-height: 150px;
-    text-align: center;
+	padding-bottom: 13.6px;
+	min-height: 150px;
+	text-align: center;
 
 }
 
 #octo p:first-child {
-    text-decoration: underline;
-    padding-bottom: 5px;
+	text-decoration: underline;
+	padding-bottom: 5px;
 }
 
 #novem {
@@ -187,8 +188,8 @@ input[type=text]{
 }
 
 #main {
-    position: absolute;
-    margin-left:250px;
+	position: absolute;
+	margin-left: 250px;
 }
 
 .resultcontainer {
@@ -211,7 +212,6 @@ input[type=text]{
 	display: inline-block;
 }
 
-
 .results-title {
 	margin-top: 0;
 	margin-bottom: 3px;
@@ -225,7 +225,7 @@ input[type=text]{
 
 .results-description {
 	text-overflow: ellipsis;
-    color: #0d141b;
+	color: #0d141b;
 	font-size: 14px;
 	float: right;
 	display: inline-block;
@@ -240,8 +240,7 @@ input[type=text]{
 }
 
 .playlist-title {
-    color: #0d141b;
-
+	color: #0d141b;
 
 }
 
@@ -302,14 +301,12 @@ h2 {
 	font-family: Bookman Old Style, serif;
 }
 
-
-
 .headerfont2 {
 	margin-top: 0;
 	color: #0d141b;;
 	font-size: 20px;
 	font-family: Bookman Old Style, serif;
-    font-weight: bolder;
+	font-weight: bolder;
 }
 
 #emailusbutton {
@@ -345,12 +342,13 @@ img {
 }
 
 #newcontainer {
-    width:70%;
-    display: inline-block;
-    height: 50px;
-    background-color: white;
+	width: 70%;
+	display: inline-block;
+	height: 50px;
+	background-color: white;
 }
- /*#prim {
+
+/*#prim {
 	width: 70%;
 	clear: both;
 
@@ -367,47 +365,42 @@ img {
 	padding-top: 9px;
 }*/
 
-
-
 .results {
-    float:left;
+	float: left;
 	height: 810px;
 	width: 70%;
 	min-width: 305px;
 	overflow-y: scroll;
 	overflow-x: hidden;
-    background-color: #ffffff;
-    padding: 2% 15px 2% 15px;
-
+	background-color: #ffffff;
+	padding: 2% 15px 2% 15px;
 
 }
 
 #playlist {
-    float:right;
-    padding: 2% 15px 2% 15px;
+	float: right;
+	padding: 2% 15px 2% 15px;
 	height: 810px;
-    width: 30%;
-    overflow-y: auto;
-    overflow-x: hidden;
-    background-color: #ffffff;
+	width: 30%;
+	overflow-y: auto;
+	overflow-x: hidden;
+	background-color: #ffffff;
 }
 
-
 #playListItemsContainer {
-    width:100%;
+	width: 100%;
 }
 
 #playlistItems div:nth-child(2n) {
-    background-color: #e8e8e8;
+	background-color: #e8e8e8;
 }
 
 #playlistItems {
 	height: 100%;
 }
 
-
 #playlistItems div.listItem.selected, #playlistItems div.listItem:hover {
-    background-color: #8dc0ee;
+	background-color: #8dc0ee;
 }
 
 #player {
@@ -415,31 +408,31 @@ img {
 }
 
 #mascot {
-    position: relative;
-    height: 100px;
-    width:100px;
+	position: relative;
+	height: 100px;
+	width: 100px;
 }
 
 #tvset {
-    display: block;
+	display: block;
 }
 
 #controlTV {
 
-    margin-bottom: 10px;
-    padding: 5px 4%;
-    height: 40px;
+	margin-bottom: 10px;
+	padding: 5px 4%;
+	height: 40px;
 	border-bottom-left-radius: 20px;
 	border-bottom-right-radius: 20px;
 	background-color: rgba(220, 220, 220, 0.46);
 }
 
 #progressSlider {
-    margin: 10px;
+	margin: 10px;
 }
 
 #volumeSlider {
-    float:right;
+	float: right;
 }
 
 /*#hrdivide {
@@ -456,63 +449,59 @@ img {
     color:#000000;
 }*/
 
-
-
 #newscontainer {
 	float: left;
 	width: 70%;
 	height: 450px;
-    padding: 45px;
-    background-color: #ffcb00;
-    color: black;
+	padding: 45px;
+	background-color: #ffcb00;
+	color: black;
 }
 
 #newscontainer td li {
-    color: black;
+	color: black;
 }
 
 #feedback {
 	float: right;
 	width: 30%;
-    height: 450px;
-    padding: 45px;
-    background-color: #f0f0f0;
-    color: black;
+	height: 450px;
+	padding: 45px;
+	background-color: #f0f0f0;
+	color: black;
 }
 
 #feedback td p {
-    color: black;
+	color: black;
 }
-
 
 #faq {
-    color: black;
-    padding: 45px;
-    clear: both;
-    text-align: center;
+	color: black;
+	padding: 45px;
+	clear: both;
+	text-align: center;
 	height: 500px;
-    background-color: #62ade3;
+	background-color: #62ade3;
 }
 
-
 #faq img {
-    height: 400px;
-    width: 400px;
-    margin: auto;
+	height: 400px;
+	width: 400px;
+	margin: auto;
 }
 
 #contact {
-    padding: 45px;
+	padding: 45px;
 
-    clear: both;
-    text-align: center;
-    background-color: #f5f5f5;
+	clear: both;
+	text-align: center;
+	background-color: #f5f5f5;
 	height: 250px;
 }
 
 #sizeHolder {
-    min-width: 1000px;
-    width: 70%;
+	min-width: 1000px;
+	width: 70%;
 
 }
 

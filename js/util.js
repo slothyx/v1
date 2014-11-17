@@ -53,7 +53,7 @@
 		});
 	};
 
-	util.onStartUp = function(callback){
+	util.onStartUp = function(callback) {
 		$(callback);
 	};
 
