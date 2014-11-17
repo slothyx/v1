@@ -194,8 +194,10 @@
 				}
 				initializing = false;
 			} else {
-				state.progress = progress;
-				progressEvents.throwEvent(progress);
+				if(progress !== 0) {
+					state.progress = progress;
+					progressEvents.throwEvent(progress);
+				}
 			}
 		}
 
