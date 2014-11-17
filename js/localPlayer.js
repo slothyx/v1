@@ -73,7 +73,6 @@
 			self.load("");
 		};
 		self.setProgress = function(percentage) {
-			console.log("duration: "+player.getDuration());
 			player.seekTo(player.getDuration() / 100 * percentage, true);
 		};
 		self.setVolume = function(percentage) {
@@ -81,11 +80,11 @@
 		};
 		self.hide = function() {
 			stopProgressUpdater();
-			$(id).hide(0);
+			$(id).hide({duration: 0});
 		};
 		self.show = function() {
 			startProgressUpdater();
-			$(id).show(0);
+			$(id).show({duration: 0});
 		};
 		self.requestFullscreen = function() {
 			var elem = player;
@@ -131,6 +130,7 @@
 			progress: 0,
 			volumne: 100
 		};
+		var initializing = false;
 
 		self.load = function(id) {
 			state.state = STATE_PLAYING;
@@ -180,23 +180,30 @@
 			player.addProgressListener(onProgressChange);
 			slothyx.util.doWhenTrue(initPlayerFromState, player.isReady);
 		};
+
 		function onStateChange(newState) {
 			events.throwEvent(newState);
 		}
 
 		function onProgressChange(progress) {
-			state.progress = progress;
-			progressEvents.throwEvent(progress);
+			//TODO move to state change
+			if(initializing) {
+				player.setProgress(state.progress);
+				if(state.state === STATE_PAUSED) {
+					player.pause();
+				}
+				initializing = false;
+			} else {
+				state.progress = progress;
+				progressEvents.throwEvent(progress);
+			}
 		}
 
 		function initPlayerFromState() {
 			player.setVolume(state.volumne);
 			if(state.state !== STATE_STOPPED) {
 				player.load(state.loadedVideoId);
-				player.setProgress(state.progress);
-				if(state.state === STATE_PAUSED) {
-					player.pause();
-				}
+				initializing = true;
 			}
 		}
 	}
