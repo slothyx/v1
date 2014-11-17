@@ -6,6 +6,7 @@
 	var util = slothyx.util = {};
 	var ENTER_KEY_CODE = 13;
 	var DATA_ATTRIBUTE = "enterevent";
+	var DEFAULT_INTERVAL = 500; //half a second
 
 	util.Video = function(id, title, description, image) {
 		var self = this;
@@ -55,6 +56,25 @@
 
 	util.onStartUp = function(callback) {
 		$(callback);
+	};
+	
+	util.Command = function(command, params) {
+		this.command = command;
+		this.params = params;
+	};
+
+	util.doWhenTrue = function(callback, predicateCallback, time) {
+		if(time === undefined) {
+			time = DEFAULT_INTERVAL;
+		}
+
+		if(predicateCallback()) {
+			callback();
+		} else {
+			setTimeout(function() {
+				util.doWhenTrue(callback, predicateCallback, time);
+			}, time);
+		}
 	};
 
 })(jQuery, window, _);
