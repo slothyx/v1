@@ -5,7 +5,7 @@
 	/***** CONSTANTS *****/
 	var SEARCH_TEXTFIELD_ID = '#searchText';
 	var VIDEO_TEXTFIELD_ID = '#newVideoId';
-	var PLAYLIST_CODE_ID = '#newVideoId';
+	var PLAYLIST_CODE_ID = '#newPlaylistCode';
 	var PLAYLIST_NAME_ID = '#newPlaylistName';
 	var PROGRESS_SLIDER_ID = '#progressSlider';
 	var VOLUME_SLIDER_ID = '#volumeSlider';

@@ -1,36 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
-	<title>Music - Slothyx.com</title>
+    <title>Music - Slothyx.com</title>
 
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<link href="css/bootstrap.min.css" rel="stylesheet">
-	<link href="css/jquery-ui.min.css" rel="stylesheet">
-	<link href="css/theme.css" rel="stylesheet">
-	<link href="css/custom.css" rel="stylesheet">
-	<link rel="icon" href="img/favicon.ico" type="image/x-icon">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link href="css/theme.css" rel="stylesheet">
+    <link href="css/custom.css" rel="stylesheet">
+    <link rel="icon" href="img/favicon.ico" type="image/x-icon">
 
-	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/knockout/3.2.0/knockout-min.js"></script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/knockout-sortable/0.8.1/knockout-sortable.min.js"></script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/knockout/3.2.0/knockout-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/knockout-sortable/0.8.1/knockout-sortable.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js"></script>
 
-	<script src="js/swfobject.js"></script>
-	<script src="js/util.js"></script>
-	<script src="js/knockout.js"></script>
-	<script src="js/persist.js"></script>
-	<script src="js/localPlayer.js"></script>
-	<script src="js/youtube.js"></script>
-	<script src="js/playlist.js"></script>
-	<script src="js/remotePlayer.js"></script>
-	<script src="js/main.js"></script>
-	<script src="https://apis.google.com/js/client.js?onload=googleApiCallback"></script>
+    <script src="js/swfobject.js"></script>
+    <script src="js/util.js"></script>
+    <script src="js/knockout.js"></script>
+    <script src="js/persist.js"></script>
+    <script src="js/localPlayer.js"></script>
+    <script src="js/youtube.js"></script>
+    <script src="js/playlist.js"></script>
+    <script src="js/remotePlayer.js"></script>
+    <script src="js/main.js"></script>
+    <script src="https://apis.google.com/js/client.js?onload=googleApiCallback"></script>
 
-	<script src="js/bootstrap.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
 
 
 </head>
@@ -40,322 +40,340 @@
 
 <div id="leftcolum">
 
+    <ul class="controllist">
+        <li id="unus">
 
-	<ul class="controllist">
-		<li id="unus">
+            <!--<p>slothyx.com
+           </p><span class="BETAfont">BETA</span>*/-->
 
-			<!--<p>slothyx.com
-		   </p><span class="BETAfont">BETA</span>*/-->
+        </li>
 
-
-		</li>
-
-		<li id="duo">
-			<p>Welcome to slothyx.com <br/> Your free Website <br/> for Playlists!
-			</p>
+        <li id="duo">
+            <p>Welcome to slothyx.com <br/> Your free Website <br/> for Playlists!
+            </p>
 
 
-		</li>
+        </li>
 
 
-		<li class="itemslots" id="tres">
+        <li class="itemslots" id="searchSlot">
 
-			<p>Search for your favourite videos</p>
+            <!-- <p>Search for your favourite videos</p>
+             <input type="text" class="search rounded" placeholder="search..."
+                                                    id="searchText" data-enterevent="searchYoutube">
+             <button onclick="slothyx.searchYoutube()" id="searchButton">Search Videos</button>-->
 
-			<label for="searchText"></label><input type="text" class="search rounded" placeholder="search..."
-												   id="searchText" data-enterevent="searchYoutube">
-			<!--<button onclick="slothyx.searchYoutube()" id="searchButton">Search Videos</button>-->
+            <div class="formed">
+                <button onclick="slothyx.searchYoutube()" type="button"><span class="glyphicon glyphicon-search"></span>
+                </button>
+                <input type="text" placeholder="Search" id="searchText"
+                       data-enterevent="searchYoutube">
+                <!--<label for="searchText"></label>-->
+            </div>
 
-		</li>
+        </li>
 
-		<li class="itemslots" id="quattuor">
+        <li class="itemslots" id="loadSlot">
 
-			<p>Load a specific video/playlist</p>
-			<label for="newVideoId"></label><input type="text" class="rounded" placeholder="load..." id="newVideoId"
-												   data-enterevent="loadVideoFromTextField">
-			<!--<button onclick="slothyx.loadVideoFromTextField()">Load Video</button>-->
-			<!--<button onclick="slothyx.generatePlaylistCode()">Generate Code</button>-->
+            <!-- <p>Load a specific video/playlist</p>
+             <button onclick="slothyx.loadVideoFromTextField()">Load Video</button>-->
 
-		</li>
+            <div class="formed">
 
-		<li class="itemslots" id="quinque">
+                <button onclick="slothyx.loadVideoFromTextField()" type="button"><span
+                        class="glyphicon glyphicon-export"></span></button>
+                <input type="text" placeholder="Load" id="newVideoId"
+                       data-enterevent="loadVideoFromTextField">
+                <!--<label for="newVideoId"></label>-->
+            </div>
+        </li>
 
-			<p>Rename a playlist</p>
-			<label for="newPlaylistName"></label>
-			<input type="text" class="rounded" placeholder="rename..." id="newPlaylistName"
-				   data-enterevent="renameCurrentPlaylist"/>
-			<!-- <button onclick="slothyx.renameCurrentPlaylist()">Rename</button>-->
+        <!--<li class="itemslots" id="quinque">
+            <p>Rename a playlist</p>
+             <button onclick="slothyx.renameCurrentPlaylist()">Rename</button>
+            <div class="input-group input-group-sm">
+                <span class="input-group-addon glyphicon glyphicon-export"></span>
+                <input type="text" class="form-control" placeholder="Rename"  id="newPlaylistName"
+                       data-enterevent="renameCurrentPlaylist"/>
+                <label for="newPlaylistName"></label>
+            </div>
+        </li>-->
 
-		</li>
+        <li style="margin-top: 50px" class="itemslots" id="generatorSlot">
 
-		<li id="sex">
+            <div class="formed">
+                <button type="button" class="defaultbutton" onclick="slothyx.generatePlaylistCode()"><span
+                        class="glyphicon glyphicon-floppy-disk"></span></button>
+                <input type="text" placeholder="Generate" id="newPlaylistCode">
+            </div>
 
-			<p>Custom settings</p>
+        </li>
 
-			<table class="textleft">
-				<tr>
-					<td><p class="settings">image</p></td>
-					<td>
-						<div class="onoffswitch">
-							<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch"
-								   checked>
-							<label class="onoffswitch-label" for="myonoffswitch">
-								<span class="onoffswitch-inner"></span>
-								<span class="onoffswitch-switch"></span>
-							</label>
-						</div>
-					</td>
-				</tr>
+        <li id="settingSlot">
 
-				<tr>
-					<td><p class="settings">title</p></td>
-					<td>
-						<div class="onoffswitch">
-							<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch2"
-								   checked>
-							<label class="onoffswitch-label" for="myonoffswitch2">
-								<span class="onoffswitch-inner"></span>
-								<span class="onoffswitch-switch"></span>
-							</label>
-						</div>
-					</td>
-				</tr>
+            <p>Custom settings</p>
 
+            <table class="textleft">
+                <tr>
+                    <td><p class="settings">image</p></td>
+                    <td>
+                        <div class="onoffswitch">
+                            <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch"
+                                   checked>
+                            <label class="onoffswitch-label" for="myonoffswitch">
+                                <span class="onoffswitch-inner"></span>
+                                <span class="onoffswitch-switch"></span>
+                            </label>
+                        </div>
+                    </td>
+                </tr>
 
-				<tr>
-					<td><p style="margin-right:10px" class="settings">description</p></td>
-					<td>
-						<div class="onoffswitch">
-							<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch3"
-								   checked>
-							<label class="onoffswitch-label" for="myonoffswitch3">
-								<span class="onoffswitch-inner"></span>
-								<span class="onoffswitch-switch"></span>
-							</label>
-						</div>
-					</td>
-				</tr>
-			</table>
+                <tr>
+                    <td><p class="settings">title</p></td>
+                    <td>
+                        <div class="onoffswitch">
+                            <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch2"
+                                   checked>
+                            <label class="onoffswitch-label" for="myonoffswitch2">
+                                <span class="onoffswitch-inner"></span>
+                                <span class="onoffswitch-switch"></span>
+                            </label>
+                        </div>
+                    </td>
+                </tr>
 
 
-		</li>
+                <tr>
+                    <td><p style="margin-right:10px" class="settings">description</p></td>
+                    <td>
+                        <div class="onoffswitch">
+                            <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch3"
+                                   checked>
+                            <label class="onoffswitch-label" for="myonoffswitch3">
+                                <span class="onoffswitch-inner"></span>
+                                <span class="onoffswitch-switch"></span>
+                            </label>
+                        </div>
+                    </td>
+                </tr>
+            </table>
 
-		<li id="septem">
-			<div class="glyphicon glyphicon-ok-sign"></div>
-			<div class="glyphicon glyphicon-ok-sign"></div>
-		</li>
 
-		<li id="octo" style="padding-top: 10px">
-			<p>About</p>
+        </li>
 
-			<p>www.slothyx.com is a free website, <br>designed to provide a fast and easy way to create video-playlists.
-				Neither
-				do we want your money, nor your data.<br> <br> Enjoy the website! </p>
+        <li id="septem">
+        </li>
 
-			<p id="copyright">Copyright &copy; is for Losers.<br>
-				~Banksy</p>
-			<!--<img src="img/sloth_rework.gif" alt="slothyx.com">-->
+        <li id="aboutSlot">
+            <p>About</p>
 
-		</li>
+            <p>www.slothyx.com is a free website, <br>designed to provide a fast and easy way to create video-playlists.
+                Neither
+                do we want your money, nor your data.<br> <br> Enjoy the website! </p>
 
-	</ul>
+            <p id="copyright">Copyright &copy; is for Losers.<br>
+                ~Banksy</p>
+            <!--<img src="img/sloth_rework.gif" alt="slothyx.com">-->
+        </li>
+
+    </ul>
 
 </div>
 
 <div id="main">
 
-	<div id="sizeHolder">
+    <div id="sizeHolder">
 
-		<div class="results backgroundcontainer">
-			<div id="searchResults" data-bind="foreach: $root.playlist.searchResultsModel.searchResults">
-				<div class="searchResultbox searchResult"><!-- data-bind="click: addToPlaylist" >-->
-					<h3 class="results-title" data-bind="text: video.title"></h3>
+        <div class="results backgroundcontainer">
+            <div id="searchResults" data-bind="foreach: $root.playlist.searchResultsModel.searchResults">
+                <div class="searchResultbox searchResult"><!-- data-bind="click: addToPlaylist" >-->
+                    <h3 class="results-title" data-bind="text: video.title"></h3>
 
-					<div class="resultcontainer">
-						<img class="results-image pull-left" data-bind="attr: {src: video.image}">
-						<span class="results-description" data-bind="text: video.description"></span></div>
+                    <div class="resultcontainer">
+                        <img class="results-image pull-left" data-bind="attr: {src: video.image}">
+                        <span class="results-description" data-bind="text: video.description"></span></div>
 
-				</div>
-				<div class="resultbuttoncontainer">
-					<button class="resultbutton1" data-bind="click: addToPlaylist">Add to current Playlist</button>
-					<button class="resultbutton2" data-bind="click: searchRelated">Search Related</button>
-				</div>
-			</div>
-			<div>
-				<button id="loadMore" style="display:none;" onclick="slothyx.loadMore()">Load More</button>
-			</div>
-		</div>
-
-
-		<div id="playlist" class="backgroundcontainer" data-bind="with: $root.playlist.playlistModel">
-
-			<div id="playlistitemscontainer">
-
-				<div>
-
-					<div id="tvset">
-						<div id="ytPlayer">
-							You need Flash player 8+ and JavaScript enabled to play videos.
-						</div>
-					</div>
-
-				</div>
-
-				<div id="progressSlider"></div>
-
-				<div id="volumeSlider"></div>
-
-				<div id="controlTV">
-
-					<button onclick="slothyx.openRemotePlayer()">Remote Player</button>
-
-					<button onclick="slothyx.toggle()" data-bind="with: $root.stateModel"><i class="glyphicon"
-																							 data-bind="css: {'glyphicon-play': !playing(), 'glyphicon-pause': playing()}"></i>
-					</button>
-
-					<div style="font-size: 20px" class="glyphicon glyphicon-fullscreen "></div>
-				</div>
-
-				<select data-bind="options:	playStrategies, optionsText: 'name', value: playStrategy"></select>
-				<select data-bind="options: playlists, optionsText: 'name', value: playlist"></select>
-				<button onclick="slothyx.addPlaylist()">
-					<div style="font-size: 15px float:left" class="glyphicon glyphicon-plus"></div>
-				</button>
-				<button onclick="slothyx.deletePlaylist()">
-					<div style="font-size:15px float:right" class="glyphicon glyphicon-trash"></div>
-				</button>
-
-				<div id="playlistItems" data-bind="if: (playlist() !== null && playlist() !== undefined)">
-					<div data-bind="sortable: {data: playlist().videos, afterMove: slothyx.lists.getPlaylist().changed}">
-						<div class="listItem" data-bind="click: select, css: {selected: isSelected()}">
-							<span class="playlist-title" data-bind="text: video.title"></span><i
-								class="xdelete glyphicon glyphicon-remove"
-								data-bind="click: remove"></i>
-						</div>
-					</div>
-				</div>
-
-				<!--<button id="toggleButton" onclick="slothyx.toggle()"><i class="glyphicon"
-																		data-bind="css: {'glyphicon-play': !playing(), 'glyphicon-pause': playing()}"></i>
-				</button>-->
+                </div>
+                <div class="resultbuttoncontainer">
+                    <button class="resultbutton1" data-bind="click: addToPlaylist">Add to current Playlist</button>
+                    <button class="resultbutton2" data-bind="click: searchRelated">Search Related</button>
+                </div>
+            </div>
+            <div>
+                <button id="loadMore" style="display:none;" onclick="slothyx.loadMore()">Load More</button>
+            </div>
+        </div>
 
 
-			</div>
-		</div>
+        <div id="playlist" class="backgroundcontainer" data-bind="with: $root.playlist.playlistModel">
 
-		<!--<div id="player">
+            <div id="playlistitemscontainer">
+
+                <div>
+
+                    <div id="tvset">
+                        <div id="ytPlayer">
+                            You need Flash player 8+ and JavaScript enabled to play videos.
+                        </div>
+                    </div>
+
+                </div>
+
+                <div id="progressSlider"></div>
+
+                <div id="volumeSlider"></div>
+
+                <div id="controlTV">
+
+                    <button onclick="slothyx.openRemotePlayer()">Remote Player</button>
+
+                    <button onclick="slothyx.toggle()" data-bind="with: $root.stateModel"><i class="glyphicon"
+                                                                                             data-bind="css: {'glyphicon-play': !playing(), 'glyphicon-pause': playing()}"></i>
+                    </button>
+
+                    <div style="font-size: 20px" class="glyphicon glyphicon-fullscreen "></div>
+                </div>
+
+                <select data-bind="options:	playStrategies, optionsText: 'name', value: playStrategy"></select>
+                <select data-bind="options: playlists, optionsText: 'name', value: playlist"></select>
+                <button onclick="slothyx.addPlaylist()">
+                    <div style="font-size: 15px float:left" class="glyphicon glyphicon-plus"></div>
+                </button>
+                <button onclick="slothyx.deletePlaylist()">
+                    <div style="font-size:15px float:right" class="glyphicon glyphicon-trash"></div>
+                </button>
+
+                <div id="playlistItems" data-bind="if: (playlist() !== null && playlist() !== undefined)">
+                    <div data-bind="sortable: {data: playlist().videos, afterMove: slothyx.lists.getPlaylist().changed}">
+                        <div class="listItem" data-bind="click: select, css: {selected: isSelected()}">
+                            <span class="playlist-title" data-bind="text: video.title"></span><i
+                                class="xdelete glyphicon glyphicon-remove"
+                                data-bind="click: remove"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!--<button id="toggleButton" onclick="slothyx.toggle()"><i class="glyphicon"
+                                                                        data-bind="css: {'glyphicon-play': !playing(), 'glyphicon-pause': playing()}"></i>
+                </button>-->
 
 
-			 <img id="mascot" src="img/sloth.gif" alt="slothyx.com">
+            </div>
+        </div>
+
+        <!--<div id="player">
+
+
+             <img id="mascot" src="img/sloth.gif" alt="slothyx.com">
 
 
 
-		</div> -->
+        </div> -->
 
-		<div class="backgroundcontainer" id="newscontainer">
-			<h3 class="headerfont2">News & Updates</h3>
+        <div class="backgroundcontainer" id="newscontainer">
+            <h3 class="headerfont2">News & Updates</h3>
 
-			<table>
-				<tr>
-					<th>
-						v. 1.0 - BETA
-					</th>
-				</tr>
-				<tr>
-					<td>
-						<ul>
-							<li>Now with Changelist</li>
-							<li>Saving Playlist when you restart Browser</li>
-							<li>Fixed bug, where video won't get unloaded</li>
-							<li>Sort your playlist with Drag&Drop</li>
-							<li>You can now load videos via URL</li>
-							<li>Repeatable playlist</li>
-							<li>Fullscreen feature implemented</li>
-							<li>External player to view video on second monitor/beamer</li>
-						</ul>
-					</td>
-					<td>
-						<ul>
-							<li>Now with Changelist</li>
-							<li>Saving Playlist when you restart Browser</li>
-							<li>Fixed bug, where video won't get unloaded</li>
-							<li>Sort your playlist with Drag&Drop</li>
-							<li>You can now load videos via URL</li>
-							<li>Repeatable playlist</li>
-							<li>Fullscreen feature implemented</li>
-							<li>External player to view video on second monitor/beamer</li>
-						</ul>
-					</td>
-				</tr>
+            <table>
+                <tr>
+                    <th>
+                        v. 1.0 - BETA
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        <ul>
+                            <li>Now with Changelist</li>
+                            <li>Saving Playlist when you restart Browser</li>
+                            <li>Fixed bug, where video won't get unloaded</li>
+                            <li>Sort your playlist with Drag&Drop</li>
+                            <li>You can now load videos via URL</li>
+                            <li>Repeatable playlist</li>
+                            <li>Fullscreen feature implemented</li>
+                            <li>External player to view video on second monitor/beamer</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <ul>
+                            <li>Now with Changelist</li>
+                            <li>Saving Playlist when you restart Browser</li>
+                            <li>Fixed bug, where video won't get unloaded</li>
+                            <li>Sort your playlist with Drag&Drop</li>
+                            <li>You can now load videos via URL</li>
+                            <li>Repeatable playlist</li>
+                            <li>Fullscreen feature implemented</li>
+                            <li>External player to view video on second monitor/beamer</li>
+                        </ul>
+                    </td>
+                </tr>
 
-			</table>
-		</div>
+            </table>
+        </div>
 
-		<div id="feedback" class="backgroundcontainer">
-			<h3 class="headerfont2">Feedback</h3>
+        <div id="feedback" class="backgroundcontainer">
+            <h3 class="headerfont2">Feedback</h3>
 
-			<table>
-				<tr>
-					<th><span>You're on the spot</span></th>
-				</tr>
+            <table>
+                <tr>
+                    <th><span>You're on the spot</span></th>
+                </tr>
 
-				<tr>
-					<td>
-						<p>www.slothyx.com is still in early stage of development.
-							It's time to send us your feedback. We highly appreciate positive as well as negative
-							acknowledgements.
-							Thank you
-							yx
-							-much for your support!
+                <tr>
+                    <td>
+                        <p>www.slothyx.com is still in early stage of development.
+                            It's time to send us your feedback. We highly appreciate positive as well as negative
+                            acknowledgements.
+                            Thank you
+                            yx
+                            -much for your support!
 
-						</p>
-					</td>
-				</tr>
-			</table>
+                        </p>
+                    </td>
+                </tr>
+            </table>
 
-			<div id="emailusbutton"><a href="mailto:info@slothyx.com">E-Mail us here</a></div>
-		</div>
+            <div id="emailusbutton"><a href="mailto:info@slothyx.com">E-Mail us here</a></div>
+        </div>
 
-		<div id="new">
+        <div id="new">
 
-		</div>
+        </div>
 
-		<div class="backgroundcontainer" id="faq">
-			<h3 class="headerfont2">FAQ</h3>
+        <div class="backgroundcontainer" id="faq">
+            <h3 class="headerfont2">FAQ</h3>
 
-			<img src="img/slothcopy.gif">
-		</div>
-		<div class="backgroundcontainer" id="contact">
-			<h3 class="headerfont2">Contact</h3>
+            <img src="img/slothcopy.gif">
+        </div>
+        <div class="backgroundcontainer" id="contact">
+            <h3 class="headerfont2">Contact</h3>
 
-			<table class="maxwidth">
+            <table class="maxwidth">
 
-				<tr>
-					<td>Name: Matthias Ableidinger alias <i>"Codemonkey"</i></td>
+                <tr>
+                    <td>Name: Matthias Ableidinger alias <i>"Codemonkey"</i></td>
 
-					<td>Name: Patrick Obermüller alias <i>"Styleparrot"</i></td>
-					<td>www.Slothyx.com</td>
-				</tr>
+                    <td>Name: Patrick Obermüller alias <i>"Styleparrot"</i></td>
+                    <td>www.Slothyx.com</td>
+                </tr>
 
-				<tr>
-					<td>Function: JavaScript/Html/Css</td>
-					<td>Function: Html/Css</td>
-					<td> E-Mail: <a href="mailto: info@slothyx.com" class="mails">info@slothyx.com</a></td>
-				</tr>
-				<tr>
-					<td>E-Mail: <a href="mailto: codemonkey@slothyx.com" class="mails">codemonkey@slothyx.com</a></td>
-					<td>E-Mail: <a href="mailto: styleparrot@slothyx.com" class="mails">styleparrot@slothyx.com</a></td>
-				</tr>
+                <tr>
+                    <td>Function: JavaScript/Html/Css</td>
+                    <td>Function: Html/Css</td>
+                    <td> E-Mail: <a href="mailto: info@slothyx.com" class="mails">info@slothyx.com</a></td>
+                </tr>
+                <tr>
+                    <td>E-Mail: <a href="mailto: codemonkey@slothyx.com" class="mails">codemonkey@slothyx.com</a></td>
+                    <td>E-Mail: <a href="mailto: styleparrot@slothyx.com" class="mails">styleparrot@slothyx.com</a></td>
+                </tr>
 
-			</table>
-		</div>
+            </table>
+        </div>
 
-		<!--<footer>
-			<div id="footer_font">
-				<address>Webdesign by: Matthias Ableidinger & Patrick Obermüller</address>
-			</div>
-		</footer>-->
-	</div>
+        <!--<footer>
+            <div id="footer_font">
+                <address>Webdesign by: Matthias Ableidinger & Patrick Obermüller</address>
+            </div>
+        </footer>-->
+    </div>
 
 </div>
 

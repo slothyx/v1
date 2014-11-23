@@ -2740,8 +2740,9 @@ select[multiple].input-lg {
           user-select: none;
   background-image: none;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: 7px;
 }
+
 .btn:focus,
 .btn:active:focus,
 .btn.active:focus {
@@ -3438,7 +3439,7 @@ tbody.collapse.in {
   z-index: 2;
   float: left;
   width: 100%;
-  margin-bottom: 0;
+
 }
 .input-group-lg > .form-control,
 .input-group-lg > .input-group-addon,
@@ -3503,10 +3504,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   vertical-align: middle;
 }
 .input-group-addon {
-  padding: 6px 12px;
-  font-size: 14px;
   font-weight: normal;
-  line-height: 1;
   color: #555;
   text-align: center;
   background-color: #eee;
