@@ -44,7 +44,8 @@
         <li id="unus">
 
             <!--<p>slothyx.com
-           </p><span class="BETAfont">BETA</span>*/-->
+           </p><span class="BETAfont">BETA</span>*/
+            <img src="img/sloth.gif">-->
 
         </li>
 
@@ -64,7 +65,8 @@
              <button onclick="slothyx.searchYoutube()" id="searchButton">Search Videos</button>-->
 
             <div class="formed">
-                <button onclick="slothyx.searchYoutube()" type="button"><span class="glyphicon glyphicon-search"></span>
+                <button title="Search video" onclick="slothyx.searchYoutube()" type="button"><span
+                        class="glyphicon glyphicon-search"></span>
                 </button>
                 <input type="text" placeholder="Search" id="searchText"
                        data-enterevent="searchYoutube">
@@ -80,7 +82,7 @@
 
             <div class="formed">
 
-                <button onclick="slothyx.loadVideoFromTextField()" type="button"><span
+                <button title="Load playlist" onclick="slothyx.loadVideoFromTextField()" type="button"><span
                         class="glyphicon glyphicon-export"></span></button>
                 <input type="text" placeholder="Load" id="newVideoId"
                        data-enterevent="loadVideoFromTextField">
@@ -102,9 +104,10 @@
         <li style="margin-top: 50px" class="itemslots" id="generatorSlot">
 
             <div class="formed">
-                <button type="button" class="defaultbutton" onclick="slothyx.generatePlaylistCode()"><span
+                <button title="Generate Code" type="button" class="defaultbutton"
+                        onclick="slothyx.generatePlaylistCode()"><span
                         class="glyphicon glyphicon-floppy-disk"></span></button>
-                <input type="text" placeholder="Generate" id="newPlaylistCode">
+                <input type="text" placeholder="Code" id="newPlaylistCode">
             </div>
 
         </li>
@@ -225,7 +228,7 @@
 
                 <div id="controlTV">
 
-                    <button onclick="slothyx.openRemotePlayer()">Remote Player</button>
+                    <button title="Open video in new tab" onclick="slothyx.openRemotePlayer()">Remote Player</button>
 
                     <button onclick="slothyx.toggle()" data-bind="with: $root.stateModel"><i class="glyphicon"
                                                                                              data-bind="css: {'glyphicon-play': !playing(), 'glyphicon-pause': playing()}"></i>
@@ -236,10 +239,10 @@
 
                 <select data-bind="options:	playStrategies, optionsText: 'name', value: playStrategy"></select>
                 <select data-bind="options: playlists, optionsText: 'name', value: playlist"></select>
-                <button onclick="slothyx.addPlaylist()">
+                <button title="Add" onclick="slothyx.addPlaylist()">
                     <div style="font-size: 15px float:left" class="glyphicon glyphicon-plus"></div>
                 </button>
-                <button onclick="slothyx.deletePlaylist()">
+                <button title="Delete" onclick="slothyx.deletePlaylist()">
                     <div style="font-size:15px float:right" class="glyphicon glyphicon-trash"></div>
                 </button>
 
@@ -271,7 +274,7 @@
         </div> -->
 
         <div class="backgroundcontainer" id="newscontainer">
-            <h3 class="headerfont2">News & Updates</h3>
+            <h3>News & Updates</h3>
 
             <table>
                 <tr>
@@ -309,63 +312,171 @@
             </table>
         </div>
 
-        <div id="feedback" class="backgroundcontainer">
-            <h3 class="headerfont2">Feedback</h3>
+        <!-- <div id="feedback" class="backgroundcontainer">
+             <h3 class="headerfont2">Feedback</h3>
 
-            <table>
-                <tr>
-                    <th><span>You're on the spot</span></th>
-                </tr>
+             <table>
+                 <tr>
+                     <th><span>You're on the spot</span></th>
+                 </tr>
 
-                <tr>
-                    <td>
-                        <p>www.slothyx.com is still in early stage of development.
-                            It's time to send us your feedback. We highly appreciate positive as well as negative
-                            acknowledgements.
-                            Thank you
-                            yx
-                            -much for your support!
+                 <tr>
+                     <td>
+                         <p>www.slothyx.com is still in early stage of development.
+                             It's time to send us your feedback. We highly appreciate positive as well as negative
+                             acknowledgements.
+                             Thank you
+                             yx
+                             -much for your support!
 
-                        </p>
-                    </td>
-                </tr>
-            </table>
+                         </p>
+                     </td>
+                 </tr>
+             </table>
 
-            <div id="emailusbutton"><a href="mailto:info@slothyx.com">E-Mail us here</a></div>
-        </div>
+             <div id="emailusbutton"><a href="mailto:info@slothyx.com">E-Mail us here</a></div>
+         </div>
 
-        <div id="new">
+         <div id="new">
 
-        </div>
+         </div>
+         -->
+        <div class="introduction">
 
-        <div class="backgroundcontainer" id="faq">
-            <h3 class="headerfont2">FAQ</h3>
 
-            <img src="img/slothcopy.gif">
-        </div>
-        <div class="backgroundcontainer" id="contact">
-            <h3 class="headerfont2">Contact</h3>
+            <h3 style="text-align: center; margin-bottom: 36px;">Get started with slothyx.com</h3>
+
 
             <table class="maxwidth">
 
                 <tr>
-                    <td>Name: Matthias Ableidinger alias <i>"Codemonkey"</i></td>
+                    <td>
+                        <h2>Search</h2>
+                    </td>
 
-                    <td>Name: Patrick Obermüller alias <i>"Styleparrot"</i></td>
-                    <td>www.Slothyx.com</td>
+                    <td>
+                        <h2>Playlist</h2>
+                    </td>
+
+                    <td>
+                        <h2>Other</h2>
+                    </td>
+
                 </tr>
 
                 <tr>
-                    <td>Function: JavaScript/Html/Css</td>
-                    <td>Function: Html/Css</td>
-                    <td> E-Mail: <a href="mailto: info@slothyx.com" class="mails">info@slothyx.com</a></td>
-                </tr>
-                <tr>
-                    <td>E-Mail: <a href="mailto: codemonkey@slothyx.com" class="mails">codemonkey@slothyx.com</a></td>
-                    <td>E-Mail: <a href="mailto: styleparrot@slothyx.com" class="mails">styleparrot@slothyx.com</a></td>
-                </tr>
 
+                    <td>
+                        <div id="leftIntroduction">
+
+                            <ul>
+                                <li>To <b>search for videos</b>, type in keywords what you are looking for. Press
+                                    "Enter" or
+                                    <div style="background-color: #c3ee73; height: 20px; width:20px; padding: 3px 3px 3px 4px;display: inline-block;">
+                                        <span class="glyphicon glyphicon-search"></span></div>
+                                    to confirm your input.
+                                </li>
+                                <li>If you want to <b>load more videos</b> hit the "Load more" button on the bottom of
+                                    the search results.
+                                </li>
+                                <li>When you have found some good videos, and you want to <b>find similar videos</b>;
+                                    simply press the "Search related" button beneath video's description
+                                </li>
+                            </ul>
+
+                        </div>
+                    </td>
+
+                    <td>
+                        <div id="centerIntroduction">
+
+                            <ul>
+                                <li>To <b>create a playlist</b>, click  <span class="glyphicon glyphicon-plus"> </span>
+                                    underneath the video screen.
+                                    Slothyx will automatically add a new playlist to your playlist library
+                                </li>
+                                <li><b>Deleting a playlist</b> is as simple as creating one. Press the "Delete" button
+                                    right besides the "Add" button.
+                                </li>
+                                <li>If you want to <b>fill your playlist with content</b>, add videos by clicking the
+                                    "Add to current playlist" button beneath the video.
+                                </li>
+                                <li>To <b>delete videos</b>, press the red <span style="color:red"
+                                                                                 class="glyphicon glyphicon-remove"></span>
+                                    next to the title of
+                                    the video.
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+
+                    <td>
+                        <div id="rightIntroduction">
+
+                            <ul>
+                                <li><b>Sharing a playlist</b> is as easy as clicking 2 buttons. Hit the "Generate
+                                    code" button above the custom settings. Copy playlist code (Right click "copy"; or
+                                    strg+c.).Insert the code on facebook, skype, email, or similar.
+                                </li>
+                                <li>
+                                    If you want to <b>use a code</b>, copy it! When copied, insert him in the "Load" input box, below the search field and confirm it by pressing "Enter" or  <div style="background-color: #c3ee73; height: 20px; width:20px;padding: 3px 3px 3px 4px;display: inline-block;">
+                                    <span class="glyphicon glyphicon-export"></span></div>.
+                                </li>
+                                <li>To <b>display videos on another screen</b>, press the "Remote player" button
+                                    underneath the video.
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+
+                </tr>
             </table>
+
+        </div>
+        <div class="backgroundcontainer" id="contact">
+
+            <div id="leftpart_contact">
+                <h3>Get in touch</h3>
+
+                <p>Hey, let us know what you think! Send us your feedback, or just say Hello to the slothyx-team</p>
+
+                <hr>
+
+                <div style="text-align: left;">
+                    <p>Name: Matthias Ableidinger alias <i>"Codemonkey"</i><br>
+                        E-Mail: <a href="mailto: codemonkey@slothyx.com"
+                                   class="mails">codemonkey@slothyx.com</a><br><br>
+
+                        Name: Patrick Obermüller alias <i>"Styleparrot"</i><br>
+                        E-Mail: <a href="mailto: styleparrot@slothyx.com"
+                                   class="mails">styleparrot@slothyx.com</a><br><br>
+                        www.Slothyx.com
+                    </p>
+                    <hr>
+
+                    <p style="text-align: center; font-size: 14px"><i>Thanks for spending your time :)</i></p>
+                </div>
+            </div>
+
+
+            <div id="rightpart_contact">
+
+                <div class="rightpart_texbox"><p>Your name:</p></div>
+
+                <input class="maxwidth" type="text">
+
+                <div class="rightpart_texbox"><p>Email:</p></div>
+
+                <input class="maxwidth" type="email">
+
+                <div class="rightpart_texbox"><p>Comment:</p></div>
+
+                <textarea id="rightpart_commentbox" rows="10" maxlength="350"></textarea>
+
+                <button type="submit" class="submit" value="">Sumbit</button>
+
+            </div>
+
         </div>
 
         <!--<footer>
