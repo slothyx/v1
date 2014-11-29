@@ -2,7 +2,7 @@
 (function($, window, _, undefined) {
 	"use strict";
 
-	var MAX_RESULTS = "5";
+	var MAX_RESULTS = "15";
 
 	var slothyx = window.slothyx || {};
 	window.slothyx = slothyx;

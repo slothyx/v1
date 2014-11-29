@@ -335,11 +335,6 @@ ol {
     width: 100%;
 }
 
-.searchResultbox {
-    height: 135px;
-    width: 100%;
-}
-
 .textleft {
     text-align: left;
 }
@@ -358,11 +353,6 @@ ol {
 
 }
 
-.resultcontainer {
-    height: 110px;
-    width: 100%;
-
-}
 
 .addtoPlaylist {
     float: right;
@@ -376,6 +366,9 @@ ol {
     font-size: 12px;
     padding: 10px;
     text-shadow: 1px 1px 1px #0d384e;
+    margin-top: auto;
+    margin-bottom: auto;
+
 }
 
 .searchRelated {
@@ -416,23 +409,36 @@ ol {
 
 }
 
-.results-title {
-    margin-top: 8px;
-    margin-bottom: 8px;
-    clear: both;
-    color: #0d141b;
-    font-size: 18px;
-    top: 0;
-    left: 0;
+.oneResult h3 {
+    text-shadow: none;
 }
 
 .oneResult {
+    padding-top: 10px;
+    padding-bottom: 10px;
     margin-top: 5px;
     margin-bottom: 5px;
     width: 100%;
     clear: both;
     border-top: 1px solid #4777a3;
-    height: 200px;
+    height: 150px;
+
+}
+
+.results-title {
+    margin-top: 8px;
+    margin-bottom: 8px;
+    margin-left: 20px;
+    clear:right;
+    float:left;
+    display: inline-block;
+    color: #0d141b;
+    font-size: 18px;
+    min-width: 200px;
+    max-width: 480px;
+
+    height:19px;
+    overflow: hidden;
 }
 
 .results-description {
@@ -442,8 +448,8 @@ ol {
     float: left;
     margin-left: 20px;
     display: inline-block;
-    width: 68%;
-    height: 110px;
+    width: 55%;
+    height: 90px;
 }
 
 .results-image {

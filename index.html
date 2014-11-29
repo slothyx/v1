@@ -30,8 +30,6 @@
     <script src="js/main.js"></script>
     <script src="https://apis.google.com/js/client.js?onload=googleApiCallback"></script>
 
-    <script src="js/bootstrap.min.js"></script>
-
 
 </head>
 
@@ -190,18 +188,18 @@
         <div class="results backgroundcontainer">
             <div id="searchResults" data-bind="foreach: $root.playlist.searchResultsModel.searchResults">
 
-                <div class="oneResult">
-                    <div class="searchResultbox searchResult"><!-- data-bind="click: addToPlaylist" >-->
-                        <h3 class="results-title" data-bind="text: video.title"></h3>
+                <div class="oneResult searchResult"><!-- data-bind="click: addToPlaylist" >-->
 
-                        <div class="resultcontainer">
-                            <img class="results-image pull-left" data-bind="attr: {src: video.image}">
-                            <span class="results-description" data-bind="text: video.description"></span></div>
+                    <img class="results-image pull-left" data-bind="attr: {src: video.image}">
 
-                    </div>
-                        <button class="addtoPlaylist" data-bind="click: addToPlaylist">Add to current Playlist</button>
-                        <button class="searchRelated" data-bind="click: searchRelated">Search Related</button>
+                    <h3 class="results-title" data-bind="text: video.title"></h3>
+                    <span class="results-description" data-bind="text: video.description"></span>
+
+                    <button class="addtoPlaylist" data-bind="click: addToPlaylist">Add to current Playlist</button>
+                    <!--<button class="searchRelated" data-bind="click: searchRelated">Search Related</button>-->
                 </div>
+
+
             </div>
             <div class="loadmoreContainer">
                 <button id="loadMore" class="loadmoreButton" onclick="slothyx.loadMore()">Load More</button>
@@ -482,12 +480,12 @@
 
                         <div style="text-align: left;">
                             <p>Matthias Ableidinger alias <i>"Codemonkey"</i><br>
-                               <a href="mailto: codemonkey@slothyx.com"
-                                           class="mails">codemonkey@slothyx.com</a><br><br>
+                                <a href="mailto: codemonkey@slothyx.com"
+                                   class="mails">codemonkey@slothyx.com</a><br><br>
 
                                 Patrick Obermüller alias <i>"Styleparrot"</i><br>
-                                 <a href="mailto: styleparrot@slothyx.com"
-                                           class="mails">styleparrot@slothyx.com</a><br><br>
+                                <a href="mailto: styleparrot@slothyx.com"
+                                   class="mails">styleparrot@slothyx.com</a><br><br>
                                 www.Slothyx.com<br>
                                 <a href="mailto: info@slothyx.com"
                                    class="mails">info@slothyx.com</a><br>
