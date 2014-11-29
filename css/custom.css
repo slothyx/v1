@@ -35,16 +35,6 @@ h2 {
     margin-top: 0px;
 }
 
-
-
-/*td {
-    font-family: Arial, serif;
-    color: #bababa;
-    font-size: 12px;
-    letter-spacing: 1px;
-    table-layout: fixed;
-}*/
-
 .introduction td {
     font-family: Arial, serif;
     color: #353535;
@@ -54,10 +44,13 @@ h2 {
 
 a {
     color: #2c5269;
+    text-decoration: none;
+    font-size: 16px;
 }
 
-.a:hover {
-    color: #8eff00;
+a:hover {
+    text-decoration: none;
+
 }
 
 #background {
@@ -200,7 +193,7 @@ h3 {
 #duo {
     text-align: left;
     height: 125px;
-  /*  text-shadow: -1px 1px #959595;*/
+    /*  text-shadow: -1px 1px #959595;*/
 
 }
 
@@ -211,7 +204,7 @@ h3 {
 
 #duo p {
     font-size: 16px;
-    word-spacing:4px;
+    word-spacing: 4px;
     letter-spacing: 1px;
     font-family: Arial, serif;
 }
@@ -224,6 +217,7 @@ h3 {
     margin-bottom: 50px;
     text-align: center;
 }
+
 .introduction h2 {
     text-align: center;
     margin-top: 0px;
@@ -242,9 +236,9 @@ h3 {
 .bubbleGray {
     border-radius: 100%;
     background-color: grey;
-    height:400px;
-    width:200px;
-    float:right;
+    height: 400px;
+    width: 200px;
+    float: right;
     display: run-in;
 
 }
@@ -266,6 +260,7 @@ h3 {
 
 #centerIntroduction ul {
 }
+
 #rightIntroduction {
     vertical-align: top;
     width: 300px;
@@ -280,7 +275,6 @@ h3 {
 #loadSlot {
     padding-top: 20px;
 }
-
 
 #quinque {
 
@@ -408,13 +402,13 @@ ol {
     border-radius: 100%;
     padding: 10px 15px;
 
-    margin:auto;
+    margin: auto;
     box-shadow: 2px 2px 3px gray;
 }
 
 .loadmoreContainer {
-    width:100%;
-    clear:both;
+    width: 100%;
+    clear: both;
     text-align: center;
     padding-top: 20px;
     margin-bottom: 30px;
@@ -435,8 +429,8 @@ ol {
 .oneResult {
     margin-top: 5px;
     margin-bottom: 5px;
-    width:100%;
-    clear:both;
+    width: 100%;
+    clear: both;
     border-top: 1px solid #4777a3;
     height: 200px;
 }
@@ -465,6 +459,9 @@ ol {
 
 .mails:hover {
     cursor: pointer;
+    font-weight: bold;
+    text-underline: none;
+    text-decoration-line: none;
 }
 
 .settings {
@@ -501,11 +498,6 @@ ol {
 
 }
 
-
-
-
-
-
 /*#prim {
 	width: 70%;
 	clear: both;
@@ -528,12 +520,11 @@ ol {
     height: 810px;
     width: 70%;
     min-width: 305px;
-    overflow-y: scroll;
-    overflow-x: hidden;
     background-color: #ffffff;
     padding: 2% 15px 2% 15px;
-
+    overflow-y: scroll;
 }
+
 
 #playlist {
     float: right;
@@ -614,16 +605,17 @@ ol {
 }
 
 #news_left {
-    width:400px;
+    width: 400px;
     margin-left: auto;
     margin-right: auto;
 }
 
 #comingsoon_right {
-    width:400px;
+    width: 400px;
     margin-left: auto;
     margin-right: auto;
 }
+
 /*#feedback {
     float: right;
     width: 30%;
@@ -644,6 +636,12 @@ ol {
     height: 180px;
     width: 200px;
     margin: auto;
+}
+
+.containerFocusBlock {
+    background-color: red;
+    height:20px;
+    width:100%;
 }
 
 #contact {
@@ -685,24 +683,23 @@ ol {
 #contact tr td {
     padding-left: 30px;
     padding-right: 30px;
-    width:50%;
+    width: 50%;
     min-width: 380px;
 }
-
 
 #leftpart_contact {
     height: 400px;
 }
 
-
 #contact tr td h3 {
     margin-top: 0;
 
 }
+
 #leftpart_contact hr {
     width: 80%;
     /*border: thin solid #cfcfcf;*/
-    border-color: #959595;
+    border-color: #a7a7a7;
     box-shadow: 1px 1px #bfbfbf;
     margin-bottom: 30px;
     margin-top: 30px;
@@ -736,13 +733,13 @@ ol {
 
 #rightpart_commentbox {
     height: 200px;
-    min-height:200px;
-    max-height:200px;
+    min-height: 200px;
+    max-height: 200px;
     max-width: 280px;
-    min-width:100%;
+    min-width: 100%;
 }
 
-#rightpart_contact .submit {
+.submit {
     margin-top: 7px;
     background: #008dd4;
     border: medium none;
@@ -754,8 +751,12 @@ ol {
     padding: 8px 20px;
     text-shadow: 1px 1px 1px #0d384e;
     float: left;
-}
 
+    transition: background-color 2s;
+}
+.submit:hover {
+    background: rgba(255, 164, 0, 0.78);
+}
 /*.BETAfont {
 	color: #878482;
 	font-size: 15px;
