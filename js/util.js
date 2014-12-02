@@ -57,7 +57,7 @@
 	util.onStartUp = function(callback) {
 		$(callback);
 	};
-	
+
 	util.Command = function(command, params) {
 		this.command = command;
 		this.params = params;
@@ -75,6 +75,14 @@
 				util.doWhenTrue(callback, predicateCallback, time);
 			}, time);
 		}
+	};
+
+	util.toArray = function(object) {
+		var array = [];
+		_.forEach(object, function(item) {
+			array.push(item);
+		});
+		return array;
 	};
 
 })(jQuery, window, _);

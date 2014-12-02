@@ -88,7 +88,7 @@
 		}
 
 		function post(command) {
-			var argArray = Array.slice(arguments);
+			var argArray = slothyx.util.toArray(arguments);
 			var commandObject = new Command(command, argArray.slice(1));
 			postRaw(JSON.stringify(commandObject));
 		}
@@ -150,7 +150,7 @@
 		}
 
 		function post(command) {
-			var argArray = Array.slice(arguments);
+			var argArray = slothyx.util.toArray(arguments);
 			var commandObject = new Command(command, argArray.slice(1));
 			if(otherWindow !== undefined) {
 				postRaw(JSON.stringify(commandObject));
