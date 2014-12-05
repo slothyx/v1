@@ -53,7 +53,7 @@
         </li>
 
         <li id="duo">
-            <p style="float:left" ;><b>Welcome</b> to <br> slothyx.com
+            <p style="float:left";><b>Welcome</b> to <br> slothyx.com
             </p>
 
         </li>
@@ -162,12 +162,9 @@
                      </td>
                  </tr>
              </table>
-
-
          </li>-->
 
-        <li id="septem">
-        </li>
+
 
         <li id="aboutSlot">
             <p>About</p>
@@ -178,7 +175,6 @@
 
             <p id="copyright">Copyright &copy; is for Losers.<br>
                 ~Banksy</p>
-            <!--<img src="img/sloth_rework.gif" alt="slothyx.com">-->
         </li>
 
     </ul>
@@ -213,7 +209,6 @@
 
         <div id="playlist" class="backgroundcontainer" data-bind="with: $root.playlist.playlistModel">
 
-            <div id="playlistitemscontainer">
 
                 <div>
 
@@ -249,33 +244,32 @@
                     <span style="font-size:15px float:right" class="glyphicon glyphicon-trash"></span>
                 </button>
 
+
                 <div id="playlistItems" data-bind="if: (playlist() !== null && playlist() !== undefined)">
                     <div data-bind="sortable: {data: playlist().videos, afterMove: slothyx.lists.getPlaylist().changed}">
                         <div class="listItem" data-bind="click: select, css: {selected: isSelected()}">
-                            <span class="playlist-title" data-bind="text: video.title"></span><i
-                                class="xdelete glyphicon glyphicon-remove"
-                                data-bind="click: remove"></i>
+
+                            <table>
+                                <tr>
+                                    <td style="width:95%;">
+                                        <span class="playlist-title playlistTitleBox" data-bind="text: video.title"></span>
+                                    </td>
+
+                                    <td style="vertical-align: middle; width:4%;">
+                                        <i class="xdelete glyphicon glyphicon-remove"
+                                           data-bind="click: remove"></i>
+                                    </td>
+                                </tr>
+                            </table>
+
                         </div>
                     </div>
                 </div>
-
                 <!--<button id="toggleButton" onclick="slothyx.toggle()"><i class="glyphicon"
                                                                         data-bind="css: {'glyphicon-play': !playing(), 'glyphicon-pause': playing()}"></i>
                 </button>-->
 
-
-            </div>
-
         </div>
-
-        <!--<div id="player">
-
-
-             <img id="mascot" src="img/sloth.gif" alt="slothyx.com">
-
-
-
-        </div> -->
 
         <div class="backgroundcontainer" id="news_update">
 
@@ -285,25 +279,18 @@
 
                 <tr>
                     <td>
-                        <h2>News</h2>
+                        <h1>Updated <span style="color: indianred">##.##.####</span></h1>
+                        <hr>
                     </td>
 
-                    <td>
-                        <h2>Coming soon</h2>
-                    </td>
                 </tr>
 
                 <tr>
-                    <td>
-                        <h1>Updated <span style="color: indianred">24.12.2014</span></h1>
-                    </td>
-                </tr>
+                    <td id="news_left" style="padding-left: 100px; padding-right: 100px;">
 
-                <tr>
-                    <td id="news_left">
 
                         <ul>
-                            <li><b>Slothyx.com has been released (24.12.2014)!Hurray!</b></li>
+                            <li><b>Slothyx.com has been released (##.##.####)!Hurray!</b></li>
                             <li>Functions Added:
                                 <ol>
                                     <li>
@@ -330,57 +317,15 @@
                                         <b>Awesomeness</b>
                                     </li>
                                 </ol>
-                            <li>Implemented youtube.com as our <b>main source</b> for the music library</li>
+                            <li>Implemented youtube.com as our <b>main source</b> for the music library.</li>
                         </ul>
                     </td>
-                    <td id="comingsoon_right">
 
-
-                        <ul>
-                            <li>Now with Changelist</li>
-                            <li>Saving Playlist when you restart Browser</li>
-                            <li>Fixed bug, where video won't get unloaded</li>
-                            <li>Sort your playlist with Drag&Drop</li>
-                            <li>You can now load videos via URL</li>
-                            <li>Repeatable playlist</li>
-                            <li>Fullscreen feature implemented</li>
-                            <li>External player to view video on second monitor/beamer</li>
-                        </ul>
-                    </td>
                 </tr>
 
             </table>
         </div>
 
-        <!-- <div id="feedback" class="backgroundcontainer">
-             <h3 class="headerfont2">Feedback</h3>
-
-             <table>
-                 <tr>
-                     <th><span>You're on the spot</span></th>
-                 </tr>
-
-                 <tr>
-                     <td>
-                         <p>www.slothyx.com is still in early stage of development.
-                             It's time to send us your feedback. We highly appreciate positive as well as negative
-                             acknowledgements.
-                             Thank you
-                             yx
-                             -much for your support!
-
-                         </p>
-                     </td>
-                 </tr>
-             </table>
-
-             <div id="emailusbutton"><a href="mailto:info@slothyx.com">E-Mail us here</a></div>
-         </div>
-
-         <div id="new">
-
-         </div>
-         -->
         <div class="introduction">
 
 
@@ -408,11 +353,10 @@
 
                     <td id="leftIntroduction">
 
-
                         <ul>
-                            <li>To <b>search for videos</b>, type in keywords what you are looking for. Press
+                            <li >To <b>search for videos</b>, type in keywords what you are looking for. Press
                                 "Enter" or
-                                <div style="background-color: #c3ee73; height: 20px; width:20px; padding: 3px 3px 3px 4px;display: inline-block;">
+                                <div style="background-color: #c3ee73; height: 25px; width:25px; padding: 3px 4px 4px 4px;display: inline-block; margin-left: 2px">
                                     <span class="glyphicon glyphicon-search"></span></div>
                                 to confirm your input.
                             </li>
@@ -420,7 +364,7 @@
                                 the search results.
                             </li>
                             <li>When you have found some good videos, and you want to <b>find similar videos</b>;
-                                simply press the "Search related" button beneath video's description
+                                simply press the "Search related" button (<i>!Coming soon!</i>).
                             </li>
 
                         </ul>
@@ -431,9 +375,9 @@
                         <ul>
                             <li>To <b>create a playlist</b>, click <span class="glyphicon glyphicon-plus"> </span>
                                 underneath the video screen.
-                                Slothyx will automatically add a new playlist to your playlist library
+                                Slothyx will automatically add a new playlist to your playlist library.
                             </li>
-                            <li><b>Deleting a playlist</b> is as simple as creating one. Press the "Delete" button
+                            <li><b>Deleting a playlist</b> is as simple as creating one. Press the "Thrash" <b>symbol</b>
                                 right besides the "Add" button.
                             </li>
                             <li>If you want to <b>fill your playlist with content</b>, add videos by clicking the
@@ -451,13 +395,13 @@
 
                         <ul>
                             <li><b>Sharing a playlist</b> is as easy as clicking 2 buttons. Hit the "Generate
-                                code" button above the custom settings. Copy playlist code (Right click "copy"; or
+                                code" button below the "load" and "search" input box. Copy playlist code (Mark all - "STRG + A"; Right click "copy"; or
                                 strg+c.).Insert the code on facebook, skype, email, or similar.
                             </li>
                             <li>
                                 If you want to <b>use a code</b>, copy it! When copied, insert him in the "Load"
                                 input box, below the search field and confirm it by pressing "Enter" or
-                                <div style="background-color: #c3ee73; height: 20px; width:20px;padding: 3px 3px 3px 4px;display: inline-block;">
+                                <div style="background-color: #c3ee73; height: 25px; width:25px; padding: 3px 4px 5px 5px;display: inline-block; margin-left: 2px">
                                     <span class="glyphicon glyphicon-export"></span></div>
                                 .
                             </li>
@@ -479,7 +423,6 @@
 
                         <p>Hey, let us know what you think! Send us your feedback, or just say Hello to the
                             slothyx-team</p>
-
                         <hr>
 
                         <div style="text-align: left;">
@@ -497,43 +440,38 @@
                             <hr>
 
 
-                            <p style="text-align: center; font-size: 14px ;z-index:2" ;><i>~Enjoy the website~</i></p>
+                            <p style="text-align: center; font-size: 14px ;z-index:2" ;><i class="standardText">~Enjoy the website~</i></p>
                         </div>
                     </td>
 
                     <td id="rightpart_contact">
 
-                        <div class="rightpart_texbox"><p>Your name:</p></div>
+                        <div class="rightpart_texbox"><p class="standardText">Your name:</p></div>
 
                         <input class="maxwidth" type="text">
 
-                        <div class="rightpart_texbox"><p>Email:</p></div>
+                        <div class="rightpart_texbox"><p class="standardText">Email:</p></div>
 
                         <input class="maxwidth" type="email">
 
-                        <div class="rightpart_texbox"><p>Comment:</p></div>
+                        <div class="rightpart_texbox"><p class="standardText">Comment:</p></div>
 
                         <textarea class="maxwidth" id="rightpart_commentbox" rows="10" maxlength="350"></textarea>
 
                         <button type="submit" class="submit" value="">Submit</button>
+                        <span style="color:red; float:left; margin-left: 15px; margin-top: 5px; clear:right">* server maintenances (not working)</span>
+                        <br>
+                        <span style="color:red; float:left; margin-left: 15px; margin-top: 5px; clear:right">* e-mail server maintenances (not working)</span>
 
                     </td>
                 </tr>
             </table>
 
         </div>
-        <!--<footer>
-            <div id="footer_font">
-                <address>Webdesign by: Matthias Ableidinger & Patrick Obermüller</address>
-            </div>
-        </footer>-->
+
     </div>
 </div>
 
-<!-- Logo
-    <div>
-        <img src="img/sloth_rework.gif" alt="slothyx.com"/>
-    </div>-->
 
 </body>
 </html>
