@@ -1,0 +1,28 @@
+.options {
+	display: inline-block;
+	min-width: 30px;
+	cursor: pointer;
+	padding: 5px;
+	text-align: center;
+	position: relative;
+}
+
+.optionsPane {
+	display: block;
+	position: absolute;
+	right: 0;
+	background-color: grey;
+	border: solid #000000 1px;
+	z-index: 10;
+	white-space: nowrap;
+}
+
+.optionsEntry {
+	display: block;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.optionsEntry:hover {
+	background-color: #f68c1e;
+}

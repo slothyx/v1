@@ -14,6 +14,7 @@
     <link href="css/jquery-ui.min.css" rel="stylesheet">
     <link href="css/theme.css" rel="stylesheet">
     <link href="css/custom.css" rel="stylesheet">
+    <link href="css/options.css" rel="stylesheet">
     <link rel="icon" href="img/favicon.ico" type="image/x-icon">
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
@@ -233,6 +234,7 @@
                     </button>
 
                     <div style="font-size: 20px" class="glyphicon glyphicon-fullscreen "></div>
+
                 </div>
 
                 <select data-bind="options:	playStrategies, optionsText: 'name', value: playStrategy"></select>
@@ -240,10 +242,8 @@
                 <button title="Add" onclick="slothyx.addPlaylist()">
                     <span style="font-size: 15px float:left" class="glyphicon glyphicon-plus"></span>
                 </button>
-                <button title="Delete" onclick="slothyx.deletePlaylist()">
-                    <span style="font-size:15px float:right" class="glyphicon glyphicon-trash"></span>
-                </button>
 
+				<span id="playlistOptions"></span>
 
                 <div id="playlistItems" data-bind="if: (playlist() !== null && playlist() !== undefined)">
                     <div data-bind="sortable: {data: playlist().videos, afterMove: slothyx.lists.getPlaylist().changed}">

@@ -85,4 +85,63 @@
 		return array;
 	};
 
+	$.widget("slothyx.options", {
+
+		options: {
+			items: [],
+			rootClass: "options",
+			paneClass: "optionsPane",
+			entryClass: "optionsEntry",
+			rootContent: "<i class='glyphicon glyphicon-cog'></i>"
+		},
+
+		_state: {
+			open: false
+		},
+
+		_create: function() {
+			var element = $(this.element);
+			element.addClass(this.options.rootClass);
+			element.html(this.options.rootContent);
+			var clickHandler = this._clickHandler.bind(this);
+			var focusHandler = this._close.bind(this);
+			element.on("click", clickHandler);
+			$(document).on("click", focusHandler);
+		},
+
+		_close: function() {
+			$(this.element).find("." + this.options.paneClass).remove();
+			this._state.open = false;
+		},
+
+		_open: function() {
+			var itemsPane = $("<div />");
+			itemsPane.addClass(this.options.paneClass);
+			var createEntry = this._createEntry.bind(this);
+			_.forEach(this.options.items, function(item) {
+				itemsPane.append(createEntry(item));
+			});
+			this.element.append(itemsPane);
+			itemsPane.focus();
+			this._state.open = true;
+		},
+
+		_clickHandler: function() {
+			if(this._state.open) {
+				this._close();
+			} else {
+				this._open();
+			}
+			return false;
+		},
+
+		_createEntry: function(item) {
+			var entry = $("<span />");
+			entry.on("click", item.action);
+			entry.html(item.content);
+			entry.addClass(this.options.entryClass);
+			return entry;
+		}
+	});
+
 })(jQuery, window, _);

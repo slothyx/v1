@@ -3,13 +3,14 @@
 	"use strict";
 
 	/***** CONSTANTS *****/
-	var SEARCH_TEXTFIELD_ID = '#searchText';
-	var VIDEO_TEXTFIELD_ID = '#newVideoId';
-	var PLAYLIST_CODE_ID = '#newPlaylistCode';
-	var PLAYLIST_NAME_ID = '#newPlaylistName';
-	var PROGRESS_SLIDER_ID = '#progressSlider';
-	var VOLUME_SLIDER_ID = '#volumeSlider';
-	var SPACE_LISTENER_ID = 'html';
+	var SEARCH_TEXTFIELD_SELECTOR = '#searchText';
+	var VIDEO_TEXTFIELD_SELECTOR = '#newVideoId';
+	var PLAYLIST_CODE_SELECTOR = '#newPlaylistCode';
+	var PLAYLIST_NAME_SELECTOR = '#newPlaylistName';
+	var PROGRESS_SLIDER_SELECTOR = '#progressSlider';
+	var VOLUME_SLIDER_SELECTOR = '#volumeSlider';
+	var OPTIONS_HTML_SELECTOR = "#playlistOptions";
+	var SPACE_LISTENER_SELECTOR = 'html';
 	var DEFAULT_WINDOW_TITLE = "Slothyx Music";
 
 	var STATE_STOPPED = 0;
@@ -61,9 +62,9 @@
 			_.forEach(result.videos, function(video) {
 				getPlayList().addVideo(video);
 			});
-			$(VIDEO_TEXTFIELD_ID).val("");
+			$(VIDEO_TEXTFIELD_SELECTOR).val("");
 		};
-		var text = $(VIDEO_TEXTFIELD_ID).val();
+		var text = $(VIDEO_TEXTFIELD_SELECTOR).val();
 		var regexResult = /v=([A-Za-z0-9_-]{11})/.exec(text);
 		if(regexResult !== null) {
 			slothyx.youtube.loadVideoData([regexResult[1]], callback);
@@ -81,7 +82,7 @@
 	var lastSearch;
 	slothyx.searchYoutube = function() {
 		lastSearch = undefined;
-		slothyx.youtube.search($(SEARCH_TEXTFIELD_ID).val(), function(searchResult) {
+		slothyx.youtube.search($(SEARCH_TEXTFIELD_SELECTOR).val(), function(searchResult) {
 			//TODO temporary
 			$('#changelog').hide();
 			$('#loadMore').show();
@@ -110,18 +111,20 @@
 		getPlayList().addPlaylist();
 	};
 	slothyx.deletePlaylist = function() {
+		//TODO make intelligent
 		getPlayList().deleteCurrentPlaylist();
 	};
 
 	slothyx.generatePlaylistCode = function() {
-		$(PLAYLIST_CODE_ID).val(_.reduce(getPlayList().getCurrentPlaylist().videos, function(code, video) {
+		$(PLAYLIST_CODE_SELECTOR).val(_.reduce(getPlayList().getCurrentPlaylist().videos, function(code, video) {
 			return code + video.id;
 		}, ""));
-		$(PLAYLIST_CODE_ID).get(0).select();
+		$(PLAYLIST_CODE_SELECTOR).get(0).select();
 	};
 
 	slothyx.renameCurrentPlaylist = function() {
-		getPlayList().renameCurrentPlaylist($(PLAYLIST_NAME_ID).val());
+		//TODO rework
+		getPlayList().renameCurrentPlaylist($(PLAYLIST_NAME_SELECTOR).val());
 	};
 
 	slothyx.openRemotePlayer = function() {
@@ -148,13 +151,13 @@
 			stateModel.internalState(STATE_PLAYING);
 			getYtPlayer().load(video.id);
 			setWindowTitle(video.title);
-			$(PROGRESS_SLIDER_ID).slider('enable');
+			$(PROGRESS_SLIDER_SELECTOR).slider('enable');
 		} else {
 			// TODO check "replay"
 			stateModel.internalState(STATE_STOPPED);
 			getYtPlayer().stop();
 			setWindowTitle(DEFAULT_WINDOW_TITLE);
-			$(PROGRESS_SLIDER_ID).slider('disable');
+			$(PROGRESS_SLIDER_SELECTOR).slider('disable');
 		}
 	}
 
@@ -187,7 +190,7 @@
 
 	function onProgressChanged(progress) {
 		if(!progressSliderDragging) {
-			$(PROGRESS_SLIDER_ID).slider("value", progress);
+			$(PROGRESS_SLIDER_SELECTOR).slider("value", progress);
 		}
 	}
 
@@ -212,14 +215,14 @@
 
 		slothyx.util.initTextFields(slothyx);
 
-		$(SPACE_LISTENER_ID).on("keypress", function(event) {
+		$(SPACE_LISTENER_SELECTOR).on("keypress", function(event) {
 			if(event.originalEvent.charCode === ENTER_SPACE_CODE && event.target.tagName !== "INPUT" && event.target.tagName !== "BUTTON") {
 				slothyx.toggle();
 				return false;
 			}
 		});
 
-		$(PROGRESS_SLIDER_ID).slider({
+		$(PROGRESS_SLIDER_SELECTOR).slider({
 			disabled: true,
 			start: function() {
 				progressSliderDragging = true;
@@ -231,13 +234,19 @@
 		});
 		getYtPlayer().addProgressListener(onProgressChanged);
 
-		$(VOLUME_SLIDER_ID).slider({
+		$(VOLUME_SLIDER_SELECTOR).slider({
 			orientation: "vertical",
 			value: 100,
 			slide: function(event, ui) {
 				getYtPlayer().setVolume(ui.value);
 			}
 		});
+
+		$(OPTIONS_HTML_SELECTOR).options({items: [
+			{content: "Generate playlistcode", action: slothyx.generatePlaylistCode},
+			{content: "Rename current playlist", action: slothyx.renameCurrentPlaylist},
+			{content: "Delete current playlist", action: slothyx.deletePlaylist}
+		]});
 	});
 
 })(jQuery, window);
