@@ -6,7 +6,6 @@
 	var SEARCH_TEXTFIELD_SELECTOR = '#searchText';
 	var VIDEO_TEXTFIELD_SELECTOR = '#newVideoId';
 	var PLAYLIST_CODE_SELECTOR = '#newPlaylistCode';
-	var PLAYLIST_NAME_SELECTOR = '#newPlaylistName';
 	var PROGRESS_SLIDER_SELECTOR = '#progressSlider';
 	var VOLUME_SLIDER_SELECTOR = '#volumeSlider';
 	var OPTIONS_HTML_SELECTOR = "#playlistOptions";
@@ -122,8 +121,7 @@
 	};
 
 	slothyx.renameCurrentPlaylist = function() {
-		//TODO rework
-		getPlayList().renameCurrentPlaylist($(PLAYLIST_NAME_SELECTOR).val());
+		getPlayList().renameCurrentPlaylist();
 	};
 
 	slothyx.openRemotePlayer = function() {

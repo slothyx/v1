@@ -9,6 +9,7 @@
 	/*****PLAYLIST API*****/
 	var playlist = (function() {
 
+		var PLAYLIST_SELECT_HOLDER_SELECTOR = "#playlistSelectHolder";
 		var PLAYLISTS_PERSIST_ID = "playlists";
 		var PLAYLIST_DEFAULT_NAME = "Slothyx Playlist";
 
@@ -77,10 +78,45 @@
 			}
 		};
 
-		playlist.renameCurrentPlaylist = function(newName) {
-			playlistModel.playlist().name(newName);
-			persistPlaylists();
+		var tmpSelectHolder;
+		var focusListener;
+		playlist.renameCurrentPlaylist = function() {
+
+			tmpSelectHolder = $(PLAYLIST_SELECT_HOLDER_SELECTOR + ' .playlistSelect');
+			tmpSelectHolder.detach();
+
+			focusListener = function() {
+				finishRenameCurrenPlaylist(true);
+			};
+			$(document).on('click', focusListener);
+			var textField = $("<input type='text' class='playlistSelect'/>");
+			textField.val(playlistModel.playlist().name());
+			textField.onEnter(function() {
+				finishRenameCurrenPlaylist(true);
+			});
+			textField.on('click', function() {
+				return false;
+			});
+			$(PLAYLIST_SELECT_HOLDER_SELECTOR).append(textField);
+			textField.get(0).select();
 		};
+
+		function finishRenameCurrenPlaylist(save) {
+			var selectWrapper = $(PLAYLIST_SELECT_HOLDER_SELECTOR);
+			var selectTextField = selectWrapper.find('.playlistSelect');
+			var select = tmpSelectHolder;
+			var newName = selectTextField.val();
+			$(document).off('click', focusListener);
+			selectTextField.remove();
+			tmpSelectHolder = undefined;
+			focusListener = undefined;
+
+			if(save) {
+				playlistModel.playlist().name(newName);
+				persistPlaylists();
+			}
+			selectWrapper.append(select);
+		}
 
 		function PlaylistVideo(video) {
 			var self = this;

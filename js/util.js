@@ -144,4 +144,13 @@
 		}
 	});
 
+	$.fn.onEnter = function(callback) {
+		$(this).on("keypress", function(event) {
+			if(event.originalEvent.keyCode === ENTER_KEY_CODE) {
+				callback();
+				return false;
+			}
+		});
+	};
+
 })(jQuery, window, _);

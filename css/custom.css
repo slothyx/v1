@@ -911,6 +911,10 @@ address {
     background-color: #6bcb04;
 }
 
+.playlistSelect {
+	width: 150px;
+}
+
 
 * {
     line-height: 1.5;

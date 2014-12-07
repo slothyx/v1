@@ -93,17 +93,6 @@
             </div>
         </li>
 
-        <!--<li class="itemslots" id="quinque">
-            <p>Rename a playlist</p>
-             <button onclick="slothyx.renameCurrentPlaylist()">Rename</button>
-            <div class="input-group input-group-sm">
-                <span class="input-group-addon glyphicon glyphicon-export"></span>
-                <input type="text" class="form-control" placeholder="Rename"  id="newPlaylistName"
-                       data-enterevent="renameCurrentPlaylist"/>
-                <label for="newPlaylistName"></label>
-            </div>
-        </li>-->
-
         <li style="margin-top: 50px" class="itemslots" id="generatorSlot">
 
             <div class="formed">
@@ -238,7 +227,9 @@
                 </div>
 
                 <select data-bind="options:	playStrategies, optionsText: 'name', value: playStrategy"></select>
-                <select data-bind="options: playlists, optionsText: 'name', value: playlist"></select>
+				<span id="playlistSelectHolder">
+					<select class="playlistSelect" data-bind="options: playlists, optionsText: 'name', value: playlist"></select>
+				</span>
                 <button title="Add" onclick="slothyx.addPlaylist()">
                     <span style="font-size: 15px float:left" class="glyphicon glyphicon-plus"></span>
                 </button>
