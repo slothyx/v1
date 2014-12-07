@@ -44,13 +44,6 @@
     <ul class="controllist">
         <li id="unus">
 
-            <!--<p>slothyx.com
-           </p><span class="BETAfont">BETA</span>*/
-            <img src="img/sloth.gif">
-
-
-            Your free Website <br/> for Playlists!-->
-
         </li>
 
         <li id="duo">
@@ -61,11 +54,6 @@
 
 
         <li class="itemslots" id="searchSlot">
-
-            <!-- <p>Search for your favourite videos</p>
-             <input type="text" class="search rounded" placeholder="search..."
-                                                    id="searchText" data-enterevent="searchYoutube">
-             <button onclick="slothyx.searchYoutube()" id="searchButton">Search Videos</button>-->
 
             <div class="formed">
                 <button title="Search video" onclick="slothyx.searchYoutube()" type="button"><span
@@ -79,9 +67,6 @@
         </li>
 
         <li class="itemslots" id="loadSlot">
-
-            <!-- <p>Load a specific video/playlist</p>
-             <button onclick="slothyx.loadVideoFromTextField()">Load Video</button>-->
 
             <div class="formed">
 
@@ -103,58 +88,6 @@
             </div>
 
         </li>
-
-        <!-- <li id="settingSlot">
-
-             <p>Custom settings</p>
-
-             <table class="textleft">
-                 <tr>
-                     <td><p class="settings">image</p></td>
-                     <td>
-                         <div class="onoffswitch">
-                             <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch"
-                                    checked>
-                             <label class="onoffswitch-label" for="myonoffswitch">
-                                 <span class="onoffswitch-inner"></span>
-                                 <span class="onoffswitch-switch"></span>
-                             </label>
-                         </div>
-                     </td>
-                 </tr>
-
-                 <tr>
-                     <td><p class="settings">title</p></td>
-                     <td>
-                         <div class="onoffswitch">
-                             <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch2"
-                                    checked>
-                             <label class="onoffswitch-label" for="myonoffswitch2">
-                                 <span class="onoffswitch-inner"></span>
-                                 <span class="onoffswitch-switch"></span>
-                             </label>
-                         </div>
-                     </td>
-                 </tr>
-
-
-                 <tr>
-                     <td><p style="margin-right:10px" class="settings">description</p></td>
-                     <td>
-                         <div class="onoffswitch">
-                             <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch3"
-                                    checked>
-                             <label class="onoffswitch-label" for="myonoffswitch3">
-                                 <span class="onoffswitch-inner"></span>
-                                 <span class="onoffswitch-switch"></span>
-                             </label>
-                         </div>
-                     </td>
-                 </tr>
-             </table>
-         </li>-->
-
-
 
         <li id="aboutSlot">
             <p>About</p>
@@ -178,7 +111,7 @@
         <div class="results backgroundcontainer">
             <div id="searchResults" data-bind="foreach: $root.playlist.searchResultsModel.searchResults">
 
-                <div class="oneResult searchResult"><!-- data-bind="click: addToPlaylist" >-->
+                <div class="oneResult searchResult">
 
                     <img class="results-image pull-left" data-bind="attr: {src: video.image}">
 
@@ -256,9 +189,6 @@
                         </div>
                     </div>
                 </div>
-                <!--<button id="toggleButton" onclick="slothyx.toggle()"><i class="glyphicon"
-                                                                        data-bind="css: {'glyphicon-play': !playing(), 'glyphicon-pause': playing()}"></i>
-                </button>-->
 
         </div>
 
