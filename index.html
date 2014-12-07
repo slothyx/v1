@@ -237,7 +237,7 @@
 				<span id="playlistOptions"></span>
 
                 <div id="playlistItems" data-bind="if: (playlist() !== null && playlist() !== undefined)">
-                    <div data-bind="sortable: {data: playlist().videos, afterMove: slothyx.lists.getPlaylist().changed}">
+                    <div data-bind="sortable: {data: playlist().videos, afterMove: slothyx.lists.getPlaylist().changed, options: {helper: 'clone'}}">
                         <div class="listItem" data-bind="click: select, css: {selected: isSelected()}">
 
                             <table>
