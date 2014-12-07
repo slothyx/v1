@@ -246,7 +246,7 @@
 			{content: "Delete current playlist", action: slothyx.deletePlaylist}
 		]});
 
-		$(YOUTUBE_DIV_SELECTOR).on('click' ,function() {
+		$(YOUTUBE_DIV_SELECTOR).on('click', function() {
 			slothyx.toggle();
 		});
 	});
