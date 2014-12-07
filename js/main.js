@@ -10,6 +10,7 @@
 	var VOLUME_SLIDER_SELECTOR = '#volumeSlider';
 	var OPTIONS_HTML_SELECTOR = "#playlistOptions";
 	var SPACE_LISTENER_SELECTOR = 'html';
+	var YOUTUBE_DIV_SELECTOR = '#tvset';
 	var DEFAULT_WINDOW_TITLE = "Slothyx Music";
 
 	var STATE_STOPPED = 0;
@@ -244,6 +245,10 @@
 			{content: "Rename current playlist", action: slothyx.renameCurrentPlaylist},
 			{content: "Delete current playlist", action: slothyx.deletePlaylist}
 		]});
+
+		$(YOUTUBE_DIV_SELECTOR).on('click' ,function() {
+			slothyx.toggle();
+		});
 	});
 
 })(jQuery, window);

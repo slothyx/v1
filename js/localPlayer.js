@@ -10,7 +10,7 @@
 	var STATE_STOPPED = 2;
 
 	$(function() {
-		var params = { allowScriptAccess: "always" };
+		var params = { allowScriptAccess: "always", wmode: "transparent" };
 		var atts = { id: YTPLAYER_RAW_HTML_ID };
 		swfobject.embedSWF("http://www.youtube.com/apiplayer?enablejsapi=1&playerapiid=ytplayer&version=3",
 			"ytPlayer", "100%", "250", "8", null, null, params, atts);
