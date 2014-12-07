@@ -40,13 +40,19 @@
 		};
 
 		playlist.deleteCurrentPlaylist = function() {
+			var currentPlaylists = playlistModel.playlists();
 			var currentPlayListId = playlistModel.playlist().id;
+			var currentIndex = getIndexOfPlaylist(currentPlayListId);
 			playlistModel.playlists.remove(function(playlist) {
 				return playlist.id === currentPlayListId;
 			});
-			if(playlistModel.playlists().length === 0) {
+			if(currentPlaylists.length === 0) {
 				playlist.addPlaylist();
 			}
+			if(currentIndex >= currentPlaylists.length) {
+				currentIndex = currentPlaylists.length - 1;
+			}
+			playlistModel.playlist(currentPlaylists[currentIndex]);
 			persistPlaylists();
 		};
 
@@ -175,6 +181,16 @@
 
 		function persistPlaylists() {
 			getPersister().put(PLAYLISTS_PERSIST_ID, playlist.getPlaylists());
+		}
+
+		function getIndexOfPlaylist(playlistId) {
+			var playlists = playlistModel.playlists();
+			for(var i = 0; i < playlists.length; i++) {
+				if(playlists[i].id === playlistId) {
+					return i;
+				}
+			}
+			return -1;
 		}
 
 		/******PLAYSTRATEGIES******/

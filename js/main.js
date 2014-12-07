@@ -111,7 +111,6 @@
 		getPlayList().addPlaylist();
 	};
 	slothyx.deletePlaylist = function() {
-		//TODO make intelligent
 		getPlayList().deleteCurrentPlaylist();
 	};
 
