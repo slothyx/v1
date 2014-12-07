@@ -129,6 +129,9 @@
 		slothyx.remotePlayer.initActivePlayer();
 	};
 
+	slothyx.requestFullscreen = function() {
+		slothyx.localPlayer.requestFullscreen();
+	};
 
 	/*****PRIVATE HELPER*****/
 
