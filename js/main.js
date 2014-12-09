@@ -246,7 +246,8 @@
 		$(OPTIONS_HTML_SELECTOR).options({items: [
 			{content: "Generate playlistcode", action: slothyx.generatePlaylistCode},
 			{content: "Rename current playlist", action: slothyx.renameCurrentPlaylist},
-			{content: "Delete current playlist", action: slothyx.deletePlaylist}
+			{content: "Delete current playlist", action: slothyx.deletePlaylist},
+			{content: "Open remote player", action: slothyx.openRemotePlayer}
 		]});
 
 		$(YOUTUBE_DIV_SELECTOR).on('click', function() {
