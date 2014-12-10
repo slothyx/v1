@@ -236,7 +236,7 @@
 		getYtPlayer().addProgressListener(onProgressChanged);
 
 		$(VOLUME_SLIDER_SELECTOR).slider({
-			orientation: "vertical",
+			orientation: "horizontal",
 			value: 100,
 			slide: function(event, ui) {
 				getYtPlayer().setVolume(ui.value);

@@ -128,16 +128,16 @@
 
         <div id="playlist" data-bind="with: $root.playlist.playlistModel">
 
-                <div id="tvset">
-                    <div id="ytPlayer">
-                        You need Flash player 8+ and JavaScript enabled to play videos.
-                    </div>
+            <div id="tvset">
+                <div id="ytPlayer">
+                    You need Flash player 8+ and JavaScript enabled to play videos.
                 </div>
+            </div>
 
 
             <div id="progressSlider"></div>
 
-            <div id="volumeSlider"></div>
+
 
             <table class="maxwidth">
 
@@ -149,7 +149,9 @@
                         </div>
                     </td>
 
-                    <td></td>
+                    <td>
+                        <div id="volumeSlider"></div>
+                    </td>
 
                     <td>
                         <div id="fullscreen" class="glyphicon glyphicon-fullscreen"
@@ -299,12 +301,12 @@
                                 to confirm your input.
                             </li>
                             <li>If you want to <b>load more videos</b> hit the "Load more" button on the bottom of
-                                the search results.
+                                the results-field.
                             </li>
-                            <li>When you have found some good videos, and you want to <b>find similar videos</b>;
-                                simply press the "Search related" button (<i>!Coming soon!</i>).
-                            </li>
-
+                            <!-- COMMING BACK SOON
+                            <li>(When you have found some good videos, and you want to <b>find similar videos</b>;
+                                simply press the "Search related" button (<i>!Coming soon!)</i>).
+                            </li>-->
                         </ul>
                     </td>
 
@@ -315,15 +317,15 @@
                                 underneath the video screen.
                                 Slothyx will automatically add a new playlist to your playlist library.
                             </li>
-                            <li><b>Deleting a playlist</b> is as simple as creating one. Press the "Thrash"
+                            <li><b>Deleting a playlist</b> is as simple as creating one. Press the "Wheel"
                                 <b>symbol</b>
-                                right besides the "Add" button.
+                                to the right of the "Playorder" drop-down menu.
                             </li>
                             <li>If you want to <b>fill your playlist with content</b>, add videos by clicking the
-                                "Add to current playlist" button beneath the video.
+                                "Add to current playlist" besides beneath the video.
                             </li>
                             <li>To <b>delete videos</b>, press the red <span
-                                                                             class="glyphicon glyphicon-remove redcolor"></span>
+                                    class="glyphicon glyphicon-remove redcolor"></span>
                                 next to the title of
                                 the video.
                             </li>
@@ -334,20 +336,19 @@
 
                         <ul>
                             <li><b>Sharing a playlist</b> is as easy as clicking 2 buttons. Hit the "Generate
-                                code" button below the "load" and "search" input box. Copy playlist code (Mark all -
-                                "STRG + A";
-                                Right click "copy"; or
-                                strg+c.).Insert the code on facebook, skype, email, or similar.
+                                code" button below the "load" and "search" input box. Copy playlist code.
+                                You can generate your code as well, by using the settings menu next to the "Playorder"
+                                drop-down menu. Insert the code on facebook, skype, email, or similar.
                             </li>
                             <li>
-                                If you want to <b>use a code</b>, copy it! When copied, insert him in the "Load"
+                                If you want to <b>use a code</b>, copy it! When copied, insert it in the "Load"
                                 input box, below the search field and confirm it by pressing "Enter" or
                                 <div class="intextglyphicon">
                                     <span class="glyphicon glyphicon-export"></span></div>
                                 .
                             </li>
                             <li>To <b>display videos on another screen</b>, press the "Remote player" button
-                                underneath the video.
+                                in the settings menu.
                             </li>
                         </ul>
                     </td>
