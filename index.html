@@ -42,14 +42,10 @@
 <div id="leftcolum">
 
     <ul class="controllist">
-        <li id="unus">
 
-        </li>
-
-        <li id="duo">
+        <li id="welcomeSlot">
             <p style="float:left;"><b>Welcome</b> to <br> slothyx.com
             </p>
-
         </li>
 
 
@@ -150,16 +146,16 @@
             <table class="maxwidth">
 
                 <tr id="primControl">
-                    <td>
+                    <td style="padding:0;width: 20%">
                         <div id="playstop" onclick="slothyx.toggle()" data-bind="with: $root.stateModel"><i
                                 class="glyphicon"
                                 data-bind="css: {'glyphicon-play': !playing(), 'glyphicon-pause': playing()}"></i>
                         </div>
                     </td>
 
-                    <td style="width:60%"></td>
+                    <td style="padding:0; width:60%; background-color: lavender"></td>
 
-                    <td>
+                    <td style="padding:0;width: 20%">
                         <div id="fullscreen" class="glyphicon glyphicon-fullscreen"
                              onclick="slothyx.requestFullscreen()"></div>
                     </td>
@@ -169,27 +165,27 @@
             <table class="maxwidth">
 
                 <tr id="secControl">
-                    <td>
+                    <td style="padding:0; width:11.45%; vertical-align: middle; text-align: center">
                             <span class="playlistAdd" title="Add" onclick="slothyx.addPlaylist()">
-		                    <span style="font-size: 15px float:left" class="glyphicon glyphicon-plus"></span>
+		                    <span class="glyphicon glyphicon-plus"></span>
                             </span>
                     </td>
 
-                    <td style="width: auto">
+                    <td style="padding:0; width:45%;">
                         <div class="selectStylePlaylist"><span id="playlistSelectHolder">
 							<select class="playlistSelect"
                                     data-bind="options: playlists, optionsText: 'name', value: playlist"></select></span>
                         </div>
                     </td>
 
-                    <td style="width:auto">
+                    <td style="padding:0;width: 26.1%">
                         <div class="selectStylePlayOrder">
                             <select data-bind="options:	playStrategies, optionsText: 'name', value: playStrategy"></select>
                         </div>
                     </td>
 
 
-                    <td>
+                    <td style="padding:0; width:11.45%;">
                         <span class="settingsWheel" id="playlistOptions"></span>
                     </td>
                 </tr>
