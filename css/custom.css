@@ -118,7 +118,6 @@ h3 {
 
 #leftcolum ul li {
     width: 100%;
-    margin: 0px;
     padding-left: 5px;
     padding-right: 5px;
 
@@ -148,6 +147,7 @@ h3 {
 
 #generatorSlot {
     padding-top: 20px;
+
 }
 
 .formed input {
@@ -183,6 +183,13 @@ h3 {
     background-color: #5188bd;
 }
 
+#leftcolum ul li:nth-child(4) {
+    margin-top: 50px;
+}
+
+#leftcolum#welcomeSlot ul li p:first-child {
+    float: left;
+}
 
 #welcomeSlot {
     text-align: left;
@@ -249,6 +256,10 @@ h3 {
     vertical-align: top;
 }
 
+.redcolor {
+    color:red;
+}
+
 #centerIntroduction {
     width: 300px;
     margin-left: auto;
@@ -275,28 +286,6 @@ h3 {
     padding-top: 20px;
 }
 
-#quinque {
-
-}
-
-#settingSlot {
-    padding-top: 20px;
-    height: 200px;
-    text-align: center;
-}
-
-#settingSlot p:first-child {
-    margin-bottom: 10px
-}
-
-#septem {
-    /*text-align: center;
-    font-size: 30px;
-    height: 10%;
-    min-height: 150px;
-    color: #f5f5f5;*/
-}
-
 ol {
     padding-left: 20px;
 }
@@ -320,14 +309,6 @@ ol {
 #aboutSlot p:first-child {
     text-decoration: underline;
     padding-bottom: 5px;
-}
-
-#novem {
-
-}
-
-#decem {
-
 }
 
 .maxwidth {
@@ -357,7 +338,7 @@ ol {
 #playstop {
     top: 0;
     background-color: #9aa2e2;
-    padding: 6px;
+    padding-top: 6px;
     height: 40px;
     text-align: center;
     cursor: pointer;
@@ -377,7 +358,7 @@ ol {
     cursor: pointer;
     font-size: 22px;
     text-align: center;
-    padding: 9px;
+    padding-top: 10px;
     position: relative;
 
 }
@@ -394,7 +375,8 @@ ol {
     top: 0;
     background-color: #93e23b;
     float: left;
-    padding: 5px;
+    padding-top: 5px;
+    padding-left: 5px;
     height: 40px;
     width: 100%;
     font-size: 22px;
@@ -425,7 +407,6 @@ ol {
     height: 40px;
     width: 100%;
     -webkit-appearance: none;
-
 }
 
 .selectStylePlaylist {
@@ -457,7 +438,7 @@ ol {
     cursor: pointer;
     font-size: 22px;
     text-align: center;
-    padding: 5px;
+    padding-top: 6px;
 }
 
 .settingsWheel:hover {
@@ -656,6 +637,66 @@ div td ul li {
     background-color: #f5f5f5;
 }
 
+#playlist tr#primControl td:first-child {
+    padding: 0;
+    width: 20%;
+}
+
+#playlist tr#primControl td:nth-child(2) {
+    padding: 0;
+    width: 60%;
+}
+
+#playlist tr#primControl td:last-child {
+    padding: 0;
+    width: 20%;
+}
+
+#playlist tr#secControl td:first-child {
+    padding: 0;
+    width: 11.45%;
+}
+
+#playlist tr#secControl td:nth-child(2) {
+    padding: 0;
+    width: 45%;
+}
+
+#playlist tr#secControl td:nth-child(3) {
+    padding: 0;
+    width: 26.1%
+}
+
+#playlist tr#secControl td:last-child {
+    padding: 0;
+    width: 11.45%
+}
+
+/* sets the with of the X*/
+.listItem tr td:nth-child(2) {
+    width: 4%;
+}
+
+.updateDate {
+    color: indianred;
+}
+
+#news_update tr td#news_left:first-child {
+    padding-left: 100px;
+    padding-right: 100px;
+}
+
+.intextglyphicon {
+    background-color: #c3ee73;
+    height: 25px;
+    width: 25px;
+    padding: 3px 4px 4px 4px;
+    display: inline-block;
+    margin-left: 2px
+}
+
+
+
 #playlistItems div:nth-child(2n) {
     background-color: #c6d5e2;
 }
@@ -691,10 +732,6 @@ div td ul li {
 
 }
 
-#player {
-
-}
-
 #mascot {
     position: relative;
     height: 100px;
@@ -703,6 +740,7 @@ div td ul li {
 
 #tvset {
     display: block;
+    height: 250px;
     background-color: #000000;
 }
 

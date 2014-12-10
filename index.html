@@ -39,15 +39,15 @@
 </head>
 
 <body id="background">
+
 <div id="leftcolum">
 
     <ul class="controllist">
 
         <li id="welcomeSlot">
-            <p style="float:left;"><b>Welcome</b> to <br> slothyx.com
+            <p><b>Welcome</b> to <br> slothyx.com
             </p>
         </li>
-
 
         <li class="itemslots" id="searchSlot">
 
@@ -74,7 +74,7 @@
             </div>
         </li>
 
-        <li style="margin-top: 50px" class="itemslots" id="generatorSlot">
+        <li class="itemslots" id="generatorSlot">
 
             <div class="formed">
                 <button title="Generate Code" type="button" class="defaultbutton"
@@ -104,7 +104,7 @@
 
     <div id="sizeHolder">
 
-        <div class="results backgroundcontainer">
+        <div class="results">
             <div id="searchResults" data-bind="foreach: $root.playlist.searchResultsModel.searchResults">
 
                 <div class="oneResult searchResult">
@@ -126,10 +126,7 @@
         </div>
 
 
-        <div id="playlist" class="backgroundcontainer" data-bind="with: $root.playlist.playlistModel">
-
-
-            <div>
+        <div id="playlist" data-bind="with: $root.playlist.playlistModel">
 
                 <div id="tvset">
                     <div id="ytPlayer">
@@ -137,7 +134,6 @@
                     </div>
                 </div>
 
-            </div>
 
             <div id="progressSlider"></div>
 
@@ -146,16 +142,16 @@
             <table class="maxwidth">
 
                 <tr id="primControl">
-                    <td style="padding:0;width: 20%">
+                    <td>
                         <div id="playstop" onclick="slothyx.toggle()" data-bind="with: $root.stateModel"><i
                                 class="glyphicon"
                                 data-bind="css: {'glyphicon-play': !playing(), 'glyphicon-pause': playing()}"></i>
                         </div>
                     </td>
 
-                    <td style="padding:0; width:60%; background-color: lavender"></td>
+                    <td></td>
 
-                    <td style="padding:0;width: 20%">
+                    <td>
                         <div id="fullscreen" class="glyphicon glyphicon-fullscreen"
                              onclick="slothyx.requestFullscreen()"></div>
                     </td>
@@ -165,27 +161,27 @@
             <table class="maxwidth">
 
                 <tr id="secControl">
-                    <td style="padding:0; width:11.45%; vertical-align: middle; text-align: center">
+                    <td>
                             <span class="playlistAdd" title="Add" onclick="slothyx.addPlaylist()">
 		                    <span class="glyphicon glyphicon-plus"></span>
                             </span>
                     </td>
 
-                    <td style="padding:0; width:45%;">
+                    <td>
                         <div class="selectStylePlaylist"><span id="playlistSelectHolder">
 							<select class="playlistSelect"
                                     data-bind="options: playlists, optionsText: 'name', value: playlist"></select></span>
                         </div>
                     </td>
 
-                    <td style="padding:0;width: 26.1%">
+                    <td>
                         <div class="selectStylePlayOrder">
                             <select data-bind="options:	playStrategies, optionsText: 'name', value: playStrategy"></select>
                         </div>
                     </td>
 
 
-                    <td style="padding:0; width:11.45%;">
+                    <td>
                         <span class="settingsWheel" id="playlistOptions"></span>
                     </td>
                 </tr>
@@ -197,11 +193,11 @@
 
                         <table>
                             <tr>
-                                <td style="width:95%;">
+                                <td>
                                     <span class="playlist-title playlistTitleBox" data-bind="text: video.title"></span>
                                 </td>
 
-                                <td style="width:4%;">
+                                <td>
                                     <i class="xdelete glyphicon glyphicon-remove"
                                        data-bind="click: remove"></i>
                                 </td>
@@ -214,7 +210,7 @@
 
         </div>
 
-        <div class="backgroundcontainer" id="news_update">
+        <div id="news_update">
 
             <h3>News & Updates</h3>
 
@@ -222,14 +218,14 @@
 
                 <tr>
                     <td>
-                        <h1>Updated <span style="color: indianred">##.##.####</span></h1>
+                        <h1>Updated <span class="updateDate">##.##.####</span></h1>
                         <hr>
                     </td>
 
                 </tr>
 
                 <tr>
-                    <td id="news_left" style="padding-left: 100px; padding-right: 100px;">
+                    <td id="news_left">
 
                         <ul>
                             <li><b>Slothyx.com has been released (##.##.####)!Hurray!</b></li>
@@ -298,7 +294,7 @@
                         <ul>
                             <li>To <b>search for videos</b>, type in keywords what you are looking for. Press
                                 "Enter" or
-                                <div style="background-color: #c3ee73; height: 25px; width:25px; padding: 3px 4px 4px 4px;display: inline-block; margin-left: 2px">
+                                <div class="intextglyphicon">
                                     <span class="glyphicon glyphicon-search"></span></div>
                                 to confirm your input.
                             </li>
@@ -315,7 +311,7 @@
                     <td id="centerIntroduction">
 
                         <ul>
-                            <li>To <b>create a playlist</b>, click <span class="glyphicon glyphicon-plus"> </span>
+                            <li>To <b>create a playlist</b>, click <span class="glyphicon glyphicon-plus"></span>
                                 underneath the video screen.
                                 Slothyx will automatically add a new playlist to your playlist library.
                             </li>
@@ -326,8 +322,8 @@
                             <li>If you want to <b>fill your playlist with content</b>, add videos by clicking the
                                 "Add to current playlist" button beneath the video.
                             </li>
-                            <li>To <b>delete videos</b>, press the red <span style="color:red"
-                                                                             class="glyphicon glyphicon-remove"></span>
+                            <li>To <b>delete videos</b>, press the red <span
+                                                                             class="glyphicon glyphicon-remove redcolor"></span>
                                 next to the title of
                                 the video.
                             </li>
@@ -346,7 +342,7 @@
                             <li>
                                 If you want to <b>use a code</b>, copy it! When copied, insert him in the "Load"
                                 input box, below the search field and confirm it by pressing "Enter" or
-                                <div style="background-color: #c3ee73; height: 25px; width:25px; padding: 3px 4px 5px 5px;display: inline-block; margin-left: 2px">
+                                <div class="intextglyphicon">
                                     <span class="glyphicon glyphicon-export"></span></div>
                                 .
                             </li>
@@ -359,7 +355,7 @@
             </table>
 
         </div>
-        <div class="backgroundcontainer" id="contact">
+        <div id="contact">
 
             <table class="maxwidth">
                 <tr>
@@ -370,8 +366,8 @@
                             slothyx-team</p>
                         <hr>
 
-                        <div style="text-align: left;">
-                            <p style="text-align: center">Matthias Ableidinger alias <i>"Codemonkey"</i><br>
+                        <div>
+                            <p class="textcenter">Matthias Ableidinger alias <i>"Codemonkey"</i><br>
                                 <a href="mailto: codemonkey@slothyx.com"
                                    class="mails">codemonkey@slothyx.com</a><br><br>
 
@@ -385,13 +381,16 @@
                             <hr>
 
 
-                            <p style="text-align: center; font-size: 14px ;z-index:2;"><i class="standardText">~Enjoy
+                            <p><i class="standardText">~Enjoy
                                 the
                                 website~</i></p>
                         </div>
                     </td>
 
-                    <!-- <td id="rightpart_contact">
+
+                    <!--! FORMULAR !
+
+                        <td id="rightpart_contact">
 
                         <div class="rightpart_texbox"><p class="standardText">Your name:</p></div>
 
@@ -411,6 +410,7 @@
                         <span style="color:red; float:left; margin-left: 15px; margin-top: 5px; clear:right">* e-mail server maintenances (not working)</span>
 
                     </td>-->
+
                 </tr>
             </table>
 
