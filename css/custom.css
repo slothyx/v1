@@ -646,6 +646,8 @@ div td ul li {
     width: 71.1%;
     text-align: center;
     vertical-align: middle;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 #playlist tr#primControl td:last-child {
