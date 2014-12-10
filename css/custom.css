@@ -74,13 +74,10 @@ h3 {
 }
 
 #leftcolum {
-
     background-image: url(images/xmas-2014.png);
-
     background-size: 313px 275px;
     background-repeat: no-repeat;
     display: inline-block;
-
     padding-top: 30px;
     position: fixed;
     float: left;
@@ -186,11 +183,6 @@ h3 {
     background-color: #5188bd;
 }
 
-/* This is a list unus -> decem; each list item has its own function */
-#unus {
-    text-align: center;
-
-}
 
 #welcomeSlot {
     text-align: left;
@@ -419,7 +411,7 @@ ol {
     overflow: hidden;
     border: 0;
     border-radius: 0;
-    width:100%;
+    width: 100%;
     position: relative;
 }
 
@@ -431,7 +423,7 @@ ol {
     border: 0;
     border-radius: 0;
     height: 40px;
-    width:100%;
+    width: 100%;
     -webkit-appearance: none;
 
 }
@@ -440,7 +432,7 @@ ol {
     overflow: hidden;
     border: 0;
     border-radius: 0;
-    width:100%;
+    width: 100%;
     position: relative;
 }
 
@@ -453,7 +445,7 @@ ol {
     border-radius: 0;
     height: 40px;
     -webkit-appearance: none;
-    width:100%;
+    width: 100%;
 }
 
 .settingsWheel {
@@ -476,7 +468,7 @@ ol {
     top: 0;
     float: right;
     display: inline-block;
-    background: #008dd4;
+    background-color: #008dd4;
     border: medium none;
     border-radius: 6px;
     box-shadow: 1px 1px 3px #2d2d2d;
@@ -659,7 +651,7 @@ div td ul li {
 #playlist {
     float: right;
     height: 810px;
-    width:30%;
+    width: 30%;
     min-width: 290px;
     background-color: #f5f5f5;
 }
@@ -668,24 +660,33 @@ div td ul li {
     background-color: #c6d5e2;
 }
 
+#playlistItems div {
+    padding: 4px 3px 4px 3px;
+}
+
 #playlistItems {
     margin-top: 10px;
     height: 400px;
     overflow-y: scroll;
     overflow-x: hidden;
+
 }
 
 #playlistItems div.listItem.selected {
     font-weight: bold;
-    background-color: #ffffff;
-    padding: 4px 3px 4px 3px;
-    border: 1px solid black;
-    border-radius: 3px;
+    background-color: #c3ee74;
     margin-top: 2px;
     margin-bottom: 2px;
+    color: #000000;
+
+    transition: background-color 1s;
+    transition-timing-function: linear;
 }
 
-#playlistItems div.listItem:hover {
+#playlistItems div.listItem.selected:before {
+}
+
+#playlistItems div.listItem:hover:not(.selected) {
     background-color: #8dc0ee;
 
 }
@@ -711,7 +712,7 @@ div td ul li {
 
 #volumeSlider {
     position: absolute;
-    right:400px;
+    right: 400px;
 }
 
 #news_update {
