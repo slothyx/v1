@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/html">
+<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
 <head>
     <title>Music - Slothyx.com</title>
 
@@ -15,6 +15,13 @@
     <link href="css/theme.css" rel="stylesheet">
     <link href="css/custom.css" rel="stylesheet">
     <link href="css/options.css" rel="stylesheet">
+    <link href="css/results.css" rel="stylesheet">
+    <link href="css/playlist.css" rel="stylesheet">
+    <link href="css/left.css" rel="stylesheet">
+    <link href="css/contact.css" rel="stylesheet">
+    <link href="css/introduction.css" rel="stylesheet">
+    <link href="css/news.css" rel="stylesheet">
+
     <link rel="icon" href="img/favicon.ico" type="image/x-icon">
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
@@ -104,7 +111,7 @@
 
     <div id="sizeHolder">
 
-        <div class="results">
+        <div id="results">
             <div id="searchResults" data-bind="foreach: $root.playlist.searchResultsModel.searchResults">
 
                 <div class="oneResult searchResult">
@@ -227,7 +234,7 @@
                 </tr>
 
                 <tr>
-                    <td id="news_left">
+                    <td >
 
                         <ul>
                             <li><b>Slothyx.com has been released (##.##.####)!Hurray!</b></li>
@@ -266,7 +273,7 @@
             </table>
         </div>
 
-        <div class="introduction">
+        <div id="introduction">
 
 
             <h3>Get started with slothyx.com</h3>
@@ -358,17 +365,16 @@
         </div>
         <div id="contact">
 
-            <table class="maxwidth">
-                <tr>
-                    <td id="leftpart_contact">
+
+                    <div id="contactbox">
                         <h3>Get in touch</h3>
 
-                        <p>Hey, let us know what you think! Send us your feedback, or just say Hello to the
+                        <p>Hey, let us know what you think! Send us your feedback, or just say <i>"Hello"</i> to the
                             slothyx-team</p>
                         <hr>
 
                         <div>
-                            <p class="textcenter">Matthias Ableidinger alias <i>"Codemonkey"</i><br>
+                            <address>Matthias Ableidinger alias <i>"Codemonkey"</i><br>
                                 <a href="mailto: codemonkey@slothyx.com"
                                    class="mails">codemonkey@slothyx.com</a><br><br>
 
@@ -378,7 +384,7 @@
                                 www.Slothyx.com<br>
                                 <a href="mailto: info@slothyx.com"
                                    class="mails">info@slothyx.com</a><br>
-                            </p>
+                            </address>
                             <hr>
 
 
@@ -386,34 +392,8 @@
                                 the
                                 website~</i></p>
                         </div>
-                    </td>
+                    </div>
 
-
-                    <!--! FORMULAR !
-
-                        <td id="rightpart_contact">
-
-                        <div class="rightpart_texbox"><p class="standardText">Your name:</p></div>
-
-                        <input class="maxwidth" type="text">
-
-                        <div class="rightpart_texbox"><p class="standardText">Email:</p></div>
-
-                        <input class="maxwidth" type="email">
-
-                        <div class="rightpart_texbox"><p class="standardText">Comment:</p></div>
-
-                        <textarea class="maxwidth" id="rightpart_commentbox" rows="10" maxlength="350"></textarea>
-
-                        <button type="submit" class="submit" value="">Submit</button>
-                        <span style="color:red; float:left; margin-left: 15px; margin-top: 5px; clear:right">* server maintenances (not working)</span>
-                        <br>
-                        <span style="color:red; float:left; margin-left: 15px; margin-top: 5px; clear:right">* e-mail server maintenances (not working)</span>
-
-                    </td>-->
-
-                </tr>
-            </table>
 
         </div>
 

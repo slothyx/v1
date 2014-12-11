@@ -1,0 +1,123 @@
+#results {
+    float: left;
+    height: 810px;
+    width: 70%;
+    min-width: 305px;
+    background-color: #c6d5e2;
+    padding: 2% 15px 2% 15px;
+    overflow-y: scroll;
+}
+
+.addtoPlaylist {
+    top: 0;
+    float: right;
+    display: inline-block;
+    background-color: #008dd4;
+    border: medium none;
+    border-radius: 6px;
+    box-shadow: 1px 1px 3px #2d2d2d;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 12px;
+    padding: 10px;
+    text-shadow: 1px 1px 1px #0d384e;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.searchRelated {
+    margin-right: 10px;
+    display: inline-block;
+    float: right;
+    background: #008dd4;
+    border: medium none;
+    border-radius: 6px;
+    box-shadow: 1px 1px 3px #2d2d2d;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 12px;
+    padding: 10px;
+    text-shadow: 1px 1px 1px #0d384e;
+}
+
+.loadmoreButton {
+    display: none;
+    color: #ffffff;
+    border: medium none;
+    background-color: #c7254e;
+    text-shadow: 2px 2px 2px #5e5e5e;
+    border-radius: 100%;
+    padding: 10px 15px;
+    margin: auto;
+    box-shadow: 2px 2px 3px gray;
+}
+
+.loadmoreContainer {
+    width: 100%;
+    clear: both;
+    text-align: center;
+    padding-top: 20px;
+    margin-bottom: 30px;
+    margin-top: 10px;
+}
+
+.oneResult h3 {
+    text-shadow: none;
+}
+
+.oneResult {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: 100%;
+    clear: both;
+    border-top: 1px solid #4777a3;
+    height: 150px;
+}
+
+.results-title {
+    margin-top: 8px;
+    margin-bottom: 6px;
+    margin-left: 20px;
+    clear: right;
+    float: left;
+    display: inline-block;
+    color: #0d141b;
+    font-size: 18px;
+    min-width: 200px;
+    max-width: 480px;
+    height: 23px;
+    overflow: hidden;
+}
+
+.results-description {
+    overflow: hidden;
+    color: #0d141b;
+    font-size: 14px;
+    float: left;
+    margin-left: 20px;
+    display: inline-block;
+    width: 55%;
+    height: 90px;
+}
+
+.results-image {
+    height: 130px;
+    float: left;
+    width: 130px;
+}
+
+#tvset {
+    display: block;
+    height: 250px;
+    background-color: #000000;
+}
+
+#progressSlider {
+    margin: 10px;
+}
+
+#volumeSlider {
+    margin: 10px;
+}

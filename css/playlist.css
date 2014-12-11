@@ -1,0 +1,213 @@
+/* Contains all material concerning:
+    -video screen
+    -sliders
+    -playlist items/videos
+    -playlist buttons/drop downs/menus */
+
+#playlist {
+    float: right;
+    height: 810px;
+    width: 30%;
+    min-width: 290px;
+    background-color: #f5f5f5;
+}
+
+#playlist tr#primControl td:first-child {
+    padding: 0;
+    width: 11.45%;
+}
+
+#playlist tr#primControl td:nth-child(2) {
+    padding: 0;
+    width: 71.1%;
+    text-align: center;
+    vertical-align: middle;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#playlist tr#primControl td:last-child {
+    padding: 0;
+    width: 11.45%;
+}
+
+#playlist tr#secControl td:first-child {
+    padding: 0;
+    width: 11.45%;
+}
+
+#playlist tr#secControl td:nth-child(2) {
+    padding: 0;
+    width: 45%;
+}
+
+#playlist tr#secControl td:nth-child(3) {
+    padding: 0;
+    width: 26.1%
+}
+
+#playlist tr#secControl td:last-child {
+    padding: 0;
+    width: 11.45%
+}
+
+.listItem tr td:nth-child(2) {
+    width: 4%;
+}
+
+#playlistItems div:nth-child(2n) {
+    background-color: #c6d5e2;
+}
+
+#playlistItems div {
+    padding: 4px 3px 4px 3px;
+}
+
+#playlistItems {
+    margin-top: 10px;
+    height: 400px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+
+}
+
+#playlistItems div.listItem.selected {
+    font-weight: bold;
+    background-color: #c3ee74;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    color: #000000;
+
+    transition: background-color 1s;
+    transition-timing-function: linear;
+}
+
+#playlistItems div.listItem.selected:before {
+}
+
+#playlistItems div.listItem:hover:not(.selected) {
+    background-color: #8dc0ee;
+
+}
+
+.xdelete {
+    color: #7f250a;
+}
+
+.xdelete:hover {
+    color: #a50000;
+    cursor: pointer;
+}
+
+#primControl {
+}
+
+#playstop {
+    top: 0;
+    background-color: #9aa2e2;
+    padding-top: 6px;
+    height: 40px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 22px;
+    width: 100%;
+}
+
+#playstop:hover {
+    background-color: #adb6ff;
+}
+
+#fullscreen {
+    background-color: #e297e0;
+    top: 0;
+    width: 100%;
+    height: 40px;
+    cursor: pointer;
+    font-size: 22px;
+    text-align: center;
+    padding-top: 10px;
+    position: relative;
+
+}
+
+#fullscreen:hover {
+    background-color: #ffa9fd;
+}
+
+#secControl {
+    background-color: transparent;
+}
+
+.playlistAdd {
+    top: 0;
+    background-color: #93e23b;
+    float: left;
+    padding-top: 5px;
+    padding-left: 4px;
+    height: 40px;
+    width: 100%;
+    font-size: 22px;
+    text-align: center;
+    position: relative;
+    cursor: pointer;
+}
+
+.playlistAdd:hover {
+    background-color: #a6ff45;
+}
+
+.selectStylePlayOrder {
+    overflow: hidden;
+    border: 0;
+    border-radius: 0;
+    width: 100%;
+    position: relative;
+}
+
+.selectStylePlayOrder select {
+    background: #bebebe;
+    padding: 0;
+    font-size: 16px;
+    line-height: 1;
+    border: 0;
+    border-radius: 0;
+    height: 40px;
+    width: 100%;
+    -webkit-appearance: none;
+}
+
+.selectStylePlaylist {
+    overflow: hidden;
+    border: 0;
+    border-radius: 0;
+    width: 100%;
+    position: relative;
+}
+
+.selectStylePlaylist select {
+    background: #bebebe;
+    padding: 0;
+    font-size: 16px;
+    line-height: 1;
+    border: 0;
+    border-radius: 0;
+    height: 40px;
+    -webkit-appearance: none;
+    width: 100%;
+}
+
+.settingsWheel {
+    top: 0;
+    background-color: #e2b353;
+    height: 40px;
+    width: 100%;
+    position: relative;
+    cursor: pointer;
+    font-size: 22px;
+    text-align: center;
+    padding-top: 6px;
+}
+
+.settingsWheel:hover {
+    background-color: #ffca5d;
+}
