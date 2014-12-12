@@ -71,13 +71,16 @@
 
 }
 
+.listItem td {
+    vertical-align: middle;
+}
+
 #playlistItems div.listItem.selected {
     font-weight: bold;
     background-color: #c3ee74;
     margin-top: 2px;
     margin-bottom: 2px;
     color: #000000;
-
     transition: background-color 1s;
     transition-timing-function: linear;
 }
@@ -91,12 +94,22 @@
 }
 
 .xdelete {
-    color: #7f250a;
+    /*color: #7f250a;*/
+    color: transparent;
+    margin-left: 5px;
 }
 
 .xdelete:hover {
-    color: #a50000;
     cursor: pointer;
+}
+
+.listItem:hover .xdelete {
+    transition: color, 1s;
+    color: rgb(167, 48, 12);
+}
+
+.trashcolor {
+    color: rgb(167, 48, 12)
 }
 
 #primControl {

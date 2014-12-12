@@ -87,16 +87,19 @@
     display: none;
     color: #ffffff;
     border: medium none;
-    background-color: #c7254e;
+    background-color: rgba(140, 153, 165, 0.60);
     text-shadow: 2px 2px 2px #5e5e5e;
-    border-radius: 100%;
     padding: 10px 15px;
     margin: auto;
     box-shadow: 2px 2px 3px gray;
+    width: 100%;
+}
+
+.loadmoreButton:hover {
+    background-color: #acb9ca;
 }
 
 .loadmoreContainer {
-    width: 100%;
     clear: both;
     text-align: center;
     padding-top: 20px;

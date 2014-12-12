@@ -56,7 +56,7 @@
             </p>
         </li>
 
-        <li class="itemslots" id="searchSlot">
+        <li class="itemslot" id="searchSlot">
 
             <div class="formed">
                 <button title="Search video" onclick="slothyx.searchYoutube()" type="button"><span
@@ -69,7 +69,7 @@
 
         </li>
 
-        <li class="itemslots" id="loadSlot">
+        <li class="itemslot" id="loadSlot">
 
             <div class="formed">
 
@@ -81,7 +81,7 @@
             </div>
         </li>
 
-        <li class="itemslots" id="generatorSlot">
+        <li class="itemslot" id="generatorSlot">
 
             <div class="formed">
                 <button title="Generate Code" type="button" class="defaultbutton"
@@ -203,12 +203,12 @@
 
                         <table>
                             <tr>
-                                <td>
-                                    <span class="playlist-title playlistTitleBox" data-bind="text: video.title"></span>
+                                <td >
+                                    <span class="playlist-title" data-bind="text: video.title"></span>
                                 </td>
 
                                 <td>
-                                    <i class="xdelete glyphicon glyphicon-remove"
+                                    <i class="xdelete glyphicon glyphicon-trash"
                                        data-bind="click: remove"></i>
                                 </td>
                             </tr>
@@ -271,7 +271,7 @@
                                         <b>Awesomeness</b>
                                     </li>
                                 </ol>
-                            <li>Implemented youtube.com as our <b>main source</b> for our video library.</li>
+                            <li>Implemented youtube.com as the <b>main source</b> for our video library.</li>
                         </ul>
                     </td>
 
@@ -338,8 +338,8 @@
                             <li>If you want to <b>fill your playlist with content</b>, add videos by clicking the
                                 "Add to current playlist" besides beneath the video.
                             </li>
-                            <li>To <b>delete videos</b>, press the red <span
-                                    class="glyphicon glyphicon-remove redcolor"></span>
+                            <li>To <b>delete videos</b>, press  <span
+                                    class="glyphicon glyphicon-trash trashcolor"></span>
                                 next to the title of
                                 the video.
                             </li>
