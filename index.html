@@ -116,13 +116,15 @@
 
                 <div class="oneResult searchResult">
 
-                    <img class="results-image pull-left" data-bind="attr: {src: video.image}">
+                    <img class="results-image" data-bind="attr: {src: video.image}">
 
                     <h3 class="results-title" data-bind="text: video.title"></h3>
                     <span class="results-description" data-bind="text: video.description"></span>
 
-                    <button class="addtoPlaylist" data-bind="click: addToPlaylist">Add to current Playlist</button>
-                    <!--<button class="searchRelated" data-bind="click: searchRelated">Search Related</button>-->
+                    <div class="slider">
+                        <button class="addtoPlaylist" data-bind="click: addToPlaylist" onlick="slothyx">+</button>
+                        <button class="searchRelated" data-bind="click: searchRelated">Search Related</button>
+                    </div>
                 </div>
 
 
@@ -143,7 +145,6 @@
 
 
             <div id="progressSlider"></div>
-
 
 
             <table class="maxwidth">
@@ -221,7 +222,13 @@
 
         <div id="news_update">
 
+            <span class="beta">For &#10084;BETA-Testers&#10084;: Our loved "Search-Related" is back! ..but.. (there is always a but) ..
+                we're still investigating a problem with the button function and the video-description.<br>
+                Visual Update is coming soon.written#12.12.2014; 02:16 a.m.</span><br>
+                Enjoy your day ~<i>styleparrot</i>
+
             <h3>News & Updates</h3>
+
 
             <table class="maxwidth">
 
@@ -234,7 +241,7 @@
                 </tr>
 
                 <tr>
-                    <td >
+                    <td>
 
                         <ul>
                             <li><b>Slothyx.com has been released (##.##.####)!Hurray!</b></li>
@@ -366,33 +373,33 @@
         <div id="contact">
 
 
-                    <div id="contactbox">
-                        <h3>Get in touch</h3>
+            <div id="contactbox">
+                <h3>Get in touch</h3>
 
-                        <p>Hey, let us know what you think! Send us your feedback, or just say <i>"Hello"</i> to the
-                            slothyx-team</p>
-                        <hr>
+                <p>Hey, let us know what you think! Send us your feedback, or just say <i>"Hello"</i> to the
+                    slothyx-team</p>
+                <hr>
 
-                        <div>
-                            <address>Matthias Ableidinger alias <i>"Codemonkey"</i><br>
-                                <a href="mailto: codemonkey@slothyx.com"
-                                   class="mails">codemonkey@slothyx.com</a><br><br>
+                <div>
+                    <address>Matthias Ableidinger alias <i>"Codemonkey"</i><br>
+                        <a href="mailto: codemonkey@slothyx.com"
+                           class="mails">codemonkey@slothyx.com</a><br><br>
 
-                                Patrick Obermüller alias <i>"Styleparrot"</i><br>
-                                <a href="mailto: styleparrot@slothyx.com"
-                                   class="mails">styleparrot@slothyx.com</a><br><br>
-                                www.Slothyx.com<br>
-                                <a href="mailto: info@slothyx.com"
-                                   class="mails">info@slothyx.com</a><br>
-                            </address>
-                            <hr>
+                        Patrick Obermüller alias <i>"Styleparrot"</i><br>
+                        <a href="mailto: styleparrot@slothyx.com"
+                           class="mails">styleparrot@slothyx.com</a><br><br>
+                        www.Slothyx.com<br>
+                        <a href="mailto: info@slothyx.com"
+                           class="mails">info@slothyx.com</a><br>
+                    </address>
+                    <hr>
 
 
-                            <p><i class="standardText">~Enjoy
-                                the
-                                website~</i></p>
-                        </div>
-                    </div>
+                    <p><i class="standardText">~Enjoy
+                        the
+                        website~</i></p>
+                </div>
+            </div>
 
 
         </div>

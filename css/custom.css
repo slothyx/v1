@@ -74,6 +74,15 @@ a:hover {
 
 }
 
+.beta {
+    font-size: 20px;
+    color: #d41c1a;
+    text-decoration: underline;
+}
+img {
+
+}
+
 .redcolor {
     color: red;
 }
