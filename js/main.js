@@ -259,7 +259,6 @@
 				if(!$(event.target).is('#test')) {
 					checked = !checked;
 				}
-				console.log(checked);
 				setTimeout(function() {
 					element.prop("checked", checked);
 					stateModel.replay = checked;
@@ -270,6 +269,19 @@
 
 		$(YOUTUBE_DIV_SELECTOR).on('click', function() {
 			slothyx.toggle();
+		});
+
+		var emails = [
+			["Codemonkey", "Y29kZW1vbmtleUBzbG90aHl4LmNvbQ=="],
+			["Styleparrot", "c3R5bGVwYXJyb3RAc2xvdGh5eC5jb20="],
+			["Info", "aW5mb0BzbG90aHl4LmNvbQ=="],
+		];
+
+		_.forEach(emails, function(item) {
+			var link = $('#emailTo' + item[0]);
+			var email = atob(item[1]);
+			link.attr("href", "mailto: " + email);
+			link.text(email);
 		});
 	});
 
