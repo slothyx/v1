@@ -155,10 +155,14 @@
 			$(PROGRESS_SLIDER_SELECTOR).slider('enable');
 		} else {
 			// TODO check "replay"
-			stateModel.internalState(STATE_STOPPED);
-			getYtPlayer().stop();
-			setWindowTitle(DEFAULT_WINDOW_TITLE);
-			$(PROGRESS_SLIDER_SELECTOR).slider('disable');
+			if(stateModel.replay) {
+				getPlayList().selectNext();
+			} else {
+				stateModel.internalState(STATE_STOPPED);
+				getYtPlayer().stop();
+				setWindowTitle(DEFAULT_WINDOW_TITLE);
+				$(PROGRESS_SLIDER_SELECTOR).slider('disable');
+			}
 		}
 	}
 
@@ -167,7 +171,8 @@
 	}
 
 	var stateModel = {
-		internalState: ko.observable(YT_STATE_STOPPED)
+		internalState: ko.observable(YT_STATE_STOPPED),
+		replay: false
 	};
 	stateModel.playing = ko.pureComputed(function() {
 		return stateModel.internalState() === YT_STATE_PLAYING;
@@ -247,7 +252,20 @@
 			{content: "Generate playlistcode", action: slothyx.generatePlaylistCode},
 			{content: "Rename current playlist", action: slothyx.renameCurrentPlaylist},
 			{content: "Delete current playlist", action: slothyx.deletePlaylist},
-			{content: "Open remote player", action: slothyx.openRemotePlayer}
+			{content: "Open remote player", action: slothyx.openRemotePlayer},
+			{content: "<input id='test' type='checkbox'> Replay", action: function(event) {
+				var element = $('#test');
+				var checked = element.is(":checked");
+				if(!$(event.target).is('#test')) {
+					checked = !checked;
+				}
+				console.log(checked);
+				setTimeout(function() {
+					element.prop("checked", checked);
+					stateModel.replay = checked;
+				}, 0);
+				return false;
+			}},
 		]});
 
 		$(YOUTUBE_DIV_SELECTOR).on('click', function() {
