@@ -1,0 +1,113 @@
+#primlist {
+    list-style-type: none;
+    height: 100%;
+    width: 600px;
+    margin-left: 20%;
+}
+
+#primlist ul li {
+    display: inline;
+}
+
+.formed {
+    height: 30px;
+}
+
+.formed button {
+    top: 0;
+    left: 0;
+    text-align: center;
+    vertical-align: middle;
+    float: left;
+    height: 100%;
+    width: 20%;
+    background-color: #c3ee73;
+    border-style: none;
+}
+
+.formed input {
+    box-sizing: border-box;
+    padding-left: 4px;
+    padding-right: 5px;
+    border-style: none;
+    float: right;
+    width: 80%;
+    height: 100%;
+    background-color: #f5f5f5;
+}
+
+.formed input:focus {
+}
+
+.itemslot {
+    padding-top: 7px;
+    height: 70%;
+    float: left;
+    width: 33%;
+    background-color: transparent;
+}
+
+.itemslot:first-child:hover {
+    background-color: dodgerblue;
+}
+
+.itemslot:nth-child(2):hover {
+    background-color: orange;
+}
+
+.itemslot:nth-child(3):hover {
+    background-color: #00b500;
+}
+
+.itemslot:active {
+    background-color: #5188bd;
+}
+
+#welcomeSlot {
+    text-align: left;
+    /*  text-shadow: -1px 1px #959595;*/
+
+}
+
+#welcomeSlot p::first-letter {
+    font-size: 20px;
+    font-family: Verdana, Arial, sans-serif;
+}
+
+#welcomeSlot p {
+    font-size: 16px;
+    word-spacing: 4px;
+    letter-spacing: 0px;
+    font-family: Arial, serif;
+}
+
+#aboutSlot {
+    position: absolute;
+    padding-top: 10px;
+    bottom: 10px;
+    left: 0;
+    padding-bottom: 13.6px;
+
+    text-align: center;
+}
+
+#aboutSlot p:first-child {
+    text-decoration: underline;
+    padding-bottom: 5px;
+}
+
+.search {
+    padding: 6px 15px 6px 30px;
+    margin: 3px;
+}
+
+#copyright {
+    bottom: 0;
+    left: 0;
+}
+
+#mascot {
+    position: relative;
+    height: 100px;
+    width: 100px;
+}

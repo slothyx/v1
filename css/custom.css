@@ -1,21 +1,6 @@
-body {
-    overflow-x: hidden;
-}
-
-#main {
-    margin-left: 250px;
-}
-
-#sizeHolder {
-    min-width: 1000px;
-    max-width: 70%;
-    width: 70%;
-    background-color: #ffffff;
-    height: auto;
-}
 
 #background {
-    background-color: #0d141b;
+    background-color: #5e97ca;
     /*background-color: #7cb9b4;*/
 }
 

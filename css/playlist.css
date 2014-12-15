@@ -4,14 +4,6 @@
     -playlist items/videos
     -playlist buttons/drop downs/menus */
 
-#playlist {
-    float: right;
-    height: 810px;
-    width: 30%;
-    min-width: 290px;
-    background-color: #f5f5f5;
-}
-
 #playlist tr#primControl td:first-child {
     padding: 0;
     width: 11.45%;

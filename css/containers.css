@@ -1,0 +1,88 @@
+body {
+    overflow-x: auto;
+}
+
+#header {
+    margin: 0;
+    padding: 0;
+    top: 0;
+    left: 0;
+    display: block;
+    height:50px;
+    clear:both;
+    background-color: #000000;
+    box-shadow: 0 3px 3px rgba(50, 50, 50, 0.52);
+    position: fixed;
+    width: 100%;
+    z-index: 9999;
+}
+
+#footer {
+    bottom: 0;
+    left: 0;
+    display: block;
+    clear: both;
+    background-color: rgba(0, 0, 0, 0.42);
+    height:100px;
+}
+
+
+#holder{
+    margin-top: 80px;
+    margin-right: auto;
+    margin-left: auto;
+    width:60%;
+    margin-bottom: 180px;
+    min-width: 1000px;
+}
+
+#results {
+    float: left;
+    height: 810px;
+    width: 70%;
+    min-width: 305px;
+    background-color: #c6d5e2;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+#playlist {
+    float: right;
+    height: 810px;
+    width: 30%;
+    min-width: 290px;
+    background-color: #f5f5f5;
+}
+
+#introduction {
+    color: black;
+    padding-top: 80px;
+    padding-left: 65px;
+    padding-right: 65px;
+    clear: both;
+    height: 750px;
+    background-color: #b9def0;
+    display: block;
+}
+
+#contact {
+    padding: 80px 150px;
+    clear: both;
+    text-align: center;
+    background-color: #f5f5f5;
+    height: 680px;
+}
+
+#news_update {
+    clear:both;
+    width: 100%;
+
+    background-color: rgba(245, 245, 245, 0.56);
+    color: black;
+    padding: 65px 150px;
+    text-align: center;
+    height: 750px;
+    overflow: hidden;
+}
+
+

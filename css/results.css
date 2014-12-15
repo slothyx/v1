@@ -1,13 +1,3 @@
-#results {
-    float: left;
-    height: 810px;
-    width: 70%;
-    min-width: 305px;
-    background-color: #c6d5e2;
-    overflow-y: scroll;
-    overflow-x: hidden;
-}
-
 .oneResult h3 {
     text-shadow: none;
     margin-top: 10px;
