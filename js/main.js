@@ -7,10 +7,6 @@
 	var VIDEO_TEXTFIELD_SELECTOR = '#newVideoId';
 	var PLAYLIST_CODE_SELECTOR = '#newPlaylistCode';
 	var PROGRESS_SLIDER_SELECTOR = '#progressSlider';
-	var VOLUME_SLIDER_SELECTOR = '#volumeSlider';
-	var OPTIONS_HTML_SELECTOR = "#playlistOptions";
-	var SPACE_LISTENER_SELECTOR = 'html';
-	var YOUTUBE_DIV_SELECTOR = '#tvset';
 	var DEFAULT_WINDOW_TITLE = "Slothyx Music";
 
 	var STATE_STOPPED = 0;
@@ -20,67 +16,57 @@
 	var YT_STATE_PLAYING = 1;
 	var YT_STATE_PAUSE = 2;
 
-	var ENTER_SPACE_CODE = 32;
-
 
 	var slothyx = window.slothyx || {};
 	window.slothyx = slothyx;
 
 
-	/*****PUBLIC API*****/
-
-	slothyx.toggle = function() {
-		if(stateModel.internalState() === STATE_PLAYING) {
-			slothyx.pause();
-		} else {
-			slothyx.play();
-		}
-	};
-
-	slothyx.play = function() {
-		if(stateModel.internalState() === STATE_STOPPED) {
-			getPlayList().selectNext();
-		} else {
-			stateModel.internalState(STATE_PLAYING);
-			getYtPlayer().play();
-		}
-	};
-
-	slothyx.pause = function() {
-		stateModel.internalState(STATE_PAUSE);
-		getYtPlayer().pause();
-	};
-
-	slothyx.stop = function() {
-		stateModel.internalState(STATE_STOPPED);
-		getYtPlayer().stop();
-	};
-
-	slothyx.loadVideoFromTextField = function() {
-		//TODO move to youtube? do we need to know / should we know how to parse this?
-		var callback = function(result) {
-			_.forEach(result.videos, function(video) {
-				getPlayList().addVideo(video);
-			});
-			$(VIDEO_TEXTFIELD_SELECTOR).val("");
-		};
-		var text = $(VIDEO_TEXTFIELD_SELECTOR).val();
-		var regexResult = /v=([A-Za-z0-9_-]{11})/.exec(text);
-		if(regexResult !== null) {
-			slothyx.youtube.loadVideoData([regexResult[1]], callback);
-		} else {
-			if(text.length % 11 === 0) {
-				var videoIds = [];
-				for(var i = 0; i <= text.length; i += 11) {
-					videoIds.push(text.substring(i, i + 11));
-				}
-				slothyx.youtube.loadVideoData(videoIds, callback);
-			}
-		}
-	};
-
 	var lastSearch;
-	slothyx.searchYoutube = function() {
+	var loadMoreCount = 0;
+	function loadMore() {
+		if(lastSearch !== undefined) {
+			slothyx.youtube.loadMore(lastSearch, function(searchResult) {
+				lastSearch = searchResult;
+				getSearchResultList().addSearchResults(searchResult.videos);
+				if(loadMoreCount > 0) {
+					loadMoreCount--;
+					loadMore();
+				}
+			});
+			lastSearch = undefined;
+		} else {
+			loadMoreCount++;
+		}
+	}
+
+	function addPlaylist() {
+		getPlayList().addPlaylist();
+	}
+
+	function deletePlaylist() {
+		getPlayList().deleteCurrentPlaylist();
+	}
+
+	function generatePlaylistCode() {
+		$(PLAYLIST_CODE_SELECTOR).val(_.reduce(getPlayList().getCurrentPlaylist().videos, function(code, video) {
+			return code + video.id;
+		}, ""));
+		$(PLAYLIST_CODE_SELECTOR).get(0).select();
+	}
+
+	function renameCurrentPlaylist() {
+		getPlayList().renameCurrentPlaylist();
+	}
+
+	function openRemotePlayer() {
+		slothyx.remotePlayer.initActivePlayer();
+	}
+
+	function requestFullscreen () {
+		slothyx.localPlayer.requestFullscreen();
+	}
+
+	function searchYoutube() {
 		lastSearch = undefined;
 		slothyx.youtube.search($(SEARCH_TEXTFIELD_SELECTOR).val(), function(searchResult) {
 			//TODO temporary
@@ -89,51 +75,35 @@
 			lastSearch = searchResult;
 			getSearchResultList().setSearchResults(searchResult.videos);
 		});
-	};
-	var loadMoreCount = 0;
-	slothyx.loadMore = function() {
-		if(lastSearch !== undefined) {
-			slothyx.youtube.loadMore(lastSearch, function(searchResult) {
-				lastSearch = searchResult;
-				getSearchResultList().addSearchResults(searchResult.videos);
-				if(loadMoreCount > 0) {
-					loadMoreCount--;
-					slothyx.loadMore();
-				}
-			});
-			lastSearch = undefined;
+	}
+
+	function toggle() {
+		if(stateModel.internalState() === STATE_PLAYING) {
+			pause();
 		} else {
-			loadMoreCount++;
+			play();
 		}
-	};
+	}
 
-	slothyx.addPlaylist = function() {
-		getPlayList().addPlaylist();
-	};
-	slothyx.deletePlaylist = function() {
-		getPlayList().deleteCurrentPlaylist();
-	};
+	function play() {
+		if(stateModel.internalState() === STATE_STOPPED) {
+			getPlayList().selectNext();
+		} else {
+			stateModel.internalState(STATE_PLAYING);
+			getYtPlayer().play();
+		}
+	}
 
-	slothyx.generatePlaylistCode = function() {
-		$(PLAYLIST_CODE_SELECTOR).val(_.reduce(getPlayList().getCurrentPlaylist().videos, function(code, video) {
-			return code + video.id;
-		}, ""));
-		$(PLAYLIST_CODE_SELECTOR).get(0).select();
-	};
+	function pause() {
+		stateModel.internalState(STATE_PAUSE);
+		getYtPlayer().pause();
+	}
 
-	slothyx.renameCurrentPlaylist = function() {
-		getPlayList().renameCurrentPlaylist();
-	};
-
-	slothyx.openRemotePlayer = function() {
-		slothyx.remotePlayer.initActivePlayer();
-	};
-
-	slothyx.requestFullscreen = function() {
-		slothyx.localPlayer.requestFullscreen();
-	};
-
-	/*****PRIVATE HELPER*****/
+	function stop() {
+		//TODO check if needed
+		stateModel.internalState(STATE_STOPPED);
+		getYtPlayer().stop();
+	}
 
 	function getYtPlayer() {
 		return slothyx.localPlayer.getPlayer();
@@ -166,6 +136,38 @@
 		window.document.title = title;
 	}
 
+	function onSpaceKey(event) {
+		if(event.target.tagName !== "INPUT" && event.target.tagName !== "BUTTON") {
+			toggle();
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	function loadVideoFromTextField() {
+		//TODO move to youtube? do we need to know / should we know how to parse this?
+		var callback = function(result) {
+			_.forEach(result.videos, function(video) {
+				getPlayList().addVideo(video);
+			});
+			$(VIDEO_TEXTFIELD_SELECTOR).val("");
+		};
+		var text = $(VIDEO_TEXTFIELD_SELECTOR).val();
+		var regexResult = /v=([A-Za-z0-9_-]{11})/.exec(text);
+		if(regexResult !== null) {
+			slothyx.youtube.loadVideoData([regexResult[1]], callback);
+		} else {
+			if(text.length % 11 === 0) {
+				var videoIds = [];
+				for(var i = 0; i <= text.length; i += 11) {
+					videoIds.push(text.substring(i, i + 11));
+				}
+				slothyx.youtube.loadVideoData(videoIds, callback);
+			}
+		}
+	}
+
 	var stateModel = {
 		internalState: ko.observable(YT_STATE_STOPPED)
 	};
@@ -190,6 +192,7 @@
 	var progressSliderDragging = false;
 
 	function onProgressChanged(progress) {
+		//TODO integrate with knockout
 		if(!progressSliderDragging) {
 			$(PROGRESS_SLIDER_SELECTOR).slider("value", progress);
 		}
@@ -210,20 +213,21 @@
 	getPlayList().addVideoSelectedListener(onSelectedVideo);
 	getSearchResultList().addSearchRelatedListener(onSearchRelated);
 	getYtPlayer().addListener(onYTPlayerStateChange);
-	getModel().contribute({stateModel: stateModel});
-
-	slothyx.util.onStartUp(function() {
-
-		slothyx.util.initTextFields(slothyx);
-
-		$(SPACE_LISTENER_SELECTOR).on("keypress", function(event) {
-			if(event.originalEvent.charCode === ENTER_SPACE_CODE && event.target.tagName !== "INPUT" && event.target.tagName !== "BUTTON") {
-				slothyx.toggle();
-				return false;
-			}
-		});
-
-		$(PROGRESS_SLIDER_SELECTOR).slider({
+	getModel().contribute({
+		stateModel: stateModel,
+		playlistOptions: {
+			items: [
+				{content: "Generate playlistcode", action: generatePlaylistCode},
+				{content: "Rename current playlist", action: renameCurrentPlaylist},
+				{content: "Delete current playlist", action: deletePlaylist},
+				{content: "Open remote player", action: openRemotePlayer}
+			]
+		},
+		toggle: toggle,
+		onSpaceKey: onSpaceKey,
+		searchYoutube: searchYoutube,
+		loadVideoFromTextField: loadVideoFromTextField,
+		progressSlider: {
 			disabled: true,
 			start: function() {
 				progressSliderDragging = true;
@@ -232,27 +236,22 @@
 				progressSliderDragging = false;
 				getYtPlayer().setProgress(ui.value);
 			}
-		});
-		getYtPlayer().addProgressListener(onProgressChanged);
-
-		$(VOLUME_SLIDER_SELECTOR).slider({
+		},
+		volumeSlider: {
 			orientation: "horizontal",
 			value: 100,
 			slide: function(event, ui) {
 				getYtPlayer().setVolume(ui.value);
 			}
-		});
+		},
+		addPlaylist: addPlaylist,
+		requestFullscreen: requestFullscreen,
+		generatePlaylistCode: generatePlaylistCode,
+		loadMore: loadMore
+	});
 
-		$(OPTIONS_HTML_SELECTOR).options({items: [
-			{content: "Generate playlistcode", action: slothyx.generatePlaylistCode},
-			{content: "Rename current playlist", action: slothyx.renameCurrentPlaylist},
-			{content: "Delete current playlist", action: slothyx.deletePlaylist},
-			{content: "Open remote player", action: slothyx.openRemotePlayer}
-		]});
-
-		$(YOUTUBE_DIV_SELECTOR).on('click', function() {
-			slothyx.toggle();
-		});
+	slothyx.util.onStartUp(function() {
+		getYtPlayer().addProgressListener(onProgressChanged);
 	});
 
 })(jQuery, window);

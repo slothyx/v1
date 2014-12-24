@@ -4,7 +4,6 @@
 	var slothyx = window.slothyx || {};
 	window.slothyx = slothyx;
 	var util = slothyx.util = {};
-	var ENTER_KEY_CODE = 13;
 	var DATA_ATTRIBUTE = "enterevent";
 	var DEFAULT_INTERVAL = 500; //half a second
 
@@ -41,19 +40,6 @@
 		}
 	};
 
-	util.initTextFields = function(object) {
-		//TODO make data-attribute parameter
-		$('input[data-' + DATA_ATTRIBUTE + ']').each(function() {
-			var self = $(this);
-			self.on("keypress", function(event) {
-				if(event.originalEvent.keyCode === ENTER_KEY_CODE) {
-					object[self.data(DATA_ATTRIBUTE)]();
-					return false;
-				}
-			});
-		});
-	};
-
 	util.onStartUp = function(callback) {
 		$(callback);
 	};
@@ -85,70 +71,72 @@
 		return array;
 	};
 
-	$.widget("slothyx.options", {
+	if($.widget) {
 
-		options: {
-			items: [],
-			rootClass: "options",
-			paneClass: "optionsPane",
-			entryClass: "optionsEntry",
-			rootContent: "<i class='glyphicon glyphicon-cog'></i>"
-		},
+		$.widget("slothyx.options", {
 
-		_state: {
-			open: false
-		},
+			options: {
+				items: [],
+				rootClass: "options",
+				paneClass: "optionsPane",
+				entryClass: "optionsEntry",
+				rootContent: "<i class='glyphicon glyphicon-cog'></i>"
+			},
 
-		_create: function() {
-			var element = $(this.element);
-			element.addClass(this.options.rootClass);
-			element.html(this.options.rootContent);
-			var clickHandler = this._clickHandler.bind(this);
-			var focusHandler = this._close.bind(this);
-			element.on("click", clickHandler);
-			$(document).on("click", focusHandler);
-		},
+			_state: {
+				open: false
+			},
 
-		_close: function() {
-			$(this.element).find("." + this.options.paneClass).remove();
-			this._state.open = false;
-		},
+			_create: function() {
+				var element = $(this.element);
+				element.addClass(this.options.rootClass);
+				element.html(this.options.rootContent);
+				var clickHandler = this._clickHandler.bind(this);
+				var focusHandler = this._close.bind(this);
+				element.on("click", clickHandler);
+				$(document).on("click", focusHandler);
+			},
 
-		_open: function() {
-			var itemsPane = $("<div />");
-			itemsPane.addClass(this.options.paneClass);
-			var createEntry = this._createEntry.bind(this);
-			_.forEach(this.options.items, function(item) {
-				itemsPane.append(createEntry(item));
-			});
-			this.element.append(itemsPane);
-			itemsPane.focus();
-			this._state.open = true;
-		},
+			_close: function() {
+				$(this.element).find("." + this.options.paneClass).remove();
+				this._state.open = false;
+			},
 
-		_clickHandler: function() {
-			if(this._state.open) {
-				this._close();
-			} else {
-				this._open();
-			}
-			return false;
-		},
+			_open: function() {
+				var itemsPane = $("<div />");
+				itemsPane.addClass(this.options.paneClass);
+				var createEntry = this._createEntry.bind(this);
+				_.forEach(this.options.items, function(item) {
+					itemsPane.append(createEntry(item));
+				});
+				this.element.append(itemsPane);
+				itemsPane.focus();
+				this._state.open = true;
+			},
 
-		_createEntry: function(item) {
-			var entry = $("<span />");
-			entry.on("click", item.action);
-			entry.html(item.content);
-			entry.addClass(this.options.entryClass);
-			return entry;
-		}
-	});
-
-	$.fn.onEnter = function(callback) {
-		$(this).on("keypress", function(event) {
-			if(event.originalEvent.keyCode === ENTER_KEY_CODE) {
-				callback();
+			_clickHandler: function() {
+				if(this._state.open) {
+					this._close();
+				} else {
+					this._open();
+				}
 				return false;
+			},
+
+			_createEntry: function(item) {
+				var entry = $("<span />");
+				entry.on("click", item.action);
+				entry.html(item.content);
+				entry.addClass(this.options.entryClass);
+				return entry;
+			}
+		});
+	}
+
+	$.fn.onKey = function(key, callback) {
+		$(this).on("keypress", function(event) {
+			if(event.which === key) {
+				return callback(event) || false;
 			}
 		});
 	};

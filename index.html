@@ -46,18 +46,18 @@
 
 </head>
 
-<body id="background">
+<body id="background" data-bind="onKey: {key: $root.util.keys.SPACE, action: $root.onSpaceKey}">
 
 <div id="header">
 
     <ul id="primlist">
         <li class="itemslot">
                 <div class="formed">
-                    <button title="Search video" onclick="slothyx.searchYoutube()" type="button"><span
+                    <button title="Search video" type="button" data-bind="click: $root.searchYoutube"><span
                             class="glyphicon glyphicon-search"></span>
                     </button>
                     <input type="text" placeholder="Search" id="searchText"
-                           data-enterevent="searchYoutube">
+						   data-bind="onKey: {key: $root.util.keys.ENTER, action: $root.searchYoutube}">
                     <!--<label for="searchText"></label>-->
                 </div>
 
@@ -66,18 +66,17 @@
         <li class="itemslot">
             <div class="formed">
 
-                <button title="Load playlist" onclick="slothyx.loadVideoFromTextField()" type="button"><span
+                <button title="Load playlist" type="button" data-bind="click: $root.loadVideoFromTextField"><span
                         class="glyphicon glyphicon-export"></span></button>
                 <input type="text" placeholder="Load" id="newVideoId"
-                       data-enterevent="loadVideoFromTextField">
+					   data-bind="onKey: {key: $root.util.keys.ENTER, action: $root.loadVideoFromTextField}">
                 <!--<label for="newVideoId"></label>-->
             </div>
         </li>
 
         <li  class="itemslot">
             <div class="formed">
-                <button title="Generate Code" type="button" class="defaultbutton"
-                        onclick="slothyx.generatePlaylistCode()"><span
+                <button title="Generate Code" type="button" class="defaultbutton" data-bind="click: $root.generatePlaylistCode"><span
                         class="glyphicon glyphicon-floppy-disk"></span></button>
                 <input type="text" placeholder="Code" id="newPlaylistCode">
             </div>
@@ -118,40 +117,40 @@
 
         </div>
         <div class="loadmoreContainer">
-            <button id="loadMore" class="loadmoreButton" onclick="slothyx.loadMore()">Load More</button>
+            <button id="loadMore" class="loadmoreButton" data-bind="click: $root.loadMore">Load More</button>
         </div>
     </div>
 
 
     <div id="playlist" data-bind="with: $root.playlist.playlistModel">
 
-        <div id="tvset">
+        <div id="tvset" data-bind="click: $root.toggle">
             <div id="ytPlayer">
                 You need Flash player 8+ and JavaScript enabled to play videos.
             </div>
         </div>
 
 
-        <div id="progressSlider"></div>
+        <div id="progressSlider" data-bind="slider: $root.progressSlider"></div>
 
 
         <table class="maxwidth">
 
             <tr id="primControl">
                 <td>
-                    <div id="playstop" onclick="slothyx.toggle()" data-bind="with: $root.stateModel"><i
+                    <div id="playstop" data-bind="with: $root.stateModel, click: $root.toggle"><i
                             class="glyphicon"
                             data-bind="css: {'glyphicon-play': !playing(), 'glyphicon-pause': playing()}"></i>
                     </div>
                 </td>
 
                 <td>
-                    <div id="volumeSlider"></div>
+                    <div id="volumeSlider" data-bind="slider: $root.volumeSlider"></div>
                 </td>
 
                 <td>
                     <div id="fullscreen" class="glyphicon glyphicon-fullscreen"
-                         onclick="slothyx.requestFullscreen()"></div>
+                         data-bind="click: $root.requestFullscreen"></div>
                 </td>
 
             </tr>
@@ -160,7 +159,7 @@
 
             <tr id="secControl">
                 <td>
-                            <span class="playlistAdd" title="Add" onclick="slothyx.addPlaylist()">
+                            <span class="playlistAdd" title="Add" data-bind="click: $root.addPlaylist">
 		                    <span class="glyphicon glyphicon-plus"></span>
                             </span>
                 </td>
@@ -180,7 +179,7 @@
 
 
                 <td>
-                    <span class="settingsWheel" id="playlistOptions"></span>
+                    <span class="settingsWheel" data-bind="optionsWheel: $root.playlistOptions"></span>
                 </td>
             </tr>
         </table>
