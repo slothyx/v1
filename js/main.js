@@ -43,7 +43,7 @@
 		slothyx.remotePlayer.initActivePlayer();
 	}
 
-	function requestFullscreen () {
+	function requestFullscreen() {
 		slothyx.localPlayer.requestFullscreen();
 	}
 
@@ -94,11 +94,14 @@
 			setWindowTitle(video.title);
 			$(PROGRESS_SLIDER_SELECTOR).slider('enable');
 		} else {
-			// TODO check "replay"
-			stateModel.internalState(STATE_STOPPED);
-			getYtPlayer().stop();
-			setWindowTitle(DEFAULT_WINDOW_TITLE);
-			$(PROGRESS_SLIDER_SELECTOR).slider('disable');
+			if(stateModel.replay) {
+				getPlayList().selectNext();
+			} else {
+				stateModel.internalState(STATE_STOPPED);
+				getYtPlayer().stop();
+				setWindowTitle(DEFAULT_WINDOW_TITLE);
+				$(PROGRESS_SLIDER_SELECTOR).slider('disable');
+			}
 		}
 	}
 
@@ -139,7 +142,8 @@
 	}
 
 	var stateModel = {
-		internalState: ko.observable(YT_STATE_STOPPED)
+		internalState: ko.observable(YT_STATE_STOPPED),
+		replay: false
 	};
 	stateModel.playing = ko.pureComputed(function() {
 		return stateModel.internalState() === YT_STATE_PLAYING;
@@ -162,7 +166,6 @@
 	var progressSliderDragging = false;
 
 	function onProgressChanged(progress) {
-		//TODO integrate with knockout
 		if(!progressSliderDragging) {
 			$(PROGRESS_SLIDER_SELECTOR).slider("value", progress);
 		}
@@ -187,7 +190,19 @@
 				{content: "Generate playlistcode", action: generatePlaylistCode},
 				{content: "Rename current playlist", action: renameCurrentPlaylist},
 				{content: "Delete current playlist", action: deletePlaylist},
-				{content: "Open remote player", action: openRemotePlayer}
+				{content: "Open remote player", action: openRemotePlayer},
+				{content: "<input id='test' type='checkbox'> Replay", action: function(event) {
+					var element = $('#test');
+					var checked = element.is(":checked");
+					if(!$(event.target).is('#test')) {
+						checked = !checked;
+					}
+					setTimeout(function() {
+						element.prop("checked", checked);
+						stateModel.replay = checked;
+					}, 0);
+					return false;
+				}}
 			]
 		},
 		toggle: toggle,
@@ -217,6 +232,20 @@
 
 	slothyx.util.onStartUp(function() {
 		getYtPlayer().addProgressListener(onProgressChanged);
+
+		var emails = [
+			["Codemonkey", "Y29kZW1vbmtleUBzbG90aHl4LmNvbQ=="],
+			["Styleparrot", "c3R5bGVwYXJyb3RAc2xvdGh5eC5jb20="],
+			["Info", "aW5mb0BzbG90aHl4LmNvbQ=="],
+		];
+
+		_.forEach(emails, function(item) {
+			var link = $('#emailTo' + item[0]);
+			var email = atob(item[1]);
+			link.attr("href", "mailto: " + email);
+			link.text(email);
+		});
+
 	});
 
 })(jQuery, window);

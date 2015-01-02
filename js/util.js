@@ -4,7 +4,6 @@
 	var slothyx = window.slothyx || {};
 	window.slothyx = slothyx;
 	var util = slothyx.util = {};
-	var DATA_ATTRIBUTE = "enterevent";
 	var DEFAULT_INTERVAL = 500; //half a second
 
 	util.Video = function(id, title, description, image) {
@@ -84,35 +83,43 @@
 			},
 
 			_state: {
-				open: false
+			open: false,
+			itemsPane: undefined
 			},
 
 			_create: function() {
 				var element = $(this.element);
 				element.addClass(this.options.rootClass);
 				element.html(this.options.rootContent);
+			this._createPane();
 				var clickHandler = this._clickHandler.bind(this);
 				var focusHandler = this._close.bind(this);
 				element.on("click", clickHandler);
 				$(document).on("click", focusHandler);
 			},
 
-			_close: function() {
-				$(this.element).find("." + this.options.paneClass).remove();
-				this._state.open = false;
-			},
-
-			_open: function() {
-				var itemsPane = $("<div />");
+		_createPane: function() {
+			var itemsPane = this._state.itemsPane = $("<div style='display: none'/>");
 				itemsPane.addClass(this.options.paneClass);
 				var createEntry = this._createEntry.bind(this);
 				_.forEach(this.options.items, function(item) {
 					itemsPane.append(createEntry(item));
 				});
 				this.element.append(itemsPane);
-				itemsPane.focus();
+		},
+
+		_open: function() {
+			this._state.itemsPane.css("display", "block");
+			this._state.itemsPane.focus();
 				this._state.open = true;
 			},
+
+		_close: function() {
+			if(this._state.itemsPane !== undefined) {
+				this._state.itemsPane.css("display", "none");
+			}
+			this._state.open = false;
+		},
 
 			_clickHandler: function() {
 				if(this._state.open) {
@@ -120,11 +127,17 @@
 				} else {
 					this._open();
 				}
+
 				return false;
 			},
 
 			_createEntry: function(item) {
 				var entry = $("<span />");
+			if(item.action === undefined) {
+				item.action = function() {
+					return false;
+				};
+			}
 				entry.on("click", item.action);
 				entry.html(item.content);
 				entry.addClass(this.options.entryClass);
