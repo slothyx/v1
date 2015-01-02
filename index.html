@@ -53,11 +53,11 @@
     <ul id="primlist">
         <li class="itemslot">
                 <div class="formed">
-                    <button title="Search video" type="button" data-bind="click: $root.searchYoutube"><span
+                    <button title="Search video" type="button" data-bind="click: $root.youtube.searchYoutube"><span
                             class="glyphicon glyphicon-search"></span>
                     </button>
-                    <input type="text" placeholder="Search" id="searchText"
-						   data-bind="onKey: {key: $root.util.keys.ENTER, action: $root.searchYoutube}">
+                    <input type="text" placeholder="Search"
+						   data-bind="onKey: {key: $root.util.keys.ENTER, action: $root.youtube.searchYoutube}, textInput: $root.youtube.searchQuery">
                     <!--<label for="searchText"></label>-->
                 </div>
 
@@ -99,7 +99,7 @@
 <div id="holder">
 
     <div id="results">
-        <div id="searchResults" data-bind="foreach: $root.playlist.searchResultsModel.searchResults">
+        <div id="searchResults" data-bind="foreach: $root.youtube.searchResultsModel.searchResults">
 
             <div class="oneResult searchResult">
 
@@ -117,7 +117,7 @@
 
         </div>
         <div class="loadmoreContainer">
-            <button id="loadMore" class="loadmoreButton" data-bind="click: $root.loadMore">Load More</button>
+            <button class="loadmoreButton" data-bind="click: $root.youtube.loadMore, visible: $root.youtube.showLoadMoreButton" style="display: none">Load More</button>
         </div>
     </div>
 

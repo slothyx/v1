@@ -86,13 +86,13 @@
 			tmpSelectHolder.detach();
 
 			focusListener = function() {
-				finishRenameCurrenPlaylist(true);
+				finishRenameCurrentPlaylist(true);
 			};
 			$(document).on('click', focusListener);
 			var textField = $("<input type='text' class='playlistSelect'/>");
 			textField.val(playlistModel.playlist().name());
 			textField.onEnter(function() {
-				finishRenameCurrenPlaylist(true);
+				finishRenameCurrentPlaylist(true);
 			});
 			textField.on('click', function() {
 				return false;
@@ -101,7 +101,7 @@
 			textField.get(0).select();
 		};
 
-		function finishRenameCurrenPlaylist(save) {
+		function finishRenameCurrentPlaylist(save) {
 			var selectWrapper = $(PLAYLIST_SELECT_HOLDER_SELECTOR);
 			var selectTextField = selectWrapper.find('.playlistSelect');
 			var select = tmpSelectHolder;
@@ -314,55 +314,10 @@
 		return playlist;
 	})();
 
-
-	/*****SEARCHRESULTLIST API*****/
-	var searchResultList = (function() {
-
-		var searchResultsModel = {
-			searchResults: ko.observableArray()
-		};
-
-		var searchResultList = {};
-		var searchRelatedEvents = createNewEventHelper(searchResultList, "addSearchRelatedListener", "removeSearchRelatedListener");
-
-		searchResultList.setSearchResults = function(searchResults) {
-			searchResultsModel.searchResults.removeAll();
-			searchResultList.addSearchResults(searchResults);
-		};
-
-		searchResultList.addSearchResults = function(searchResults) {
-			_.forEach(searchResults, function(searchResult) {
-				var searchResultWrapper = new SearchResultWrapper(searchResult);
-				searchResultsModel.searchResults.push(searchResultWrapper);
-			});
-		};
-
-		function SearchResultWrapper(video) {
-			var self = this;
-			self.video = video;
-
-			self.addToPlaylist = function() {
-				lists.getPlaylist().addVideo(video);
-			};
-
-			self.searchRelated = function() {
-				searchRelatedEvents.throwEvent(video);
-			};
-		}
-
-		/******INIT******/
-		slothyx.knockout.getModel().contribute({playlist: {searchResultsModel: searchResultsModel}});
-		return searchResultList;
-	})();
-
-
 	/*****PUBLIC API*****/
+
 	lists.getPlaylist = function() {
 		return playlist;
-	};
-
-	lists.getSearchResultList = function() {
-		return searchResultList;
 	};
 
 	/*****PRIVATE HELPER*****/

@@ -1,5 +1,5 @@
-/*globals jQuery, gapi, _*/
-(function($, window, _, undefined) {
+/*globals jQuery, gapi, _, ko*/
+(function($, window, _, ko, undefined) {
 	"use strict";
 
 	var MAX_RESULTS = "15";
@@ -11,6 +11,31 @@
 	var Video = slothyx.util.Video;
 
 	youtube.search = function(query, callback, optionOverride) {
+		if(callback === undefined) {
+			callback = getDefaultSearchCallback(false);
+		}
+		if(query === undefined) {
+			query = youtubeModel.searchQuery();
+		}
+		search(query, callback, optionOverride);
+	};
+
+	youtube.loadVideoData = function(videoIds, callback, optionOverride) {
+		loadVideoData(videoIds, callback, optionOverride);
+	};
+
+	youtube.loadMore = function(callback) {
+		if(callback === undefined) {
+			callback = getDefaultSearchCallback(true);
+		}
+		search(undefined, callback, youtubeModel.lastSearchResult());
+	};
+
+	youtube.searchForRelated = function(video, callback) {
+		youtube.search(undefined, callback, {relatedToVideoId: video.id});
+	};
+
+	function search(query, callback, optionOverride) {
 		//TODO caching
 		var options = getDefaultOptions();
 		options.q = query;
@@ -19,10 +44,12 @@
 		doOptionOverride(options, optionOverride);
 
 		var request = gapi.client.youtube.search.list(options);
-		request.execute(getCallbackHandler(options, callback));
-	};
+		request.execute(getInternalCallbackWrapper(options, callback));
 
-	youtube.loadVideoData = function(videoIds, callback, optionOverride) {
+		youtubeModel.lastSearchResult(undefined);
+	}
+
+	function loadVideoData(videoIds, callback, optionOverride) {
 		//TODO caching
 		var options = getDefaultOptions();
 		options.id = videoIds.join(',');
@@ -30,32 +57,26 @@
 		doOptionOverride(options, optionOverride);
 
 		var request = gapi.client.youtube.videos.list(options);
-		request.execute(getCallbackHandler(options, callback));
-	};
+		request.execute(getInternalCallbackWrapper(options, callback));
+	}
 
-	youtube.loadMore = function(lastSearchResult, callback) {
-		youtube.search(undefined, callback, lastSearchResult.options);
-	};
-
-	youtube.searchForRelated = function(video, callback) {
-		youtube.search(undefined, callback, {relatedToVideoId: video.id});
-	};
-
-	function getCallbackHandler(options, callback) {
+	function getInternalCallbackWrapper(options, callback) {
 		return function(response) {
 			if(response === undefined) {
 				//TODO maybe empty callback?
 				return;
 			}
-			var result = {};
-			result.options = options;
-			result.options.pageToken = response.result.nextPageToken;
-			result.videos = _.map(response.result.items, function(item) {
+
+			var lastSearchResult = options;
+			lastSearchResult.pageToken = response.result.nextPageToken;
+			youtubeModel.lastSearchResult(lastSearchResult);
+
+			var videos = _.map(response.result.items, function(item) {
 				return new Video(item.id.videoId || item.id, item.snippet.title, item.snippet.description,
 					item.snippet.thumbnails.default.url);
 			});
 
-			callback(result);
+			callback(videos);
 		};
 	}
 
@@ -69,6 +90,16 @@
 		}
 	}
 
+	function getDefaultSearchCallback(appendVideos) {
+		return function(searchResults) {
+			if(appendVideos) {
+				youtube.getSearchResultList().addSearchResults(searchResults);
+			} else {
+				youtube.getSearchResultList().setSearchResults(searchResults);
+			}
+		};
+	}
+
 	function getDefaultOptions() {
 		return {
 			part: "id,snippet",
@@ -77,10 +108,71 @@
 		};
 	}
 
-})(jQuery, window, _);
+	/*****SEARCHRESULTLIST API*****/
+	var searchResultList = (function() {
+
+		var searchResultsModel = {
+			searchResults: ko.observableArray()
+		};
+
+		var searchResultList = {};
+		var searchResultSelectedEvent = new slothyx.util.EventHelper(searchResultList, "addSearchResultSelectedListener", "removeSearchResultSelectedListener");
+
+		searchResultList.setSearchResults = function(searchResults) {
+			searchResultsModel.searchResults.removeAll();
+			searchResultList.addSearchResults(searchResults);
+		};
+
+		searchResultList.addSearchResults = function(searchResults) {
+			_.forEach(searchResults, function(searchResult) {
+				var searchResultWrapper = new SearchResultWrapper(searchResult);
+				searchResultsModel.searchResults.push(searchResultWrapper);
+			});
+		};
+
+		function SearchResultWrapper(video) {
+			var self = this;
+			self.video = video;
+
+			self.addToPlaylist = function() {
+				searchResultSelectedEvent.throwEvent(video);
+			};
+
+			self.searchRelated = function() {
+				youtube.searchForRelated(video);
+			};
+		}
+
+		/******INIT******/
+		slothyx.knockout.getModel().contribute({youtube: {searchResultsModel: searchResultsModel}});
+		return searchResultList;
+	})();
+
+	youtube.getSearchResultList = function() {
+		return searchResultList;
+	};
+
+	var youtubeModel = {
+		lastSearchResult: ko.observable(),
+		searchQuery: ko.observable(''),
+		loadMore: function() {
+			youtube.loadMore();
+		},
+		searchYoutube: function() {
+			youtube.search();
+		}
+	};
+	youtubeModel.showLoadMoreButton = ko.pureComputed(function(){
+		return youtubeModel.lastSearchResult() !== undefined;
+	});
+
+	slothyx.knockout.getModel().contribute({youtube: youtubeModel});
 
 
-//need to be outside
+})(jQuery, window, _, ko);
+
+
+//TODO move inside
 function googleApiCallback() {
 	"use strict";
 	var API_KEY = "AIzaSyCdRfueQo-4w42pTRur9gFC0ammNREQ8QM";

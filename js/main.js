@@ -3,7 +3,6 @@
 	"use strict";
 
 	/***** CONSTANTS *****/
-	var SEARCH_TEXTFIELD_SELECTOR = '#searchText';
 	var VIDEO_TEXTFIELD_SELECTOR = '#newVideoId';
 	var PLAYLIST_CODE_SELECTOR = '#newPlaylistCode';
 	var PROGRESS_SLIDER_SELECTOR = '#progressSlider';
@@ -20,24 +19,6 @@
 	var slothyx = window.slothyx || {};
 	window.slothyx = slothyx;
 
-
-	var lastSearch;
-	var loadMoreCount = 0;
-	function loadMore() {
-		if(lastSearch !== undefined) {
-			slothyx.youtube.loadMore(lastSearch, function(searchResult) {
-				lastSearch = searchResult;
-				getSearchResultList().addSearchResults(searchResult.videos);
-				if(loadMoreCount > 0) {
-					loadMoreCount--;
-					loadMore();
-				}
-			});
-			lastSearch = undefined;
-		} else {
-			loadMoreCount++;
-		}
-	}
 
 	function addPlaylist() {
 		getPlayList().addPlaylist();
@@ -64,17 +45,6 @@
 
 	function requestFullscreen () {
 		slothyx.localPlayer.requestFullscreen();
-	}
-
-	function searchYoutube() {
-		lastSearch = undefined;
-		slothyx.youtube.search($(SEARCH_TEXTFIELD_SELECTOR).val(), function(searchResult) {
-			//TODO temporary
-			$('#changelog').hide();
-			$('#loadMore').show();
-			lastSearch = searchResult;
-			getSearchResultList().setSearchResults(searchResult.videos);
-		});
 	}
 
 	function toggle() {
@@ -114,7 +84,7 @@
 	}
 
 	function getSearchResultList() {
-		return slothyx.lists.getSearchResultList();
+		return slothyx.youtube.getSearchResultList();
 	}
 
 	function onSelectedVideo(video) {
@@ -198,11 +168,8 @@
 		}
 	}
 
-	function onSearchRelated(video) {
-		slothyx.youtube.searchForRelated(video, function(result) {
-			lastSearch = result;
-			getSearchResultList().setSearchResults(result.videos);
-		});
+	function onSearchResultSelected(video) {
+		getPlayList().addVideo(video);
 	}
 
 	function getModel() {
@@ -211,7 +178,7 @@
 
 	/*****INIT*****/
 	getPlayList().addVideoSelectedListener(onSelectedVideo);
-	getSearchResultList().addSearchRelatedListener(onSearchRelated);
+	getSearchResultList().addSearchResultSelectedListener(onSearchResultSelected);
 	getYtPlayer().addListener(onYTPlayerStateChange);
 	getModel().contribute({
 		stateModel: stateModel,
@@ -225,7 +192,6 @@
 		},
 		toggle: toggle,
 		onSpaceKey: onSpaceKey,
-		searchYoutube: searchYoutube,
 		loadVideoFromTextField: loadVideoFromTextField,
 		progressSlider: {
 			disabled: true,
@@ -246,8 +212,7 @@
 		},
 		addPlaylist: addPlaylist,
 		requestFullscreen: requestFullscreen,
-		generatePlaylistCode: generatePlaylistCode,
-		loadMore: loadMore
+		generatePlaylistCode: generatePlaylistCode
 	});
 
 	slothyx.util.onStartUp(function() {
