@@ -19,7 +19,6 @@
 	var slothyx = window.slothyx || {};
 	window.slothyx = slothyx;
 
-
 	function addPlaylist() {
 		getPlayList().addPlaylist();
 	}
@@ -40,7 +39,7 @@
 	}
 
 	function openRemotePlayer() {
-		slothyx.remotePlayer.initActivePlayer();
+		window.open("player.html", "remotePlayer");
 	}
 
 	function requestFullscreen() {
@@ -182,7 +181,6 @@
 	/*****INIT*****/
 	getPlayList().addVideoSelectedListener(onSelectedVideo);
 	getSearchResultList().addSearchResultSelectedListener(onSearchResultSelected);
-	getYtPlayer().addListener(onYTPlayerStateChange);
 	getModel().contribute({
 		stateModel: stateModel,
 		playlistOptions: {
@@ -191,7 +189,8 @@
 				{content: "Rename current playlist", action: renameCurrentPlaylist},
 				{content: "Delete current playlist", action: deletePlaylist},
 				{content: "Open remote player", action: openRemotePlayer},
-				{content: "<input id='test' type='checkbox'> Replay", action: function(event) {
+				{
+					content: "<input id='test' type='checkbox'> Replay", action: function(event) {
 					var element = $('#test');
 					var checked = element.is(":checked");
 					if(!$(event.target).is('#test')) {
@@ -202,7 +201,8 @@
 						stateModel.replay = checked;
 					}, 0);
 					return false;
-				}}
+				}
+				}
 			]
 		},
 		toggle: toggle,
@@ -231,7 +231,12 @@
 	});
 
 	slothyx.util.onStartUp(function() {
-		getYtPlayer().addProgressListener(onProgressChanged);
+		slothyx.util.doWhenTrue(function() {
+			getYtPlayer().addProgressListener(onProgressChanged);
+			getYtPlayer().addStateListener(onYTPlayerStateChange);
+		}, function() {
+			return getYtPlayer() !== undefined;
+		});
 
 		var emails = [
 			["Codemonkey", "Y29kZW1vbmtleUBzbG90aHl4LmNvbQ=="],
@@ -247,6 +252,22 @@
 		});
 
 	});
+
+	var slothyxPlayer;
+	slothyx.registerRemoteWindow = function() {
+		if(window.slothyxPlayer !== undefined) {
+			slothyxPlayer = window.slothyxPlayer;
+		}
+		return {
+			getPlayer: function() {
+				return slothyxPlayer;
+			},
+			remoteClosed: function(player) {
+				slothyxPlayer = player;
+				$("#tvset").get(0).appendChild(player);
+			}
+		};
+	};
 
 })(jQuery, window);
 
