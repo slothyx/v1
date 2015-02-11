@@ -49,163 +49,170 @@
 
 <div id="header">
 
-    <ul id="primlist">
-        <li class="itemslot">
+    <table style="margin: auto">
+        <tr>
+            <td>
                 <div class="formed">
                     <button title="Search video" type="button" data-bind="click: $root.youtube.searchYoutube"><span
                             class="glyphicon glyphicon-search"></span>
                     </button>
                     <input type="text" placeholder="Search"
-						   data-bind="onKey: {key: $root.util.keys.ENTER, action: $root.youtube.searchYoutube}, textInput: $root.youtube.searchQuery">
+                           data-bind="onKey: {key: $root.util.keys.ENTER, action: $root.youtube.searchYoutube}, textInput: $root.youtube.searchQuery">
                     <!--<label for="searchText"></label>-->
                 </div>
+            </td>
+            <td>
+                    <div class="formed" style="width: 300px;">
+                        <button title="Load playlist" type="button" data-bind="click: $root.loadVideoFromTextField"><span
+                                class="glyphicon glyphicon-export"></span></button>
+                        <input type="text" placeholder="Load" id="newVideoId"
+                               data-bind="onKey: {key: $root.util.keys.ENTER, action: $root.loadVideoFromTextField}">
+                        <label for="newVideoId"></label>
+                    </div>
 
-        </li>
+            </td>
 
-        <li class="itemslot">
-            <div class="formed">
+            <td>
 
-                <button title="Load playlist" type="button" data-bind="click: $root.loadVideoFromTextField"><span
-                        class="glyphicon glyphicon-export"></span></button>
-                <input type="text" placeholder="Load" id="newVideoId"
-					   data-bind="onKey: {key: $root.util.keys.ENTER, action: $root.loadVideoFromTextField}">
-                <!--<label for="newVideoId"></label>-->
-            </div>
-        </li>
+                <div class="formed" style="width: 300px;">
+                    <button title="Generate Code" type="button" class="defaultbutton" data-bind="click: $root.generatePlaylistCode"><span
+                            class="glyphicon glyphicon-floppy-disk"></span></button>
+                    <input type="text" placeholder="Code" id="newPlaylistCode">
+                </div>
 
-        <li  class="itemslot">
-            <div class="formed">
-                <button title="Generate Code" type="button" class="defaultbutton" data-bind="click: $root.generatePlaylistCode"><span
-                        class="glyphicon glyphicon-floppy-disk"></span></button>
-                <input type="text" placeholder="Code" id="newPlaylistCode">
-            </div>
-        </li>
-    </ul>
+            </td>
+        </tr>
+    </table>
 
-        <!-- <li id="aboutSlot">
-             <p>About</p>
+    <!--
 
-             <p>www.slothyx.com is a free website, <br>designed to provide a fast and easy way to create video-playlists.
-                 Neither
-                 do we want your money, nor your data.<br> <br> Enjoy the website! </p>
+    <li id="aboutSlot">
+         <p>About</p>
 
-             <p id="copyright">Copyright &copy; is for Losers.<br>
+         <p>www.slothyx.com is a free website, <br>designed to provide a fast and easy way to create video-playlists.
+             Neither
+             do we want your money, nor your data.<br> <br> Enjoy the website! </p>
+
+         <p id="copyright">Copyright &copy; is for Losers.<br>
                  ~Banksy</p>
-         </li> -->
+         </li>
 
+</div>-->
 </div>
-
 <div id="holder">
 
-    <div id="results">
-        <div id="searchResults" data-bind="foreach: $root.youtube.searchResultsModel.searchResults">
+<div id="results">
+    <div id="searchResults" data-bind="foreach: $root.youtube.searchResultsModel.searchResults">
 
-            <div class="oneResult searchResult">
+        <div class="oneResult searchResult">
 
-                <img class="results-image" data-bind="attr: {src: video.image}">
+            <img class="results-image" data-bind="attr: {src: video.image}">
 
-                <h3 class="results-title" data-bind="text: video.title"></h3>
-                <span class="results-description" data-bind="text: video.description"></span>
+            <h3 class="results-title" data-bind="text: video.title"></h3>
+            <span class="results-description" data-bind="text: video.description"></span>
 
-                <div class="slider">
-                    <button class="addtoPlaylist" data-bind="click: addToPlaylist" onlick="slothyx">+</button>
-                    <button class="searchRelated" data-bind="click: searchRelated">Search Related</button>
-                </div>
+            <div class="slider">
+                <button class="addtoPlaylist" data-bind="click: addToPlaylist" onlick="slothyx">+</button>
+                <button class="searchRelated" data-bind="click: searchRelated">Search Related</button>
             </div>
-
-
         </div>
-        <div class="loadmoreContainer">
-            <button class="loadmoreButton" data-bind="click: $root.youtube.loadMore, visible: $root.youtube.showLoadMoreButton" style="display: none">Load More</button>
+
+
+    </div>
+    <div class="loadmoreContainer">
+        <button class="loadmoreButton"
+                data-bind="click: $root.youtube.loadMore, visible: $root.youtube.showLoadMoreButton"
+                style="display: none">Load More
+        </button>
+    </div>
+</div>
+
+
+<div id="playlist" data-bind="with: $root.playlist.playlistModel">
+
+    <div id="tvset" data-bind="click: $root.toggle">
+        <div id="ytPlayer">
+            You need Flash player 8+ and JavaScript enabled to play videos.
         </div>
     </div>
 
 
-    <div id="playlist" data-bind="with: $root.playlist.playlistModel">
-
-        <div id="tvset" data-bind="click: $root.toggle">
-            <div id="ytPlayer">
-                You need Flash player 8+ and JavaScript enabled to play videos.
-            </div>
-        </div>
+    <div id="progressSlider" data-bind="slider: $root.progressSlider"></div>
 
 
-        <div id="progressSlider" data-bind="slider: $root.progressSlider"></div>
+    <table class="maxwidth">
 
+        <tr id="primControl">
+            <td>
+                <div id="playstop" data-bind="with: $root.stateModel, click: $root.toggle"><i
+                        class="glyphicon"
+                        data-bind="css: {'glyphicon-play': !playing(), 'glyphicon-pause': playing()}"></i>
+                </div>
+            </td>
 
-        <table class="maxwidth">
+            <td>
+                <div id="volumeSlider" data-bind="slider: $root.volumeSlider"></div>
+            </td>
 
-            <tr id="primControl">
-                <td>
-                    <div id="playstop" data-bind="with: $root.stateModel, click: $root.toggle"><i
-                            class="glyphicon"
-                            data-bind="css: {'glyphicon-play': !playing(), 'glyphicon-pause': playing()}"></i>
-                    </div>
-                </td>
+            <td>
+                <div id="fullscreen" class="glyphicon glyphicon-fullscreen"
+                     data-bind="click: $root.requestFullscreen"></div>
+            </td>
 
-                <td>
-                    <div id="volumeSlider" data-bind="slider: $root.volumeSlider"></div>
-                </td>
+        </tr>
+    </table>
+    <table class="maxwidth">
 
-                <td>
-                    <div id="fullscreen" class="glyphicon glyphicon-fullscreen"
-                         data-bind="click: $root.requestFullscreen"></div>
-                </td>
-
-            </tr>
-        </table>
-        <table class="maxwidth">
-
-            <tr id="secControl">
-                <td>
+        <tr id="secControl">
+            <td>
                             <span class="playlistAdd" title="Add" data-bind="click: $root.addPlaylist">
 		                    <span class="glyphicon glyphicon-plus"></span>
                             </span>
-                </td>
+            </td>
 
-                <td>
-                    <div class="selectStylePlaylist"><span id="playlistSelectHolder">
+            <td>
+                <div class="selectStylePlaylist"><span id="playlistSelectHolder">
 							<select class="playlistSelect"
                                     data-bind="options: playlists, optionsText: 'name', value: playlist"></select></span>
-                    </div>
-                </td>
-
-                <td>
-                    <div class="selectStylePlayOrder">
-                        <select data-bind="options:	playStrategies, optionsText: 'name', value: playStrategy"></select>
-                    </div>
-                </td>
-
-
-                <td>
-                    <span class="settingsWheel" data-bind="optionsWheel: $root.playlistOptions"></span>
-                </td>
-            </tr>
-        </table>
-
-        <div id="playlistItems" data-bind="if: (playlist() !== null && playlist() !== undefined)">
-            <div data-bind="sortable: {data: playlist().videos, afterMove: slothyx.lists.getPlaylist().changed, options: {helper: 'clone'}}">
-                <div class="listItem" data-bind="click: select, css: {selected: isSelected()}">
-
-                    <table>
-                        <tr>
-                            <td>
-                                <span class="playlist-title" data-bind="text: video.title"></span>
-                            </td>
-
-                            <td>
-                                <i class="xdelete glyphicon glyphicon-trash"
-                                   data-bind="click: remove"></i>
-                            </td>
-                        </tr>
-                    </table>
-
                 </div>
+            </td>
+
+            <td>
+                <div class="selectStylePlayOrder">
+                    <select data-bind="options:	playStrategies, optionsText: 'name', value: playStrategy"></select>
+                </div>
+            </td>
+
+
+            <td>
+                <span class="settingsWheel" data-bind="optionsWheel: $root.playlistOptions"></span>
+            </td>
+        </tr>
+    </table>
+
+    <div id="playlistItems" data-bind="if: (playlist() !== null && playlist() !== undefined)">
+        <div data-bind="sortable: {data: playlist().videos, afterMove: slothyx.lists.getPlaylist().changed, options: {helper: 'clone'}}">
+            <div class="listItem" data-bind="click: select, css: {selected: isSelected()}">
+
+                <table>
+                    <tr>
+                        <td>
+                            <span class="playlist-title" data-bind="text: video.title"></span>
+                        </td>
+
+                        <td>
+                            <i class="xdelete glyphicon glyphicon-trash"
+                               data-bind="click: remove"></i>
+                        </td>
+                    </tr>
+                </table>
+
             </div>
         </div>
-
     </div>
 
+</div>
+<!--
     <div id="news_update">
 
             <span class="beta">For &#10084;BETA-Testers&#10084;: Our beloved "Search-Related" button is back! ..but.. (there is always a but) ..
@@ -265,127 +272,127 @@
 
         </table>
     </div>
-
-    <div id="introduction">
-
-
-        <h3>Get started with slothyx.com</h3>
+-->
+<div id="introduction">
 
 
-        <table class="maxwidth">
-
-            <tr>
-                <td>
-                    <h2>Search</h2>
-                </td>
-
-                <td>
-                    <h2>Playlist</h2>
-                </td>
-
-                <td>
-                    <h2>Other</h2>
-                </td>
-
-            </tr>
-
-            <tr>
-
-                <td id="leftIntroduction">
-
-                    <ul>
-                        <li>To <b>search for videos</b>, type in keywords what you are looking for. Press
-                            "Enter" or
-                            <div class="intextglyphicon">
-                                <span class="glyphicon glyphicon-search"></span></div>
-                            to confirm your input.
-                        </li>
-                        <li>If you want to <b>load more videos</b> hit the "Load more" button on the bottom of
-                            the results-field.
-                        </li>
-                        <!-- COMMING BACK SOON
-                        <li>(When you have found some good videos, and you want to <b>find similar videos</b>;
-                            simply press the "Search related" button (<i>!Coming soon!)</i>).
-                        </li>-->
-                    </ul>
-                </td>
-
-                <td id="centerIntroduction">
-
-                    <ul>
-                        <li>To <b>create a playlist</b>, click <span class="glyphicon glyphicon-plus"></span>
-                            underneath the video screen.
-                            Slothyx will automatically add a new playlist to your playlist library.
-                        </li>
-                        <li><b>Deleting a playlist</b> is as simple as creating one. Press the "Wheel"
-                            <b>symbol</b>
-                            to the right of the "Playorder" drop-down menu.
-                        </li>
-                        <li>If you want to <b>fill your playlist with content</b>, add videos by clicking the
-                            "Add to current playlist" besides beneath the video.
-                        </li>
-                        <li>To <b>delete videos</b>, press  <span
-                                class="glyphicon glyphicon-trash trashcolor"></span>
-                            next to the title of
-                            the video.
-                        </li>
-                    </ul>
-                </td>
-
-                <td id="rightIntroduction">
-
-                    <ul>
-                        <li><b>Sharing a playlist</b> is as easy as clicking 2 buttons. Hit the "Generate
-                            code" button below the "load" and "search" input box. Copy playlist code.
-                            You can generate your code as well, by using the settings menu next to the "Playorder"
-                            drop-down menu. Insert the code on facebook, skype, email, or similar.
-                        </li>
-                        <li>
-                            If you want to <b>use a code</b>, copy it! When copied, insert it in the "Load"
-                            input box, below the search field and confirm it by pressing "Enter" or
-                            <div class="intextglyphicon">
-                                <span class="glyphicon glyphicon-export"></span></div>
-                            .
-                        </li>
-                        <li>To <b>display videos on another screen</b>, press the "Remote player" button
-                            in the settings menu.
-                        </li>
-                    </ul>
-                </td>
-            </tr>
-        </table>
-
-    </div>
-    <div id="contact">
+    <h3>Get started with slothyx.com</h3>
 
 
-        <div id="contactbox">
-            <h3>Get in touch</h3>
+    <table class="maxwidth">
 
-            <p>Hey, let us know what you think! Send us your feedback, or just say <i>"Hello"</i> to the
-                slothyx-team</p>
+        <tr>
+            <td>
+                <h2>Search</h2>
+            </td>
+
+            <td>
+                <h2>Playlist</h2>
+            </td>
+
+            <td>
+                <h2>Other</h2>
+            </td>
+
+        </tr>
+
+        <tr>
+
+            <td id="leftIntroduction">
+
+                <ul>
+                    <li>To <b>search for videos</b>, type in keywords what you are looking for. Press
+                        "Enter" or
+                        <div class="intextglyphicon">
+                            <span class="glyphicon glyphicon-search"></span></div>
+                        to confirm your input.
+                    </li>
+                    <li>If you want to <b>load more videos</b> hit the "Load more" button on the bottom of
+                        the results-field.
+                    </li>
+                    <!-- COMMING BACK SOON
+                    <li>(When you have found some good videos, and you want to <b>find similar videos</b>;
+                        simply press the "Search related" button (<i>!Coming soon!)</i>).
+                    </li>-->
+                </ul>
+            </td>
+
+            <td id="centerIntroduction">
+
+                <ul>
+                    <li>To <b>create a playlist</b>, click <span class="glyphicon glyphicon-plus"></span>
+                        underneath the video screen.
+                        Slothyx will automatically add a new playlist to your playlist library.
+                    </li>
+                    <li><b>Deleting a playlist</b> is as simple as creating one. Press the "Wheel"
+                        <b>symbol</b>
+                        to the right of the "Playorder" drop-down menu.
+                    </li>
+                    <li>If you want to <b>fill your playlist with content</b>, add videos by clicking the
+                        "Add to current playlist" besides beneath the video.
+                    </li>
+                    <li>To <b>delete videos</b>, press  <span
+                            class="glyphicon glyphicon-trash trashcolor"></span>
+                        next to the title of
+                        the video.
+                    </li>
+                </ul>
+            </td>
+
+            <td id="rightIntroduction">
+
+                <ul>
+                    <li><b>Sharing a playlist</b> is as easy as clicking 2 buttons. Hit the "Generate
+                        code" button below the "load" and "search" input box. Copy playlist code.
+                        You can generate your code as well, by using the settings menu next to the "Playorder"
+                        drop-down menu. Insert the code on facebook, skype, email, or similar.
+                    </li>
+                    <li>
+                        If you want to <b>use a code</b>, copy it! When copied, insert it in the "Load"
+                        input box, below the search field and confirm it by pressing "Enter" or
+                        <div class="intextglyphicon">
+                            <span class="glyphicon glyphicon-export"></span></div>
+                        .
+                    </li>
+                    <li>To <b>display videos on another screen</b>, press the "Remote player" button
+                        in the settings menu.
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    </table>
+
+</div>
+<div id="contact">
+
+
+    <div id="contactbox">
+        <h3>Get in touch</h3>
+
+        <p>Hey, let us know what you think! Send us your feedback, or just say <i>"Hello"</i> to the
+            slothyx-team</p>
+        <hr>
+
+        <div>
+            <address>Matthias Ableidinger alias <i>"Codemonkey"</i><br>
+                <a id="emailToCodemonkey" class="mails"></a><br><br>
+
+                Patrick Obermüller alias <i>"Styleparrot"</i><br>
+                <a id="emailToStyleparrot" class="mails"></a><br><br>
+                www.Slothyx.com<br>
+                <a id="emailToInfo" class="mails"></a><br>
+            </address>
             <hr>
 
-            <div>
-                <address>Matthias Ableidinger alias <i>"Codemonkey"</i><br>
-                        <a id="emailToCodemonkey" class="mails"></a><br><br>
 
-                    Patrick Obermüller alias <i>"Styleparrot"</i><br>
-                        <a id="emailToStyleparrot" class="mails"></a><br><br>
-                    www.Slothyx.com<br>
-                        <a id="emailToInfo" class="mails"></a><br>
-                </address>
-                <hr>
-
-
-                <p><i class="standardText">~Enjoy
-                    the
-                    website~</i></p>
-            </div>
+            <p><i class="standardText">~Enjoy
+                the
+                website~</i></p>
         </div>
-
-
     </div>
+
+
+</div>
 </div>
 
 <div id="footer"></div>
