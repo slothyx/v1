@@ -6,6 +6,11 @@
 	var util = slothyx.util = {};
 	var DEFAULT_INTERVAL = 500; //half a second
 
+	util.KEYS = {
+		ENTER: 13,
+		SPACE: 32
+	};
+
 	util.Video = function(id, title, description, image) {
 		var self = this;
 		self.id = id;

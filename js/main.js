@@ -120,7 +120,7 @@
 	function loadVideoFromTextField() {
 		//TODO move to youtube? do we need to know / should we know how to parse this?
 		var callback = function(result) {
-			_.forEach(result.videos, function(video) {
+			_.forEach(result, function(video) {
 				getPlayList().addVideo(video);
 			});
 			$(VIDEO_TEXTFIELD_SELECTOR).val("");

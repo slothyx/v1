@@ -38,8 +38,8 @@
 	//INIT knockout
 	modelWrapper.contribute({util: {
 		keys: {
-			ENTER: 13,
-			SPACE: 32
+			ENTER: slothyx.util.KEYS.ENTER,
+			SPACE: slothyx.util.KEYS.SPACE
 		}
 	}});
 

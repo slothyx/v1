@@ -91,7 +91,7 @@
 			$(document).on('click', focusListener);
 			var textField = $("<input type='text' class='playlistSelect'/>");
 			textField.val(playlistModel.playlist().name());
-			textField.onEnter(function() {
+			textField.onKey(slothyx.util.KEYS.ENTER, function() {
 				finishRenameCurrentPlaylist(true);
 			});
 			textField.on('click', function() {
