@@ -12,7 +12,7 @@
 }
 
 .oneResult:hover {
-    background-color: #acb9ca;
+    background-color: #c6d5e2;
     transition: background-color, 0.5s, linear;
 }
 
@@ -76,7 +76,7 @@
 .loadmoreButton {
     color: #ffffff;
     border: medium none;
-    background-color: rgba(140, 153, 165, 0.60);
+    background-color: #3b5a77;
     text-shadow: 2px 2px 2px #5e5e5e;
     padding: 10px 15px;
     margin: auto;
@@ -85,7 +85,7 @@
 }
 
 .loadmoreButton:hover {
-    background-color: #acb9ca;
+    background-color: #3f6786;
 }
 
 .loadmoreContainer {

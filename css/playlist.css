@@ -56,25 +56,34 @@
 }
 
 #playlistItems {
-    margin-top: 10px;
-    height: 400px;
+    margin-top: 6px;
     overflow-y: scroll;
     overflow-x: hidden;
+    max-height: 435px;
+    margin-bottom: 10px;
+}
 
+.listItem  {
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .listItem td {
     vertical-align: middle;
 }
 
+.listItem:hover {
+    white-space: normal;
+}
+
 #playlistItems div.listItem.selected {
-    font-weight: bold;
-    background-color: #c3ee74;
+    background-color: #64b1e5;
     margin-top: 2px;
     margin-bottom: 2px;
     color: #000000;
     transition: background-color 1s;
     transition-timing-function: linear;
+    white-space: normal;
 }
 
 #playlistItems div.listItem.selected:before {
