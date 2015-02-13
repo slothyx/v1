@@ -74,6 +74,7 @@
 
 .listItem:hover {
     white-space: normal;
+    cursor:pointer;
 }
 
 #playlistItems div.listItem.selected {
