@@ -25,7 +25,7 @@
 		};
 
 		var playlist = {};
-		var videoSelectedEventHelper = createNewEventHelper(playlist, "addVideoSelectedListener", "removeVideoSelectedListener");
+		var videoSelectedEventHelper = createNewEventHelper(playlist, "VideoSelected");
 
 		playlist.addVideo = function(video) {
 			var playListVideo = new PlaylistVideo(video);
@@ -42,10 +42,10 @@
 
 		playlist.deleteCurrentPlaylist = function() {
 			var currentPlaylists = playlistModel.playlists();
-			var currentPlayListId = playlistModel.playlist().id;
-			var currentIndex = getIndexOfPlaylist(currentPlayListId);
+			var currentPlaylistId = playlistModel.playlist().id;
+			var currentIndex = getIndexOfPlaylist(currentPlaylistId);
 			playlistModel.playlists.remove(function(playlist) {
-				return playlist.id === currentPlayListId;
+				return playlist.id === currentPlaylistId;
 			});
 			if(currentPlaylists.length === 0) {
 				playlist.addPlaylist();

@@ -2,8 +2,6 @@
 (function($, window, undefined) {
 	"use strict";
 
-	var YT_PLAYER_HOLDER_ID = "#ytPlayer";
-
 	var slothyx = window.slothyx || {};
 	window.slothyx = slothyx;
 
@@ -15,13 +13,17 @@
 	if(otherWindow === undefined) {
 		window.close();
 	}
-	var callbacks = otherWindow.slothyx.registerRemoteWindow();
+	var callback;
 
-	slothyx.util.onStartUp(function() {
-		var player = callbacks.getPlayer();
-		$(YT_PLAYER_HOLDER_ID).get(0).appendChild(player);
-		window.onbeforeunload = function() {
-			callbacks.remoteClosed(player);
-		};
+	window.onbeforeunload = function() {
+		if(callback) {
+			callback();
+		}
+	};
+
+	slothyx.util.doWhenTrue(function() {
+		callback = otherWindow.slothyx.registerRemoteWindow(slothyx.localPlayer.getPlayer());
+	}, function() {
+		return slothyx.localPlayer.getPlayer().isReady();
 	});
 })(jQuery, window);

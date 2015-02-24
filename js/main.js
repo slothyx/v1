@@ -253,19 +253,12 @@
 
 	});
 
-	var slothyxPlayer;
-	slothyx.registerRemoteWindow = function() {
-		if(window.slothyxPlayer !== undefined) {
-			slothyxPlayer = window.slothyxPlayer;
-		}
-		return {
-			getPlayer: function() {
-				return slothyxPlayer;
-			},
-			remoteClosed: function(player) {
-				slothyxPlayer = player;
-				$("#tvset").get(0).appendChild(player);
-			}
+	var localPlayer;
+	slothyx.registerRemoteWindow = function(player) {
+		localPlayer = getYtPlayer().getPlayer();
+		getYtPlayer().setPlayer(player);
+		return function() {
+			getYtPlayer().setPlayer(localPlayer);
 		};
 	};
 

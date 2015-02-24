@@ -17,6 +17,7 @@
 	localPlayer.STATE_PLAYING = STATE_PLAYING;
 	localPlayer.STATE_STOPPED = STATE_STOPPED;
 
+	var proxyPlayer = new PlayerProxy();
 	var ytPlayer;
 	var localPayerOnStateChangeCallback;
 
@@ -24,6 +25,7 @@
 	//needed in global scope
 	window.onYouTubePlayerReady = function() {
 		ytPlayer = new LocalPlayer(YTPLAYER_HTML_ID);
+		proxyPlayer.setPlayer(ytPlayer);
 	};
 
 	window.onLocalPlayerStateChange = function(state) {
@@ -37,7 +39,7 @@
 	};
 
 	localPlayer.getPlayer = function() {
-		return ytPlayer;
+		return proxyPlayer;
 	};
 
 	function LocalPlayer(id) {
@@ -69,6 +71,9 @@
 		self.setProxy = function(proxy) {
 			playerProxy = proxy;
 		};
+		self.isReady = function() {
+			return player.setVolume && player.loadVideoById && player.pauseVideo && player.playVideo && player.seekTo && player.getDuration;
+		};
 
 		/* custom */
 		self.requestFullscreen = function() {
@@ -89,10 +94,6 @@
 		player.addEventListener("onStateChange", "onLocalPlayerStateChange");
 		startProgressUpdater();
 
-		function isReady() {
-			return player.setVolume && player.loadVideoById && player.pauseVideo && player.playVideo && player.seekTo && player.getDuration;
-		}
-
 		function startProgressUpdater() {
 			timerId = setInterval(function() {
 				progressEvents.throwEvent(player.getCurrentTime() * 100 / player.getDuration());
@@ -101,6 +102,73 @@
 
 		function stopProgressUpdater() {
 			clearInterval(timerId);
+		}
+	}
+
+	function PlayerProxy() {
+		//TODO buffer commands
+		var self = this;
+		var stateEvents = new slothyx.util.EventHelper(self, "State");
+		var progressEvents = new slothyx.util.EventHelper(self, "Progress");
+		var player = null;
+
+		self.load = function(id) {
+			if(player !== null) {
+				player.load(id);
+			}
+		};
+		self.pause = function() {
+			if(player !== null) {
+				player.pause();
+			}
+		};
+		self.play = function() {
+			if(player !== null) {
+				player.play();
+			}
+		};
+		self.stop = function() {
+			if(player !== null) {
+				player.stop();
+			}
+		};
+		self.setProgress = function(percentage) {
+			if(player !== null) {
+				player.setProgress(percentage);
+			}
+		};
+		self.setVolume = function(percentage) {
+			if(player !== null) {
+				player.setVolume(percentage);
+			}
+		};
+		self.isReady = function() {
+			if(player !== null) {
+				return player.isReady();
+			} else {
+				return false;
+			}
+		};
+		self.getPlayer = function() {
+			return player;
+		};
+		self.setPlayer = function(newPlayer) {
+			if(player !== null) {
+				player.removeStateListener(onStateChange);
+				player.removeProgressListener(onProgressChange);
+				player.stop();
+			}
+			player = newPlayer;
+			player.addStateListener(onStateChange);
+			player.addProgressListener(onProgressChange);
+		};
+
+		function onStateChange(newState) {
+			stateEvents.throwEvent(newState);
+		}
+
+		function onProgressChange(progress) {
+			progressEvents.throwEvent(progress);
 		}
 	}
 
