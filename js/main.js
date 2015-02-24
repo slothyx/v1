@@ -4,7 +4,6 @@
 
 	/***** CONSTANTS *****/
 	var VIDEO_TEXTFIELD_SELECTOR = '#newVideoId';
-	var PLAYLIST_CODE_SELECTOR = '#newPlaylistCode';
 	var PROGRESS_SLIDER_SELECTOR = '#progressSlider';
 	var DEFAULT_WINDOW_TITLE = "Slothyx Music";
 
@@ -28,10 +27,10 @@
 	}
 
 	function generatePlaylistCode() {
-		$(PLAYLIST_CODE_SELECTOR).val(_.reduce(getPlayList().getCurrentPlaylist().videos, function(code, video) {
+		var code = _.reduce(getPlayList().getCurrentPlaylist().videos, function(code, video) {
 			return code + video.id;
-		}, ""));
-		$(PLAYLIST_CODE_SELECTOR).get(0).select();
+		}, "");
+		slothyx.util.openTextBox(code);
 	}
 
 	function renameCurrentPlaylist() {
@@ -109,7 +108,7 @@
 	}
 
 	function onSpaceKey(event) {
-		if(event.target.tagName !== "INPUT" && event.target.tagName !== "BUTTON") {
+		if(event.target.tagName !== "INPUT" && event.target.tagName !== "BUTTON" && event.target.tagName !== "TEXTAREA") {
 			toggle();
 			return false;
 		} else {

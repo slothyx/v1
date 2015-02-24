@@ -22,6 +22,7 @@
     <link href="css/introduction.css" rel="stylesheet">
     <link href="css/news.css" rel="stylesheet">
     <link href="css/containers.css" rel="stylesheet">
+    <link href="css/util.css" rel="stylesheet">
 
     <link rel="icon" href="img/favicon.ico" type="image/x-icon">
 
@@ -69,16 +70,6 @@
                                data-bind="onKey: {key: $root.util.keys.ENTER, action: $root.loadVideoFromTextField}">
                         <label for="newVideoId"></label>
                     </div>
-
-            </td>
-
-            <td>
-
-                <div class="formed" style="width: 300px;">
-                    <button title="Generate Code" type="button" class="defaultbutton" data-bind="click: $root.generatePlaylistCode"><span
-                            class="glyphicon glyphicon-floppy-disk"></span></button>
-                    <input type="text" placeholder="Code" id="newPlaylistCode">
-                </div>
 
             </td>
         </tr>

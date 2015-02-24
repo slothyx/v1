@@ -160,4 +160,24 @@
 		});
 	};
 
+	util.openTextBox = function(text) {
+		var dialog = $(
+			"<div class='dialog'>" +
+			"<textarea>" + text + "</textarea>" +
+			"</div>");
+		var textArea = dialog.find("textarea");
+		var closeFunction = function() {
+			setTimeout(function() {
+				dialog.remove();
+			}, 0);
+			return true;
+		};
+		dialog.on("keypress", closeFunction);
+		textArea.on("focusout", closeFunction);
+
+
+		$(window.document.body).prepend(dialog);
+		textArea.select();
+	};
+
 })(jQuery, window, _);
