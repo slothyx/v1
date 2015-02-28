@@ -27,7 +27,7 @@
 		getPlayList().deleteCurrentPlaylist();
 	}
 
-	function generatePlaylistCode() {
+	function sharePlaylist() {
 		var code = _.reduce(getPlayList().getCurrentPlaylist().videos, function(code, video) {
 			return code + video.id;
 		}, "");
@@ -109,7 +109,6 @@
 	}
 
 	function loadVideoFromTextField() {
-		//TODO move to youtube? do we need to know / should we know how to parse this?
 		var callback = function(result) {
 			_.forEach(result, function(video) {
 				getPlayList().addVideo(video);
@@ -184,7 +183,7 @@
 		stateModel: stateModel,
 		playlistOptions: {
 			items: [
-				{content: "Generate playlistcode", action: generatePlaylistCode},
+				{content: "Share playlist", action: sharePlaylist},
 				{content: "Rename current playlist", action: renameCurrentPlaylist},
 				{content: "Delete current playlist", action: deletePlaylist},
 				{content: "Open remote player", action: openRemotePlayer},

@@ -92,12 +92,11 @@
 				rootContent: "<i class='glyphicon glyphicon-cog'></i>"
 			},
 
-			_state: {
-				open: false,
-				itemsPane: undefined
-			},
-
 			_create: function() {
+				this._state = {
+					open: false,
+					itemsPane: undefined
+				};
 				var element = $(this.element);
 				element.addClass(this.options.rootClass);
 				element.html(this.options.rootContent);
