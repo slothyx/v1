@@ -8,7 +8,11 @@
 
 	util.KEYS = {
 		ENTER: 13,
-		SPACE: 32
+		SPACE: 32,
+		LEFT: 37,
+		UP: 38,
+		RIGHT: 39,
+		DOWN: 40
 	};
 
 	util.Video = function(id, title, description, image) {
@@ -153,7 +157,7 @@
 	}
 
 	$.fn.onKey = function(key, callback) {
-		$(this).on("keypress", function(event) {
+		$(this).on("keydown", function(event) {
 			if(event.which === key) {
 				return callback(event) || false;
 			}
@@ -180,4 +184,19 @@
 		textArea.select();
 	};
 
-})(jQuery, window, _);
+	util.registerShortcuts = function(shortcuts) {
+		var keys = _.pluck(shortcuts, "key");
+		var actionMap = _.reduce(shortcuts, function(actionMap, shortcut) {
+				actionMap[shortcut.key] = shortcut.action;
+				return actionMap;
+			}, {}
+		);
+		$(document).on("keydown", function(event) {
+			if(_.indexOf(keys, event.which) !== -1 && event.originalEvent.getModifierState("Accel")) {
+				actionMap[event.which]();
+			}
+		});
+	};
+
+})
+(jQuery, window, _);

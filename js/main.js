@@ -107,15 +107,6 @@
 		window.document.title = title;
 	}
 
-	function onSpaceKey(event) {
-		if(event.target.tagName !== "INPUT" && event.target.tagName !== "BUTTON" && event.target.tagName !== "TEXTAREA") {
-			toggle();
-			return false;
-		} else {
-			return true;
-		}
-	}
-
 	function loadVideoFromTextField() {
 		//TODO move to youtube? do we need to know / should we know how to parse this?
 		var callback = function(result) {
@@ -137,6 +128,14 @@
 				slothyx.youtube.loadVideoData(videoIds, callback);
 			}
 		}
+	}
+
+	function onShortcutRight() {
+		getPlayList().selectNext();
+	}
+
+	function onShortcutSpace() {
+		toggle();
 	}
 
 	var stateModel = {
@@ -205,7 +204,6 @@
 			]
 		},
 		toggle: toggle,
-		onSpaceKey: onSpaceKey,
 		loadVideoFromTextField: loadVideoFromTextField,
 		progressSlider: {
 			disabled: true,
@@ -225,17 +223,17 @@
 			}
 		},
 		addPlaylist: addPlaylist,
-		requestFullscreen: requestFullscreen,
-		generatePlaylistCode: generatePlaylistCode
+		requestFullscreen: requestFullscreen
 	});
 
+	getYtPlayer().addProgressListener(onProgressChanged);
+	getYtPlayer().addStateListener(onYTPlayerStateChange);
+	slothyx.util.registerShortcuts([
+		{key: slothyx.util.KEYS.SPACE, action: onShortcutSpace},
+		{key: slothyx.util.KEYS.RIGHT, action: onShortcutRight}
+	]);
+
 	slothyx.util.onStartUp(function() {
-		slothyx.util.doWhenTrue(function() {
-			getYtPlayer().addProgressListener(onProgressChanged);
-			getYtPlayer().addStateListener(onYTPlayerStateChange);
-		}, function() {
-			return getYtPlayer() !== undefined;
-		});
 
 		var emails = [
 			["Codemonkey", "Y29kZW1vbmtleUBzbG90aHl4LmNvbQ=="],
