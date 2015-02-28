@@ -14,6 +14,7 @@
 	var YT_STATE_PLAYING = 1;
 	var YT_STATE_PAUSE = 2;
 
+	var UPDATE_INTERVAL_MS = 500;
 
 	var slothyx = window.slothyx || {};
 	window.slothyx = slothyx;
@@ -162,7 +163,7 @@
 
 	var progressSliderDragging = false;
 
-	function onProgressChanged(progress) {
+	function progressChanged(progress) {
 		if(!progressSliderDragging) {
 			$(PROGRESS_SLIDER_SELECTOR).slider("value", progress);
 		}
@@ -226,7 +227,9 @@
 		requestFullscreen: requestFullscreen
 	});
 
-	getYtPlayer().addProgressListener(onProgressChanged);
+	window.setInterval(function() {
+		progressChanged(getYtPlayer().getProgress());
+	}, UPDATE_INTERVAL_MS);
 	getYtPlayer().addStateListener(onYTPlayerStateChange);
 	slothyx.util.registerShortcuts([
 		{key: slothyx.util.KEYS.SPACE, action: onShortcutSpace},

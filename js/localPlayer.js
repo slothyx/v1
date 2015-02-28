@@ -3,7 +3,6 @@
 	"use strict";
 	var YTPLAYER_RAW_HTML_ID = "slothyxPlayer";
 	var YTPLAYER_HTML_ID = "#" + YTPLAYER_RAW_HTML_ID;
-	var UPDATE_INTERVAL_MS = 500;
 
 	var STATE_PAUSED = 0;
 	var STATE_PLAYING = 1;
@@ -45,10 +44,7 @@
 	function LocalPlayer(id) {
 		var self = this;
 		var player = $(id)[0];
-		var timerId;
-		var playerProxy;
 		var stateEvents = new slothyx.util.EventHelper(self, "State");
-		var progressEvents = new slothyx.util.EventHelper(self, "Progress");
 
 		self.load = function(id) {
 			player.loadVideoById(id);
@@ -68,11 +64,15 @@
 		self.setVolume = function(percentage) {
 			player.setVolume(percentage);
 		};
-		self.setProxy = function(proxy) {
-			playerProxy = proxy;
-		};
 		self.isReady = function() {
 			return player.setVolume && player.loadVideoById && player.pauseVideo && player.playVideo && player.seekTo && player.getDuration;
+		};
+		self.getProgress = function() {
+			return player.getCurrentTime() * 100 / player.getDuration();
+		};
+		self.getState = function() {
+			//TODO translate
+			return player.getPlayerState();
 		};
 
 		/* custom */
@@ -92,24 +92,12 @@
 			stateEvents.throwEvent(state);
 		};
 		player.addEventListener("onStateChange", "onLocalPlayerStateChange");
-		startProgressUpdater();
-
-		function startProgressUpdater() {
-			timerId = setInterval(function() {
-				progressEvents.throwEvent(player.getCurrentTime() * 100 / player.getDuration());
-			}, UPDATE_INTERVAL_MS);
-		}
-
-		function stopProgressUpdater() {
-			clearInterval(timerId);
-		}
 	}
 
 	function PlayerProxy() {
 		//TODO buffer commands
 		var self = this;
 		var stateEvents = new slothyx.util.EventHelper(self, "State");
-		var progressEvents = new slothyx.util.EventHelper(self, "Progress");
 		var player = null;
 
 		self.load = function(id) {
@@ -149,26 +137,32 @@
 				return false;
 			}
 		};
+		self.getProgress = function() {
+			if(player !== null) {
+				return player.getProgress();
+			}
+		};
+		self.getState = function() {
+			if(player !== null) {
+				return player.getState();
+			}
+		};
+
+		/* custom */
 		self.getPlayer = function() {
 			return player;
 		};
 		self.setPlayer = function(newPlayer) {
 			if(player !== null) {
 				player.removeStateListener(onStateChange);
-				player.removeProgressListener(onProgressChange);
 				player.stop();
 			}
 			player = newPlayer;
 			player.addStateListener(onStateChange);
-			player.addProgressListener(onProgressChange);
 		};
 
 		function onStateChange(newState) {
 			stateEvents.throwEvent(newState);
-		}
-
-		function onProgressChange(progress) {
-			progressEvents.throwEvent(progress);
 		}
 	}
 

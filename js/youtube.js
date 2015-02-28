@@ -156,9 +156,11 @@
 		lastSearchResult: ko.observable(),
 		searchQuery: ko.observable(''),
 		loadMore: function() {
+			//done to avoid parameters from event
 			youtube.loadMore();
 		},
 		searchYoutube: function() {
+			//done to avoid parameters from event
 			youtube.search();
 		}
 	};
