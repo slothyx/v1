@@ -10,74 +10,76 @@
 
 	var Video = slothyx.util.Video;
 
-	youtube.search = function(query, callback, optionOverride) {
+	youtube.loadVideoData = function(videoIds, callback) {
 		if(callback === undefined) {
 			callback = getDefaultSearchCallback(false);
 		}
-		if(query === undefined) {
-			query = youtubeModel.searchQuery();
-		}
-		search(query, callback, optionOverride);
+
+		loadVideoData(videoIds, callback);
 	};
 
-	youtube.loadVideoData = function(videoIds, callback, optionOverride) {
-		loadVideoData(videoIds, callback, optionOverride);
-	};
 
-	youtube.loadMore = function(callback) {
-		if(callback === undefined) {
-			callback = getDefaultSearchCallback(true);
-		}
-		search(undefined, callback, youtubeModel.lastSearchResult());
-	};
+	function loadMore() {
+		search(getDefaultSearchCallback(true), youtubeModel.lastSearchResult());
+	}
 
-	youtube.searchForRelated = function(video, callback) {
-		youtube.search(undefined, callback, {relatedToVideoId: video.id});
-	};
+	function searchForRelated(video) {
+		search(getDefaultSearchCallback(false), {relatedToVideoId: video.id});
+	}
 
-	function search(query, callback, optionOverride) {
+	function search(callback, optionOverride) {
 		//TODO caching
-		var options = getDefaultOptions();
-		options.q = query;
-		options.maxResults = MAX_RESULTS;
+		if(callback === undefined) {
+			callback = getDefaultSearchCallback(false);
+		}
+
+		var options = {
+			part: "id",
+			fields: "items/id,nextPageToken",
+			type: "video",
+			q: youtubeModel.searchQuery(),
+			maxResults: MAX_RESULTS
+		};
 
 		doOptionOverride(options, optionOverride);
 
 		var request = gapi.client.youtube.search.list(options);
-		request.execute(getInternalCallbackWrapper(options, callback));
+		request.execute(function(response) {
+			var lastSearchResult = options;
+			lastSearchResult.pageToken = response.result.nextPageToken;
+			youtubeModel.lastSearchResult(lastSearchResult);
+			var videoIds = _.map(response.items, function(item) {
+				return item.id.videoId;
+			});
+			loadVideoData(videoIds, callback);
+		});
 
 		youtubeModel.lastSearchResult(undefined);
 	}
 
-	function loadVideoData(videoIds, callback, optionOverride) {
+	function loadVideoData(videoIds, callback) {
 		//TODO caching
-		var options = getDefaultOptions();
+		var options = {
+			part: "id,snippet",
+			type: "video",
+			fields: "nextPageToken, items(id,snippet)"
+		};
 		options.id = videoIds.join(',');
 
-		doOptionOverride(options, optionOverride);
-
 		var request = gapi.client.youtube.videos.list(options);
-		request.execute(getInternalCallbackWrapper(options, callback));
-	}
-
-	function getInternalCallbackWrapper(options, callback) {
-		return function(response) {
+		request.execute(function(response) {
 			if(response === undefined) {
 				//TODO maybe empty callback?
 				return;
 			}
 
-			var lastSearchResult = options;
-			lastSearchResult.pageToken = response.result.nextPageToken;
-			youtubeModel.lastSearchResult(lastSearchResult);
-
-			var videos = _.map(response.result.items, function(item) {
+			var videos = _.map(response.items, function(item) {
 				return new Video(item.id.videoId || item.id, item.snippet.title, item.snippet.description,
 					item.snippet.thumbnails.default.url);
 			});
 
 			callback(videos);
-		};
+		});
 	}
 
 	function doOptionOverride(options, optionOverride) {
@@ -100,14 +102,6 @@
 		};
 	}
 
-	function getDefaultOptions() {
-		return {
-			part: "id,snippet",
-			type: "video",
-			fields: "nextPageToken, items(id,snippet)"
-		};
-	}
-
 	/*****SEARCHRESULTLIST API*****/
 	var searchResultList = (function() {
 
@@ -116,7 +110,7 @@
 		};
 
 		var searchResultList = {};
-		var searchResultSelectedEvent = new slothyx.util.EventHelper(searchResultList, "addSearchResultSelectedListener", "removeSearchResultSelectedListener");
+		var searchResultSelectedEvent = new slothyx.util.EventHelper(searchResultList, "SearchResultSelected");
 
 		searchResultList.setSearchResults = function(searchResults) {
 			searchResultsModel.searchResults.removeAll();
@@ -139,7 +133,7 @@
 			};
 
 			self.searchRelated = function() {
-				youtube.searchForRelated(video);
+				searchForRelated(video);
 			};
 		}
 
@@ -157,14 +151,14 @@
 		searchQuery: ko.observable(''),
 		loadMore: function() {
 			//done to avoid parameters from event
-			youtube.loadMore();
+			loadMore();
 		},
 		searchYoutube: function() {
 			//done to avoid parameters from event
-			youtube.search();
+			search();
 		}
 	};
-	youtubeModel.showLoadMoreButton = ko.pureComputed(function(){
+	youtubeModel.showLoadMoreButton = ko.pureComputed(function() {
 		return youtubeModel.lastSearchResult() !== undefined;
 	});
 
