@@ -191,8 +191,10 @@
 			}, {}
 		);
 		$(document).on("keydown", function(event) {
-			if(_.indexOf(keys, event.which) !== -1 && event.originalEvent.getModifierState("Accel")) {
+			if(_.indexOf(keys, event.which) !== -1 && event.ctrlKey) {
 				actionMap[event.which]();
+				event.preventDefault();
+				event.stopPropagation();
 			}
 		});
 	};

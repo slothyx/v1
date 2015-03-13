@@ -68,7 +68,8 @@
 			return player.setVolume && player.loadVideoById && player.pauseVideo && player.playVideo && player.seekTo && player.getDuration;
 		};
 		self.getProgress = function() {
-			return player.getCurrentTime() * 100 / player.getDuration();
+			var progress = player.getCurrentTime() * 100 / player.getDuration();
+			return isNaN(progress) ? 0 : progress;
 		};
 		self.getState = function() {
 			//TODO translate
