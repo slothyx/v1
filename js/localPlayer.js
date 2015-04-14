@@ -11,13 +11,11 @@
 
 	var PLAYER_STATE = slothyx.util.PLAYER_STATE;
 	var YT_STATE = {
-		LOADING: -1,
 		STOPPED: 0,
 		PAUSED: 2,
 		PLAYING: 1
 	};
 	var TRANSLATIONTABLE = {};
-	TRANSLATIONTABLE[YT_STATE.LOADING] = PLAYER_STATE.STOPPED;
 	TRANSLATIONTABLE[YT_STATE.STOPPED] = PLAYER_STATE.STOPPED;
 	TRANSLATIONTABLE[YT_STATE.PAUSED] = PLAYER_STATE.PAUSED;
 	TRANSLATIONTABLE[YT_STATE.PLAYING] = PLAYER_STATE.PLAYING;
@@ -101,7 +99,9 @@
 			}
 		};
 		localPayerOnStateChangeCallback = function(state) {
-			stateEvents.throwEvent(translate(state));
+			if(translate(state) !== undefined) {
+				stateEvents.throwEvent(translate(state));
+			}
 		};
 		localPayerOnErrorCallback = function(/*error*/) {
 			stateEvents.throwEvent(PLAYER_STATE.INVALID);
@@ -110,7 +110,7 @@
 		player.addEventListener("onError", "onLocalPlayerError");
 
 		function translate(ytState) {
-			return TRANSLATIONTABLE[ytState] !== undefined ? TRANSLATIONTABLE[ytState] : PLAYER_STATE.PLAYING;
+			return TRANSLATIONTABLE[ytState];
 		}
 	}
 
