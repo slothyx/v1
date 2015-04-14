@@ -36,12 +36,14 @@
 	};
 
 	//INIT knockout
-	modelWrapper.contribute({util: {
-		keys: {
-			ENTER: slothyx.util.KEYS.ENTER,
-			SPACE: slothyx.util.KEYS.SPACE
+	modelWrapper.contribute({
+		util: {
+			keys: {
+				ENTER: slothyx.util.KEYS.ENTER,
+				SPACE: slothyx.util.KEYS.SPACE
+			}
 		}
-	}});
+	});
 
 	ko.bindingHandlers.optionsWheel = {
 		init: function(element, valueAccessor) {

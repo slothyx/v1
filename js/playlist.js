@@ -78,7 +78,7 @@
 			}
 		};
 
-		playlist.markCurrentVideoInvalid = function(){
+		playlist.markCurrentVideoInvalid = function() {
 			var currentVideo = playlistModel.video();
 			currentVideo.invalid(true);
 		};

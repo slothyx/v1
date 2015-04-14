@@ -109,8 +109,8 @@
 		player.addEventListener("onStateChange", "onLocalPlayerStateChange");
 		player.addEventListener("onError", "onLocalPlayerError");
 
-		function translate(ytState){
-			return TRANSLATIONTABLE[ytState] || PLAYER_STATE.PLAYING;
+		function translate(ytState) {
+			return TRANSLATIONTABLE[ytState] !== undefined ? TRANSLATIONTABLE[ytState] : PLAYER_STATE.PLAYING;
 		}
 	}
 
