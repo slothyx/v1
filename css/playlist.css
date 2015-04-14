@@ -226,3 +226,7 @@
 .settingsWheel:hover {
     background-color: #ffca5d;
 }
+
+.invalid {
+    text-decoration: line-through;
+}

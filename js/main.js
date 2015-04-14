@@ -7,17 +7,12 @@
 	var PROGRESS_SLIDER_SELECTOR = '#progressSlider';
 	var DEFAULT_WINDOW_TITLE = "Slothyx Music";
 
-	var STATE_STOPPED = 0;
-	var STATE_PLAYING = 1;
-	var STATE_PAUSE = 2;
-	var YT_STATE_STOPPED = 0;
-	var YT_STATE_PLAYING = 1;
-	var YT_STATE_PAUSE = 2;
-
 	var UPDATE_INTERVAL_MS = 500;
 
 	var slothyx = window.slothyx || {};
 	window.slothyx = slothyx;
+
+	var PLAYER_STATE = slothyx.util.PLAYER_STATE;
 
 	function addPlaylist() {
 		getPlayList().addPlaylist();
@@ -47,7 +42,7 @@
 	}
 
 	function toggle() {
-		if(stateModel.internalState() === STATE_PLAYING) {
+		if(stateModel.internalState() === PLAYER_STATE.PLAYING) {
 			pause();
 		} else {
 			play();
@@ -55,22 +50,22 @@
 	}
 
 	function play() {
-		if(stateModel.internalState() === STATE_STOPPED) {
+		if(stateModel.internalState() === PLAYER_STATE.STOPPED) {
 			getPlayList().selectNext();
 		} else {
-			stateModel.internalState(STATE_PLAYING);
+			stateModel.internalState(PLAYER_STATE.PLAYING);
 			getYtPlayer().play();
 		}
 	}
 
 	function pause() {
-		stateModel.internalState(STATE_PAUSE);
+		stateModel.internalState(PLAYER_STATE.PAUSED);
 		getYtPlayer().pause();
 	}
 
 	function stop() {
 		//TODO check if needed
-		stateModel.internalState(STATE_STOPPED);
+		stateModel.internalState(PLAYER_STATE.STOPPED);
 		getYtPlayer().stop();
 	}
 
@@ -88,7 +83,7 @@
 
 	function onSelectedVideo(video) {
 		if(video !== null) {
-			stateModel.internalState(STATE_PLAYING);
+			stateModel.internalState(PLAYER_STATE.PLAYING);
 			getYtPlayer().load(video.id);
 			setWindowTitle(video.title);
 			$(PROGRESS_SLIDER_SELECTOR).slider('enable');
@@ -96,7 +91,7 @@
 			if(stateModel.replay) {
 				getPlayList().selectNext();
 			} else {
-				stateModel.internalState(STATE_STOPPED);
+				stateModel.internalState(PLAYER_STATE.STOPPED);
 				getYtPlayer().stop();
 				setWindowTitle(DEFAULT_WINDOW_TITLE);
 				$(PROGRESS_SLIDER_SELECTOR).slider('disable');
@@ -139,23 +134,25 @@
 	}
 
 	var stateModel = {
-		internalState: ko.observable(YT_STATE_STOPPED),
+		internalState: ko.observable(PLAYER_STATE.STOPPED),
 		replay: false
 	};
 	stateModel.playing = ko.pureComputed(function() {
-		return stateModel.internalState() === YT_STATE_PLAYING;
+		return stateModel.internalState() === PLAYER_STATE.PLAYING;
 	});
 
 	function onYTPlayerStateChange(state) {
 		switch(state) {
-			case YT_STATE_STOPPED:
+			case PLAYER_STATE.STOPPED:
 				getPlayList().selectNext();
 				break;
-			case YT_STATE_PLAYING:
-				stateModel.internalState(STATE_PLAYING);
+			case PLAYER_STATE.PLAYING:
+			case PLAYER_STATE.PAUSED:
+				stateModel.internalState(state);
 				break;
-			case YT_STATE_PAUSE:
-				stateModel.internalState(STATE_PAUSE);
+			case PLAYER_STATE.INVALID:
+				getPlayList().markCurrentVideoInvalid();
+				getPlayList().selectNext();
 				break;
 		}
 	}

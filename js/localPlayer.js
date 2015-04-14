@@ -4,21 +4,28 @@
 	var YTPLAYER_RAW_HTML_ID = "slothyxPlayer";
 	var YTPLAYER_HTML_ID = "#" + YTPLAYER_RAW_HTML_ID;
 
-	var STATE_PAUSED = 0;
-	var STATE_PLAYING = 1;
-	var STATE_STOPPED = 2;
 
 	var slothyx = window.slothyx || {};
 	window.slothyx = slothyx;
 	var localPlayer = slothyx.localPlayer = {};
 
-	localPlayer.STATE_PAUSED = STATE_PAUSED;
-	localPlayer.STATE_PLAYING = STATE_PLAYING;
-	localPlayer.STATE_STOPPED = STATE_STOPPED;
+	var PLAYER_STATE = slothyx.util.PLAYER_STATE;
+	var YT_STATE = {
+		LOADING: -1,
+		STOPPED: 0,
+		PAUSED: 2,
+		PLAYING: 1
+	};
+	var TRANSLATIONTABLE = {};
+	TRANSLATIONTABLE[YT_STATE.LOADING] = PLAYER_STATE.STOPPED;
+	TRANSLATIONTABLE[YT_STATE.STOPPED] = PLAYER_STATE.STOPPED;
+	TRANSLATIONTABLE[YT_STATE.PAUSED] = PLAYER_STATE.PAUSED;
+	TRANSLATIONTABLE[YT_STATE.PLAYING] = PLAYER_STATE.PLAYING;
 
 	var proxyPlayer = new PlayerProxy();
 	var ytPlayer;
 	var localPayerOnStateChangeCallback;
+	var localPayerOnErrorCallback;
 
 
 	//needed in global scope
@@ -30,6 +37,11 @@
 	window.onLocalPlayerStateChange = function(state) {
 		if(localPayerOnStateChangeCallback !== undefined) {
 			localPayerOnStateChangeCallback(state);
+		}
+	};
+	window.onLocalPlayerError = function(error) {
+		if(localPayerOnErrorCallback !== undefined) {
+			localPayerOnErrorCallback(error);
 		}
 	};
 
@@ -72,8 +84,7 @@
 			return isNaN(progress) ? 0 : progress;
 		};
 		self.getState = function() {
-			//TODO translate
-			return player.getPlayerState();
+			return translate(player.getPlayerState());
 		};
 
 		/* custom */
@@ -90,9 +101,17 @@
 			}
 		};
 		localPayerOnStateChangeCallback = function(state) {
-			stateEvents.throwEvent(state);
+			stateEvents.throwEvent(translate(state));
+		};
+		localPayerOnErrorCallback = function(/*error*/) {
+			stateEvents.throwEvent(PLAYER_STATE.INVALID);
 		};
 		player.addEventListener("onStateChange", "onLocalPlayerStateChange");
+		player.addEventListener("onError", "onLocalPlayerError");
+
+		function translate(ytState){
+			return TRANSLATIONTABLE[ytState] || PLAYER_STATE.PLAYING;
+		}
 	}
 
 	function PlayerProxy() {

@@ -6,6 +6,14 @@
 	var util = slothyx.util = {};
 	var DEFAULT_INTERVAL = 500; //half a second
 
+
+	util.PLAYER_STATE = {
+		INVALID: -1,
+		STOPPED: 0,
+		PAUSED: 1,
+		PLAYING: 2
+	};
+
 	util.KEYS = {
 		ENTER: 13,
 		SPACE: 32,

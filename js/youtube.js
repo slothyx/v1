@@ -38,7 +38,10 @@
 			fields: "items/id,nextPageToken",
 			type: "video",
 			q: youtubeModel.searchQuery(),
-			maxResults: MAX_RESULTS
+			maxResults: MAX_RESULTS,
+			safeSearch: "moderate",
+			videoEmbeddable: "true",
+			videoSyndicated: "true"
 		};
 
 		doOptionOverride(options, optionOverride);

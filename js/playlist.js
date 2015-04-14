@@ -78,6 +78,11 @@
 			}
 		};
 
+		playlist.markCurrentVideoInvalid = function(){
+			var currentVideo = playlistModel.video();
+			currentVideo.invalid(true);
+		};
+
 		var tmpSelectHolder;
 		var focusListener;
 		playlist.renameCurrentPlaylist = function() {
@@ -122,6 +127,7 @@
 			var self = this;
 			self.id = videoIdCount++;
 			self.video = video;
+			self.invalid = ko.observable(false);
 			self.select = function() {
 				selectVideo(self);
 			};
