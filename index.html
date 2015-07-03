@@ -48,6 +48,8 @@
 
 <body id="background">
 
+
+<!--the 'header' contains as following: Search field, loading field-->
 <div id="header">
 
     <table style="margin: auto">
@@ -63,45 +65,42 @@
                 </div>
             </td>
             <td>
-                    <div class="formed" style="width: 300px;">
-                        <button title="Load playlist" type="button" data-bind="click: $root.loadVideoFromTextField"><span
-                                class="glyphicon glyphicon-export"></span></button>
-                        <input type="text" placeholder="Load" id="newVideoId"
-                               data-bind="onKey: {key: $root.util.keys.ENTER, action: $root.loadVideoFromTextField}">
-                        <label for="newVideoId"></label>
-                    </div>
+                <div class="formed" style="width: 300px;">
+                    <button title="Load playlist" type="button" data-bind="click: $root.loadVideoFromTextField"><span
+                            class="glyphicon glyphicon-export"></span></button>
+                    <input type="text" placeholder="Load" id="newVideoId"
+                           data-bind="onKey: {key: $root.util.keys.ENTER, action: $root.loadVideoFromTextField}">
+                    <label for="newVideoId"></label>
+                </div>
 
             </td>
         </tr>
     </table>
 
-    <!--
-
-    <li id="aboutSlot">
-         <p>About</p>
-
-         <p>www.slothyx.com is a free website, <br>designed to provide a fast and easy way to create video-playlists.
-             Neither
-             do we want your money, nor your data.<br> <br> Enjoy the website! </p>
-
-         <p id="copyright">Copyright &copy; is for Losers.<br>
-                 ~Banksy</p>
-         </li>
-
-</div>-->
 </div>
+
+<!--the 'holder' keeps all contents in the center of the page -->
 <div id="holder">
 
+<!-- 'results' contains all search results -->
 <div id="results">
+
+
     <div id="searchResults" data-bind="foreach: $root.youtube.searchResultsModel.searchResults">
 
+        <!-- 'oneResult' shows a single search result -->
         <div class="oneResult searchResult">
 
+            <!-- youtube image -->
             <img class="results-image" data-bind="attr: {src: video.image}">
 
+            <!-- title -->
             <h3 class="results-title" data-bind="text: video.title"></h3>
+
+            <!-- description -->
             <span class="results-description" data-bind="text: video.description"></span>
 
+            <!-- fancy slider -->
             <div class="slider">
                 <button class="addtoPlaylist" data-bind="click: addToPlaylist">+</button>
                 <button class="searchRelated" data-bind="click: searchRelated">Search Related</button>
@@ -110,7 +109,10 @@
 
 
     </div>
+    <!-- 'loadmorecontainer' holds the 'loadmoreButton' -->
     <div class="loadmoreContainer">
+
+        <!-- the load more button on the bottom side of the results-->
         <button class="loadmoreButton"
                 data-bind="click: $root.youtube.loadMore, visible: $root.youtube.showLoadMoreButton"
                 style="display: none">Load More
@@ -119,20 +121,22 @@
 </div>
 
 
+<!-- 'playlist' contains all content belonging to a finished playlist including: Video, Buttons, Volume slider, etc -->
 <div id="playlist" data-bind="with: $root.playlist.playlistModel">
 
+    <!-- the 'tvset' displays videos -->
     <div id="tvset" data-bind="click: $root.toggle">
         <div id="ytPlayer">
             You need Flash player 8+ and JavaScript enabled to play videos.
         </div>
     </div>
 
-
+    <!-- 'progressSlider' enables the user to control the video -->
     <div id="progressSlider" data-bind="slider: $root.progressSlider"></div>
-
 
     <table class="maxwidth">
 
+        <!-- 'primControl' contains: Play/Stop Button, Volume Slider & the fullscreen Button -->
         <tr id="primControl">
             <td>
                 <div id="playstop" data-bind="with: $root.stateModel, click: $root.toggle"><i
@@ -152,8 +156,10 @@
 
         </tr>
     </table>
+
     <table class="maxwidth">
 
+        <!-- 'secControl' contains: Add Button, Playlist drop-down menue, play-mode drop-down menue & Settings -->
         <tr id="secControl">
             <td>
                             <span class="playlistAdd" title="Add" data-bind="click: $root.addPlaylist">
@@ -181,17 +187,23 @@
         </tr>
     </table>
 
+    <!-- 'playlistitems' holds playlist-list content & more -->
     <div id="playlistItems" data-bind="if: (playlist() !== null && playlist() !== undefined)">
-        <div data-bind="sortable: {data: playlist().videos, afterMove: slothyx.lists.getPlaylist().changed, options: {helper: 'clone'}}">
-            <div class="listItem" data-bind="click: select, css: {selected: isSelected()}">
 
+        <!-- this div contains all added videos-->
+        <div data-bind="sortable: {data: playlist().videos, afterMove: slothyx.lists.getPlaylist().changed, options: {helper: 'clone'}}">
+
+            <!-- shows a single video -->
+            <div class="listItem" data-bind="click: select, css: {selected: isSelected()}">
                 <table>
                     <tr>
                         <td>
+                            <!-- video title -->
                             <span class="playlist-title" data-bind="text: video.title, css: {invalid: invalid}"></span>
                         </td>
 
                         <td>
+                            <!-- remove button-->
                             <i class="xdelete glyphicon glyphicon-trash"
                                data-bind="click: remove"></i>
                         </td>
@@ -203,92 +215,36 @@
     </div>
 
 </div>
-<!--
-    <div id="news_update">
 
-            <span class="beta">For &#10084;BETA-Testers&#10084;: Our beloved "Search-Related" button is back! ..but.. (there is always a but) ..
-                we're still investigating a problem with the button function and the video-description.<br>
-                Visual Update is coming soon.written#12.12.2014; 02:16 a.m.</span><br>
-        Enjoy your day ~<i>styleparrot</i>
-
-        <h3>News & Updates</h3>
-
-
-        <table class="maxwidth">
-
-            <tr>
-                <td>
-                    <h1>Updated <span class="updateDate">##.##.####</span></h1>
-                    <hr>
-                </td>
-
-            </tr>
-
-            <tr>
-                <td>
-
-                    <ul>
-                        <li><b>Slothyx.com has been released (##.##.####)!Hurray!</b></li>
-                        <li>Functions Added:
-                            <ol>
-                                <li>
-                                    <b>Search</b>
-                                </li>
-
-                                <li>
-                                    <b>Load</b>
-                                </li>
-
-                                <li>
-                                    <b>Generate Code</b>
-                                </li>
-
-                                <li>
-                                    <b>Create Playlists</b>
-                                </li>
-
-                                <li>
-                                    <b>Remote Player</b>
-                                </li>
-
-                                <li>
-                                    <b>Awesomeness</b>
-                                </li>
-                            </ol>
-                        <li>Implemented youtube.com as the <b>main source</b> for our video library.</li>
-                    </ul>
-                </td>
-
-            </tr>
-
-        </table>
-    </div>
--->
+<!-- 'introduction' gives the user hints -->
 <div id="introduction">
 
 
-    <h3>Get started with slothyx.com</h3>
+    <h3>Guide</h3>
 
 
     <table class="maxwidth">
 
         <tr>
             <td>
+                <!-- hints to the 'search' option -->
                 <h2>Search</h2>
             </td>
 
             <td>
+                <!-- hints to handle playlists-->
                 <h2>Playlist</h2>
             </td>
 
             <td>
+                <!-- hints to 'other' options -->
                 <h2>Other</h2>
             </td>
 
         </tr>
 
         <tr>
-
+            <!-- search -->
             <td id="leftIntroduction">
 
                 <ul>
@@ -306,7 +262,7 @@
                     </li>
                 </ul>
             </td>
-
+            <!-- playlist -->
             <td id="centerIntroduction">
 
                 <ul>
@@ -328,6 +284,7 @@
                 </ul>
             </td>
 
+            <!-- other -->
             <td id="rightIntroduction">
 
                 <ul>
@@ -350,8 +307,9 @@
     </table>
 
 </div>
-<div id="contact">
 
+<!-- 'contact' opens user the opportunity to get in touch with the developers -->
+<div id="contact">
 
     <div id="contactbox">
         <h3>Get in touch</h3>
@@ -369,12 +327,8 @@
                 www.Slothyx.com<br>
                 <a id="emailToInfo" class="mails"></a><br>
             </address>
-            <hr>
+            <hr style="width: 45%">
 
-
-            <p><i class="standardText">~Enjoy
-                the
-                website~</i></p>
         </div>
     </div>
 
@@ -382,6 +336,7 @@
 </div>
 </div>
 
+<!-- 'footer' rounds up the website(blank atm)-->
 <div id="footer"></div>
 
 </body>
