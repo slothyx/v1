@@ -1,9 +1,6 @@
-/*globals jQuery, window, swfobject*/
-(function($, window, swfobject, undefined) {
+/*globals jQuery, window, YT*/
+(function($, window, undefined) {
 	"use strict";
-	var YTPLAYER_RAW_HTML_ID = "slothyxPlayer";
-	var YTPLAYER_HTML_ID = "#" + YTPLAYER_RAW_HTML_ID;
-
 
 	var slothyx = window.slothyx || {};
 	window.slothyx = slothyx;
@@ -22,25 +19,11 @@
 
 	var proxyPlayer = new PlayerProxy();
 	var ytPlayer;
-	var localPayerOnStateChangeCallback;
-	var localPayerOnErrorCallback;
 
 
 	//needed in global scope
-	window.onYouTubePlayerReady = function() {
-		ytPlayer = new LocalPlayer(YTPLAYER_HTML_ID);
-		proxyPlayer.setPlayer(ytPlayer);
-	};
-
-	window.onLocalPlayerStateChange = function(state) {
-		if(localPayerOnStateChangeCallback !== undefined) {
-			localPayerOnStateChangeCallback(state);
-		}
-	};
-	window.onLocalPlayerError = function(error) {
-		if(localPayerOnErrorCallback !== undefined) {
-			localPayerOnErrorCallback(error);
-		}
+	window.onYouTubeIframeAPIReady = function() {
+		ytPlayer = new LocalPlayer();
 	};
 
 	localPlayer.requestFullscreen = function() {
@@ -51,10 +34,22 @@
 		return proxyPlayer;
 	};
 
-	function LocalPlayer(id) {
+	function LocalPlayer() {
 		var self = this;
-		var player = $(id)[0];
 		var stateEvents = new slothyx.util.EventHelper(self, "State");
+
+		var player = new window.YT.Player('ytPlayer', {
+			height: '250',
+			width: '343',
+			playerVars: {'controls': 0},
+			events: {
+				'onStateChange': onStateChange,
+				'onError': onError,
+				'onReady': function() {
+					proxyPlayer.setPlayer(self);
+				}
+			}
+		});
 
 		self.load = function(id) {
 			player.loadVideoById(id);
@@ -98,14 +93,16 @@
 				elem.webkitRequestFullscreen();
 			}
 		};
-		localPayerOnStateChangeCallback = function(state) {
-			if(translate(state) !== undefined) {
-				stateEvents.throwEvent(translate(state));
+		function onStateChange(event) {
+			if(translate(event.data) !== undefined) {
+				stateEvents.throwEvent(translate(event.data));
 			}
-		};
-		localPayerOnErrorCallback = function(/*error*/) {
+		}
+
+		function onError(/*error*/) {
 			stateEvents.throwEvent(PLAYER_STATE.INVALID);
-		};
+		}
+
 		player.addEventListener("onStateChange", "onLocalPlayerStateChange");
 		player.addEventListener("onError", "onLocalPlayerError");
 
@@ -186,11 +183,4 @@
 		}
 	}
 
-	slothyx.util.onStartUp(function() {
-		var params = {allowScriptAccess: "always", wmode: "transparent"};
-		var atts = {id: YTPLAYER_RAW_HTML_ID};
-		swfobject.embedSWF("http://www.youtube.com/apiplayer?enablejsapi=1&playerapiid=ytplayer&version=3",
-			"ytPlayer", "100%", "250", "8", null, null, params, atts);
-	});
-
-})(jQuery, window, swfobject);
+})(jQuery, window);

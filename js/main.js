@@ -249,9 +249,8 @@
 
 	});
 
-	var localPlayer;
 	slothyx.registerRemoteWindow = function(player) {
-		localPlayer = getYtPlayer().getPlayer();
+		var localPlayer = getYtPlayer().getPlayer();
 		getYtPlayer().setPlayer(player);
 		return function() {
 			getYtPlayer().setPlayer(localPlayer);
