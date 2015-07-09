@@ -61,7 +61,7 @@
 			player.playVideo();
 		};
 		self.stop = function() {
-			self.load("");
+			self.stopVideo();
 		};
 		self.setProgress = function(percentage) {
 			player.seekTo(player.getDuration() / 100 * percentage, true);
