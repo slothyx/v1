@@ -4,6 +4,7 @@
 
 	/***** CONSTANTS *****/
 	var VIDEO_TEXTFIELD_SELECTOR = '#newVideoId';
+	var TVSET_SELECTOR = '#tvset';
 	var PROGRESS_SLIDER_SELECTOR = '#progressSlider';
 	var DEFAULT_WINDOW_TITLE = "Slothyx Music";
 
@@ -257,8 +258,10 @@
 
 	slothyx.registerRemoteWindow = function(player) {
 		getPlayer().setPlayer(player);
+		$(TVSET_SELECTOR).hide();
 		return function() {
 			getPlayer().setPlayer(slothyx.ytPlayer.getYTPlayer());
+			$(TVSET_SELECTOR).show();
 		};
 	};
 
