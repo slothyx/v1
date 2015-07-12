@@ -191,7 +191,7 @@
     <div id="playlistItems" data-bind="if: (playlist() !== null && playlist() !== undefined)">
 
         <!-- this div contains all added videos-->
-        <div data-bind="sortable: {data: playlist().videos, afterMove: slothyx.lists.getPlaylist().changed, options: {helper: 'clone'}}">
+        <div data-bind="sortable: {data: playlist().videos, afterMove: slothyx.lists.getPlaylist().changed, options: {helper: 'clone', distance: 10}}">
 
             <!-- shows a single video -->
             <div class="listItem" data-bind="click: select, css: {selected: isSelected()}">
