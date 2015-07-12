@@ -35,9 +35,11 @@
 	}
 
 	function initPlayer() {
-		var self = {};
-		var stateEvents = new slothyx.util.EventHelper(self, "State");
+		var playerObject = {};
+		var stateEvents = new slothyx.util.EventHelper(playerObject, "State");
+		var internalStateEvents = new slothyx.util.EventHelper();
 
+		var videoId;
 		var player = new window.YT.Player('ytPlayer', {
 			height: '250',
 			width: '343',
@@ -46,69 +48,126 @@
 				'onStateChange': onStateChange,
 				'onError': onError,
 				'onReady': function() {
-					onReady(self);
+					onReady(playerObject);
 				}
 			}
 		});
 
-		self.load = function(id) {
+		playerObject.load = function(id) {
+			videoId = id;
 			player.loadVideoById(id);
 		};
-		self.pause = function() {
+		playerObject.pause = function() {
 			player.pauseVideo();
 		};
-		self.play = function() {
+		playerObject.play = function() {
 			player.playVideo();
 		};
-		self.stop = function() {
+		playerObject.stop = function() {
 			player.stopVideo();
 		};
-		self.setProgress = function(percentage) {
+		playerObject.setProgress = function(percentage) {
 			player.seekTo(player.getDuration() / 100 * percentage, true);
 		};
-		self.setVolume = function(percentage) {
+		playerObject.setVolume = function(percentage) {
 			player.setVolume(percentage);
 		};
-		self.isReady = function() {
+		playerObject.isReady = function() {
 			return player.setVolume && player.loadVideoById && player.pauseVideo && player.playVideo && player.seekTo && player.getDuration;
 		};
-		self.getProgress = function() {
+		playerObject.getProgress = function() {
 			var progress = player.getCurrentTime() * 100 / player.getDuration();
 			return isNaN(progress) ? 0 : progress;
 		};
-		self.getState = function() {
+		playerObject.getState = function() {
 			return translate(player.getPlayerState());
 		};
 
-		/* custom */
-		self.requestFullscreen = function() {
-			var elem = player;
-			if(elem.requestFullscreen) {
-				elem.requestFullscreen();
-			} else if(elem.msRequestFullscreen) {
-				elem.msRequestFullscreen();
-			} else if(elem.mozRequestFullScreen) {
-				elem.mozRequestFullScreen();
-			} else if(elem.webkitRequestFullscreen) {
-				elem.webkitRequestFullscreen();
+		playerObject.requestFullscreen = function() {
+			if(player.requestFullscreen) {
+				player.requestFullscreen();
+			} else if(player.msRequestFullscreen) {
+				player.msRequestFullscreen();
+			} else if(player.mozRequestFullScreen) {
+				player.mozRequestFullScreen();
+			} else if(player.webkitRequestFullscreen) {
+				player.webkitRequestFullscreen();
 			}
 		};
 
+		playerObject.getPlayerSnapshot = function() {
+			return {
+				videoId: videoId,
+				progress: playerObject.getProgress(),
+				volumne: player.getVolume(),
+				state: playerObject.getState()
+			};
+		};
+
+		playerObject.setPlayerSnapshot = function(state) {
+			throwStateEvents = false;
+			if(state.volumne !== undefined) {
+				player.setVolume(state.volumne);
+			}
+			if(state.videoId !== undefined) {
+				playerObject.load(state.videoId);
+				waitForLoading(function() {
+					finishSetPlayerSnapshot(state);
+				});
+			} else {
+				finishSetPlayerSnapshot(state);
+			}
+		};
+
+		function finishSetPlayerSnapshot(state) {
+			if(state.progress !== undefined) {
+				playerObject.setProgress(state.progress);
+				waitForLoading(function() {
+					finishSetPlayerSnapshot2(state);
+				});
+			} else {
+				finishSetPlayerSnapshot2(state);
+			}
+		}
+
+		function finishSetPlayerSnapshot2(state) {
+			if(state.state === PLAYER_STATE.PAUSED) {
+				playerObject.pause();
+			}
+			throwStateEvents = true;
+		}
+
 		function onStateChange(event) {
 			if(translate(event.data) !== undefined) {
-				stateEvents.throwEvent(translate(event.data));
+				throwStateEvent(translate(event.data));
 			}
 		}
 
 		function onError(/*error*/) {
-			stateEvents.throwEvent(PLAYER_STATE.INVALID);
+			throwStateEvent(PLAYER_STATE.INVALID);
 		}
-
-		player.addEventListener("onStateChange", "onLocalPlayerStateChange");
-		player.addEventListener("onError", "onLocalPlayerError");
 
 		function translate(ytState) {
 			return TRANSLATIONTABLE[ytState];
+		}
+
+		var throwStateEvents = true;
+
+		function throwStateEvent(newState) {
+			if(throwStateEvents) {
+				stateEvents.throwEvent(newState);
+			}
+			internalStateEvents.throwEvent(newState);
+		}
+
+		function waitForLoading(callback) {
+			var tmpListener = function(event) {
+				if(event === PLAYER_STATE.PLAYING) {
+					internalStateEvents.removeListener(tmpListener);
+					callback();
+				}
+			};
+			internalStateEvents.addListener(tmpListener);
 		}
 	}
 
