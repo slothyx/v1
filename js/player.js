@@ -13,13 +13,19 @@
 	};
 
 	function PlayerProxy() {
-		//TODO remember/restore state
 		//TODO buffer commands
 		var self = this;
 		var stateEvents = new slothyx.util.EventHelper(self, "State");
 		var player = null;
+		var state = {
+			state: undefined,
+			videoId: undefined,
+			progress: 0,
+			volumne: 100
+		};
 
 		self.load = function(id) {
+			state.videoId = id;
 			if(player !== null) {
 				player.load(id);
 			}
@@ -45,6 +51,7 @@
 			}
 		};
 		self.setVolume = function(percentage) {
+			state.volumne = percentage;
 			if(player !== null) {
 				player.setVolume(percentage);
 			}
@@ -66,6 +73,11 @@
 				return player.getState();
 			}
 		};
+		self.requestFullscreen = function() {
+			if(player !== null) {
+				player.requestFullscreen();
+			}
+		};
 
 		/* custom */
 		self.getPlayer = function() {
@@ -74,21 +86,44 @@
 		self.setPlayer = function(newPlayer) {
 			if(player !== null) {
 				player.removeStateListener(onStateChange);
+				state.progress = player.getProgress();
 				player.stop();
 			}
-			player = newPlayer;
-			player.addStateListener(onStateChange);
-		};
-
-		/* custom */
-		self.requestFullscreen = function() {
-			if(player !== null) {
-				self.requestFullscreen();
-			}
+			player = null;
+			initNewPlayer(newPlayer);
 		};
 
 		function onStateChange(newState) {
+			state.state = newState;
 			stateEvents.throwEvent(newState);
+		}
+
+		//init new player TODO move to implementing player
+		function initNewPlayer(newPlayer) {
+			if(state.state !== undefined) {
+				newPlayer.setVolume(state.volumne);
+				if(state.videoId !== undefined) {
+					var tmpStateListener = function(state) {
+						if(state === slothyx.util.PLAYER_STATE.PLAYING) {
+							newPlayer.removeStateListener(tmpStateListener);
+							newPlayer.setProgress(state.progress);
+							if(state.state === slothyx.util.PLAYER_STATE.PAUSED) {
+								newPlayer.pause();
+							}
+							player = newPlayer;
+							player.addStateListener(onStateChange);
+						}
+					};
+					newPlayer.addStateListener(tmpStateListener);
+					newPlayer.load(state.videoId);
+				} else {
+					player = newPlayer;
+					player.addStateListener(onStateChange);
+				}
+			} else {
+				player = newPlayer;
+				player.addStateListener(onStateChange);
+			}
 		}
 	}
 

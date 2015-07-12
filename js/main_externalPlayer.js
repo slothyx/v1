@@ -6,7 +6,7 @@
 	window.slothyx = slothyx;
 
 	slothyx.requestFullscreen = function() {
-		slothyx.localPlayer.requestFullscreen();
+		slothyx.player.requestFullscreen();
 	};
 
 	var otherWindow = window.opener;
@@ -21,9 +21,8 @@
 		}
 	};
 
-	slothyx.util.doWhenTrue(function() {
-		callback = otherWindow.slothyx.registerRemoteWindow(slothyx.localPlayer.getPlayer());
-	}, function() {
-		return slothyx.localPlayer.getPlayer().isReady();
+	slothyx.ytPlayer.addReadyListener(function(){
+		callback = otherWindow.slothyx.registerRemoteWindow(slothyx.ytPlayer.getYTPlayer());
 	});
+
 })(jQuery, window);

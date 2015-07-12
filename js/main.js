@@ -39,7 +39,7 @@
 	}
 
 	function requestFullscreen() {
-		slothyx.localPlayer.requestFullscreen();
+		getPlayer().requestFullscreen();
 	}
 
 	function toggle() {
