@@ -17,6 +17,8 @@
 	TRANSLATIONTABLE[YT_STATE.PAUSED] = PLAYER_STATE.PAUSED;
 	TRANSLATIONTABLE[YT_STATE.PLAYING] = PLAYER_STATE.PLAYING;
 
+	var YT_PLAYER_ID = 'ytPlayer';
+
 	var ytPlayerInstance = null;
 	var readyEvent = new slothyx.util.EventHelper(ytPlayer, "Ready");
 
@@ -40,7 +42,7 @@
 		var internalStateEvents = new slothyx.util.EventHelper();
 
 		var videoId;
-		var player = new window.YT.Player('ytPlayer', {
+		var player = new window.YT.Player(YT_PLAYER_ID, {
 			height: '250',
 			width: '343',
 			playerVars: {'controls': 0},
@@ -84,14 +86,15 @@
 		};
 
 		playerObject.requestFullscreen = function() {
-			if(player.requestFullscreen) {
-				player.requestFullscreen();
-			} else if(player.msRequestFullscreen) {
-				player.msRequestFullscreen();
-			} else if(player.mozRequestFullScreen) {
-				player.mozRequestFullScreen();
-			} else if(player.webkitRequestFullscreen) {
-				player.webkitRequestFullscreen();
+			var elem = $('#' + YT_PLAYER_ID).get(0);
+			if(elem.requestFullscreen) {
+				elem.requestFullscreen();
+			} else if(elem.msRequestFullscreen) {
+				elem.msRequestFullscreen();
+			} else if(elem.mozRequestFullScreen) {
+				elem.mozRequestFullScreen();
+			} else if(elem.webkitRequestFullscreen) {
+				elem.webkitRequestFullscreen();
 			}
 		};
 
