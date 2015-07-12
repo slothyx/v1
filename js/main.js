@@ -12,6 +12,7 @@
 	var slothyx = window.slothyx || {};
 	window.slothyx = slothyx;
 
+	//used for shorter reference
 	var PLAYER_STATE = slothyx.util.PLAYER_STATE;
 
 	function addPlaylist() {
@@ -54,23 +55,23 @@
 			getPlayList().selectNext();
 		} else {
 			stateModel.internalState(PLAYER_STATE.PLAYING);
-			getYtPlayer().play();
+			getPlayer().play();
 		}
 	}
 
 	function pause() {
 		stateModel.internalState(PLAYER_STATE.PAUSED);
-		getYtPlayer().pause();
+		getPlayer().pause();
 	}
 
 	function stop() {
 		//TODO check if needed
 		stateModel.internalState(PLAYER_STATE.STOPPED);
-		getYtPlayer().stop();
+		getPlayer().stop();
 	}
 
-	function getYtPlayer() {
-		return slothyx.localPlayer.getPlayer();
+	function getPlayer() {
+		return slothyx.player.getPlayer();
 	}
 
 	function getPlayList() {
@@ -84,7 +85,7 @@
 	function onSelectedVideo(video) {
 		if(video !== null) {
 			stateModel.internalState(PLAYER_STATE.PLAYING);
-			getYtPlayer().load(video.id);
+			getPlayer().load(video.id);
 			setWindowTitle(video.title);
 			$(PROGRESS_SLIDER_SELECTOR).slider('enable');
 		} else {
@@ -92,7 +93,7 @@
 				getPlayList().selectNext();
 			} else {
 				stateModel.internalState(PLAYER_STATE.STOPPED);
-				getYtPlayer().stop();
+				getPlayer().stop();
 				setWindowTitle(DEFAULT_WINDOW_TITLE);
 				$(PROGRESS_SLIDER_SELECTOR).slider('disable');
 			}
@@ -185,18 +186,19 @@
 				{content: "Delete current playlist", action: deletePlaylist},
 				{content: "Open remote player", action: openRemotePlayer},
 				{
-					content: "<input id='test' type='checkbox'> Replay", action: function(event) {
-					var element = $('#test');
-					var checked = element.is(":checked");
-					if(!$(event.target).is('#test')) {
-						checked = !checked;
+					content: "<input id='test' type='checkbox'> Replay",
+					action: function(event) {
+						var element = $('#test');
+						var checked = element.is(":checked");
+						if(!$(event.target).is('#test')) {
+							checked = !checked;
+						}
+						setTimeout(function() {
+							element.prop("checked", checked);
+							stateModel.replay = checked;
+						}, 0);
+						return false;
 					}
-					setTimeout(function() {
-						element.prop("checked", checked);
-						stateModel.replay = checked;
-					}, 0);
-					return false;
-				}
 				}
 			]
 		},
@@ -209,14 +211,14 @@
 			},
 			stop: function(event, ui) {
 				progressSliderDragging = false;
-				getYtPlayer().setProgress(ui.value);
+				getPlayer().setProgress(ui.value);
 			}
 		},
 		volumeSlider: {
 			orientation: "horizontal",
 			value: 100,
 			slide: function(event, ui) {
-				getYtPlayer().setVolume(ui.value);
+				getPlayer().setVolume(ui.value);
 			}
 		},
 		addPlaylist: addPlaylist,
@@ -224,9 +226,9 @@
 	});
 
 	window.setInterval(function() {
-		progressChanged(getYtPlayer().getProgress());
+		progressChanged(getPlayer().getProgress());
 	}, UPDATE_INTERVAL_MS);
-	getYtPlayer().addStateListener(onYTPlayerStateChange);
+	getPlayer().addStateListener(onYTPlayerStateChange);
 	slothyx.util.registerShortcuts([
 		{key: slothyx.util.KEYS.SPACE, action: onShortcutSpace},
 		{key: slothyx.util.KEYS.RIGHT, action: onShortcutRight}
@@ -249,11 +251,14 @@
 
 	});
 
+	slothyx.ytPlayer.addReadyListener(function(ytPlayer){
+		getPlayer().setPlayer(ytPlayer);
+	});
+
 	slothyx.registerRemoteWindow = function(player) {
-		var localPlayer = getYtPlayer().getPlayer();
-		getYtPlayer().setPlayer(player);
+		getPlayer().setPlayer(player);
 		return function() {
-			getYtPlayer().setPlayer(localPlayer);
+			getPlayer().setPlayer(slothyx.ytPlayer.getYTPlayer());
 		};
 	};
 

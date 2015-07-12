@@ -4,7 +4,7 @@
 
 	var slothyx = window.slothyx || {};
 	window.slothyx = slothyx;
-	var localPlayer = slothyx.localPlayer = {};
+	var ytPlayer = slothyx.ytPlayer = {};
 
 	var PLAYER_STATE = slothyx.util.PLAYER_STATE;
 	var YT_STATE = {
@@ -17,25 +17,25 @@
 	TRANSLATIONTABLE[YT_STATE.PAUSED] = PLAYER_STATE.PAUSED;
 	TRANSLATIONTABLE[YT_STATE.PLAYING] = PLAYER_STATE.PLAYING;
 
-	var proxyPlayer = new PlayerProxy();
-	var ytPlayer;
-
+	var ytPlayerInstance = null;
+	var readyEvent = new slothyx.util.EventHelper(ytPlayer, "Ready");
 
 	//needed in global scope
 	window.onYouTubeIframeAPIReady = function() {
-		ytPlayer = new LocalPlayer();
+		initPlayer();
 	};
 
-	localPlayer.requestFullscreen = function() {
-		ytPlayer.requestFullscreen();
+	ytPlayer.getYTPlayer = function() {
+		return ytPlayerInstance;
 	};
 
-	localPlayer.getPlayer = function() {
-		return proxyPlayer;
-	};
+	function onReady(player) {
+		ytPlayerInstance = player;
+		readyEvent.throwEvent(player);
+	}
 
-	function LocalPlayer() {
-		var self = this;
+	function initPlayer() {
+		var self = {};
 		var stateEvents = new slothyx.util.EventHelper(self, "State");
 
 		var player = new window.YT.Player('ytPlayer', {
@@ -46,7 +46,7 @@
 				'onStateChange': onStateChange,
 				'onError': onError,
 				'onReady': function() {
-					proxyPlayer.setPlayer(self);
+					onReady(self);
 				}
 			}
 		});
@@ -61,7 +61,7 @@
 			player.playVideo();
 		};
 		self.stop = function() {
-			self.stopVideo();
+			player.stopVideo();
 		};
 		self.setProgress = function(percentage) {
 			player.seekTo(player.getDuration() / 100 * percentage, true);
@@ -93,6 +93,7 @@
 				elem.webkitRequestFullscreen();
 			}
 		};
+
 		function onStateChange(event) {
 			if(translate(event.data) !== undefined) {
 				stateEvents.throwEvent(translate(event.data));
@@ -111,76 +112,5 @@
 		}
 	}
 
-	function PlayerProxy() {
-		//TODO buffer commands
-		var self = this;
-		var stateEvents = new slothyx.util.EventHelper(self, "State");
-		var player = null;
-
-		self.load = function(id) {
-			if(player !== null) {
-				player.load(id);
-			}
-		};
-		self.pause = function() {
-			if(player !== null) {
-				player.pause();
-			}
-		};
-		self.play = function() {
-			if(player !== null) {
-				player.play();
-			}
-		};
-		self.stop = function() {
-			if(player !== null) {
-				player.stop();
-			}
-		};
-		self.setProgress = function(percentage) {
-			if(player !== null) {
-				player.setProgress(percentage);
-			}
-		};
-		self.setVolume = function(percentage) {
-			if(player !== null) {
-				player.setVolume(percentage);
-			}
-		};
-		self.isReady = function() {
-			if(player !== null) {
-				return player.isReady();
-			} else {
-				return false;
-			}
-		};
-		self.getProgress = function() {
-			if(player !== null) {
-				return player.getProgress();
-			}
-		};
-		self.getState = function() {
-			if(player !== null) {
-				return player.getState();
-			}
-		};
-
-		/* custom */
-		self.getPlayer = function() {
-			return player;
-		};
-		self.setPlayer = function(newPlayer) {
-			if(player !== null) {
-				player.removeStateListener(onStateChange);
-				player.stop();
-			}
-			player = newPlayer;
-			player.addStateListener(onStateChange);
-		};
-
-		function onStateChange(newState) {
-			stateEvents.throwEvent(newState);
-		}
-	}
-
-})(jQuery, window);
+})
+(jQuery, window);
