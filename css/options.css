@@ -1,31 +1,35 @@
+/* styles the inside of the settings-wheel*/
+
 .options {
-	display: inline-block;
-	cursor: pointer;
-	text-align: center;
-	position: relative;
+    display: inline-block;
+    cursor: pointer;
+    text-align: center;
+    position: relative;
 }
 
 .optionsPane {
-	display: block;
-	position: absolute;
-	right: 0;
-	background-color: #bebebe;
-	border: solid #d2d2d2 1px;
-	z-index: 10;
-	white-space: nowrap;
+    /*to keep it downside*/
+    display: block;
+    position: absolute;
+    right: 0;
+    background-color: #bebebe;
+    border: solid #d2d2d2 1px;
+    z-index: 10;
+    white-space: nowrap;
 }
 
 .optionsEntry {
-	display: block;
-	padding-left: 10px;
-	padding-right: 10px;
-	font-size: 16px;
+    display: block;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 16px;
 }
 
 .optionsEntry:hover {
-	  background-color: #f6aa48;
-  }
 
-.optionsEntry:hover:last-child {
-	background-color: #678cf6;
+    background-color: #c6d5e2;
+}
+
+.optionsEntry:last-child {
+    background-color: #d2d2d2;
 }

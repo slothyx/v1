@@ -1,7 +1,16 @@
-
+/* general styles are made here*/
 #background {
     background-color: #5e97ca;
     /*background-color: #7cb9b4;*/
+}
+
+.intextglyphicon {
+    background-color: #c3ee73;
+    height: 25px;
+    width: 25px;
+    padding: 3px 4px 4px 4px;
+    display: inline-block;
+    margin-left: 2px
 }
 
 .standardText {
@@ -28,7 +37,6 @@ td {
 h1 {
     color: #343434;
     font-size: 14px;
-    font-family: Bookman Old Style, serif;
     margin-bottom: 4px;
     margin-top: 0px;
 }
@@ -36,7 +44,6 @@ h1 {
 h2 {
     color: #343434;
     font-size: 20px;
-    font-family: Bookman Old Style, serif;
     margin-bottom: 15px;
     margin-top: 0px;
 }
@@ -45,7 +52,6 @@ h3 {
     font-size: 36px;
     margin-bottom: 20px;
     color: #343434;
-    font-family: Bookman Old Style, serif;
 }
 
 a {
@@ -64,6 +70,7 @@ a:hover {
     color: #d41c1a;
     text-decoration: underline;
 }
+
 img {
 
 }

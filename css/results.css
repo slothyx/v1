@@ -9,11 +9,13 @@
     clear: both;
     height: 120px;
     position: relative;
+
 }
 
 .oneResult:hover {
-    background-color: #c6d5e2;
+    background-color: #dddddd;
     transition: background-color, 0.5s, linear;
+    cursor: pointer;
 }
 
 .oneResult:hover .slider {

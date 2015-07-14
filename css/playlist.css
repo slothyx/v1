@@ -119,7 +119,7 @@
 
 #playstop {
     top: 0;
-    background-color: #9aa2e2;
+    background-color: #e25547;
     padding-top: 6px;
     height: 40px;
     text-align: center;
@@ -129,11 +129,11 @@
 }
 
 #playstop:hover {
-    background-color: #adb6ff;
+    background-color: #ff5b4c;
 }
 
 #fullscreen {
-    background-color: #e297e0;
+    background-color: #dddddd;
     top: 0;
     width: 100%;
     height: 40px;
@@ -146,7 +146,7 @@
 }
 
 #fullscreen:hover {
-    background-color: #ffa9fd;
+    background-color: #d2d2d2;
 }
 
 #secControl {
@@ -189,6 +189,7 @@
     height: 40px;
     width: 100%;
     -webkit-appearance: none;
+
 }
 
 .selectStylePlaylist {
@@ -197,6 +198,7 @@
     border-radius: 0;
     width: 100%;
     position: relative;
+
 }
 
 .selectStylePlaylist select {
@@ -213,7 +215,7 @@
 
 .settingsWheel {
     top: 0;
-    background-color: #e2b353;
+    background-color: #dddddd;
     height: 40px;
     width: 100%;
     position: relative;
@@ -221,10 +223,11 @@
     font-size: 22px;
     text-align: center;
     padding-top: 6px;
+    border-top: 1px solid #808080;
 }
 
 .settingsWheel:hover {
-    background-color: #ffca5d;
+    background-color: #d2d2d2;
 }
 
 .invalid {

@@ -1,7 +1,7 @@
 .formed {
     margin-top: 22.5px;
     height: 30px;
-    width: 450px;
+    width: 400px;
 }
 
 .formed button {
@@ -12,12 +12,11 @@
     float: left;
     height: 100%;
     width: 20%;
-    background-color: #9aa2e2;
+    background-color: #dddddd;
     border-style: none;
 }
-
-.formed:hover {
-    background-color: #adb6ff;
+.formed button:hover {
+    background-color: #d2d2d2;
 }
 
 .formed input {
@@ -28,54 +27,5 @@
     float: right;
     width: 80%;
     height: 100%;
-    background-color: #f5f5f5;
-}
-
-#welcomeSlot {
-    text-align: left;
-    /*  text-shadow: -1px 1px #959595;*/
-
-}
-
-#welcomeSlot p::first-letter {
-    font-size: 20px;
-    font-family: Verdana, Arial, sans-serif;
-}
-
-#welcomeSlot p {
-    font-size: 16px;
-    word-spacing: 4px;
-    letter-spacing: 0px;
-    font-family: Arial, serif;
-}
-
-#aboutSlot {
-    position: absolute;
-    padding-top: 10px;
-    bottom: 10px;
-    left: 0;
-    padding-bottom: 13.6px;
-
-    text-align: center;
-}
-
-#aboutSlot p:first-child {
-    text-decoration: underline;
-    padding-bottom: 5px;
-}
-
-.search {
-    padding: 6px 15px 6px 30px;
-    margin: 3px;
-}
-
-#copyright {
-    bottom: 0;
-    left: 0;
-}
-
-#mascot {
-    position: relative;
-    height: 100px;
-    width: 100px;
+    background-color: #ffffff;
 }

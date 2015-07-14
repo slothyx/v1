@@ -1,42 +1,45 @@
+/*here are all major containers styled */
 body {
     overflow-x: auto;
 }
 
 #header {
-    top:0;
-    height:75px;
+    top: 0;
+    height: 75px;
     background-color: #395976;
-   /* box-shadow: 0 3px 3px rgba(50, 50, 50, 0.52);*/
+    /* box-shadow: 0 3px 3px rgba(50, 50, 50, 0.52);*/
     position: fixed;
     width: 100%;
-    z-index: 50;
+    /* z-index needed for buttons/slider */
+    z-index: 999;
 
 }
 
-#holder{
+#holder {
     margin-right: auto;
     margin-left: auto;
-    width:60%;
+    width: 60%;
     margin-bottom: 180px;
     min-width: 1000px;
     margin-top: 105px;
-}
-
-#footer {
-    bottom: 0;
-    left: 0;
-    background-color: rgb(59, 90, 119);
-    height:100px;
-
 }
 
 #results {
     float: left;
     height: 810px;
     width: 70%;
-    min-width: 305px;
-    background-color: #ffffff;
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,f5f5f5+100 */
+    background: rgb(255,255,255); /* Old browsers */
+    background: -moz-linear-gradient(top,  rgba(255,255,255,1) 0%, rgba(245,245,245,1) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(100%,rgba(245,245,245,1))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(245,245,245,1) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(245,245,245,1) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(245,245,245,1) 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  rgba(255,255,255,1) 0%,rgba(245,245,245,1) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f5f5f5',GradientType=0 ); /* IE6-9 */
+
     overflow-y: scroll;
+    /*needed to hide add/search related buttons*/
     overflow-x: hidden;
 }
 
@@ -44,40 +47,31 @@ body {
     float: right;
     height: 810px;
     width: 30%;
-    min-width: 290px;
     background-color: #ffffff;
 }
 
 #introduction {
-    color: black;
     padding-top: 80px;
+    padding-bottom: 80px;
     padding-left: 65px;
     padding-right: 65px;
     clear: both;
-    height: 750px;
-    background-color: #b9def0;
-    display: block;
+    background-color: #f5f5f5;
+
 }
 
 #contact {
-    padding: 80px 150px;
+    padding-top: 80px;
+    padding-left: 150px;
+    padding-right: 150px;
+    padding-bottom: 100px;
     clear: both;
-    text-align: center;
     background-color: #f5f5f5;
-    height: 680px;
 }
 
-/*
-#news_update {
-    clear:both;
-    width: 100%;
-
-    background-color: rgba(245, 245, 245, 0.56);
-    color: black;
-    padding: 65px 150px;
-    text-align: center;
-    height: 750px;
-    overflow: hidden;
+#footer {
+    bottom: 0;
+    left: 0;
+    background-color: rgb(59, 90, 119);
+    height: 100px;
 }
-
-

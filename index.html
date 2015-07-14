@@ -20,7 +20,6 @@
     <link href="css/prim.css" rel="stylesheet">
     <link href="css/contact.css" rel="stylesheet">
     <link href="css/introduction.css" rel="stylesheet">
-    <link href="css/news.css" rel="stylesheet">
     <link href="css/containers.css" rel="stylesheet">
     <link href="css/util.css" rel="stylesheet">
 
@@ -65,7 +64,7 @@
                 </div>
             </td>
             <td>
-                <div class="formed" style="width: 300px;">
+                <div class="formed">
                     <button title="Load playlist" type="button" data-bind="click: $root.loadVideoFromTextField"><span
                             class="glyphicon glyphicon-export"></span></button>
                     <input type="text" placeholder="Load" id="newVideoId"
@@ -220,25 +219,28 @@
 <div id="introduction">
 
 
-    <h3>Guide</h3>
+  <!-- <h3>Guide</h3>-->
 
 
-    <table class="maxwidth">
+    <table class="introductionTable">
 
         <tr>
             <td>
                 <!-- hints to the 'search' option -->
                 <h2>Search</h2>
+
             </td>
 
             <td>
                 <!-- hints to handle playlists-->
                 <h2>Playlist</h2>
+
             </td>
 
             <td>
                 <!-- hints to 'other' options -->
                 <h2>Other</h2>
+
             </td>
 
         </tr>
@@ -247,61 +249,62 @@
             <!-- search -->
             <td id="leftIntroduction">
 
-                <ul>
-                    <li>To <b>search for videos</b>, type in keywords what you are looking for. Press
-                        "Enter" or
+                <p>
+                To search for videos, type in keywords what you are looking for. Press
+                "Enter" or
                         <span class="intextglyphicon">
                             <span class="glyphicon glyphicon-search"></span></span>
-                        to confirm your input.
-                    </li>
-                    <li>If you want to <b>load more videos</b> hit the "Load more" button on the bottom of
-                        the results-field.
-                    </li>
-                    <li>When you have found some good videos and you want to <b>find similar videos</b>
-                        simply press the "Search related" button.
-                    </li>
-                </ul>
+                to confirm your input.
+                </p>
+                <hr>
+                <p>If you want to load more videos hit the "Load more" button on the bottom of
+                the results-field.
+                </p>
+                <hr>
+                <p>When you have found some good videos and you want to find similar videos
+                simply press the "Search related" button.</p>
+
             </td>
             <!-- playlist -->
             <td id="centerIntroduction">
+                <p>To create a playlist, click  <span class="glyphicon glyphicon-plus"></span>
+                    underneath the video screen.
+                    Slothyx will automatically add a new playlist to your playlist library.
+                </p>
+                <hr>
+                <p>
+                    Deleting a playlist is as simple as creating one. Press the "Wheel"
+                    symbol
+                    to the right of the "Playorder" drop-down menu.
+                </p>
 
-                <ul>
-                    <li>To <b>create a playlist</b>, click <span class="glyphicon glyphicon-plus"></span>
-                        underneath the video screen.
-                        Slothyx will automatically add a new playlist to your playlist library.
-                    </li>
-                    <li><b>Deleting a playlist</b> is as simple as creating one. Press the "Wheel"
-                        <b>symbol</b>
-                        to the right of the "Playorder" drop-down menu.
-                    </li>
-                    <li>If you want to <b>fill your playlist with content</b>, add videos by clicking the
-                        big + besides the search result.
-                    </li>
-                    <li>To <b>delete videos from your playlist</b>, press  <span
-                            class="glyphicon glyphicon-trash trashcolor"></span>
-                        next to the title of the video.
-                    </li>
-                </ul>
+                <hr>
+                <p>If you want to fill your playlist with content, add videos by clicking the
+                    big + besides the search result.</p>
+
+                <hr>
+                <p>To delete videos from your playlist, press  <span
+                        class="glyphicon glyphicon-trash trashcolor"></span>
+                    next to the title of the video.
+                </p>
+
             </td>
 
             <!-- other -->
             <td id="rightIntroduction">
 
-                <ul>
-                    <li><b>Sharing a playlist</b> is as easy as clicking one button. Hit the "Share
-                        playlist" button in the options wheel. Copy the code. Share it!
-                    </li>
-                    <li>
-                        If you want to <b>use a code</b> insert it in the "Load"
-                        input box besides the search field and confirm it by pressing "Enter" or
-                        <div class="intextglyphicon">
-                            <span class="glyphicon glyphicon-export"></span></div>
-                        .
-                    </li>
-                    <li>To <b>display videos on another screen</b>, press the "Remote player" button
-                        in the settings menu.
-                    </li>
-                </ul>
+                <p>Sharing a playlist is as easy as clicking one button. Hit the "Share
+                playlist" button in the options wheel. Copy the code. Share it!
+                </p>  <hr>
+                <p>If you want to use a code insert it in the "Load"
+                input box besides the search field and confirm it by pressing "Enter" or
+                <div class="intextglyphicon">
+                    <span class="glyphicon glyphicon-export"></span></div>
+                . </p>
+                  <hr>
+                <p>To display videos on another screen, press the "Remote player" button
+                in the settings menu.</p>
+
             </td>
         </tr>
     </table>

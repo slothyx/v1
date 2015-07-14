@@ -1,3 +1,11 @@
+/*stylesheets for the contact container*/
+
+/*contentbox*/
+#contactbox {
+
+    text-align: center;
+}
+
 .mails {
     font-size: 20px;
 }
@@ -5,28 +13,7 @@
 .mails:hover {
     cursor: pointer;
     font-weight: bold;
-    text-underline: none;
     text-decoration-line: none;
-}
-
-#contact tr td {
-    padding-left: 30px;
-    padding-right: 30px;
-    width: 50%;
-    min-width: 380px;
-}
-
-#contact td {
-    color: black;
-}
-
-#contactbox {
-    height: 400px;
-}
-
-#contact tr td h3 {
-    margin-top: 0;
-
 }
 
 #contactbox hr {
@@ -42,12 +29,11 @@
 
 #contactbox p {
     color: black;
-    margin-top: 2px;
     font-size: 16px;
 }
 
+/*all text concerning adress inc. Names/Mails*/
 #contactbox address {
     color: black;
-    margin-top: 2px;
     font-size: 15px;
 }
