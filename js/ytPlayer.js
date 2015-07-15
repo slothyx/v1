@@ -44,7 +44,8 @@
 		var videoId;
 		var player = new window.YT.Player(YT_PLAYER_ID, {
 			height: '250',
-			width: '343',
+			width: '100%',
+            minWidth: '250',
 			playerVars: {'controls': 0},
 			events: {
 				'onStateChange': onStateChange,
