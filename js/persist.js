@@ -25,7 +25,13 @@
 		}
 
 		function getIntern() {
-			return JSON.parse(window.localStorage.getItem(SLOTHYX_PERSIST_PREFIX)) || {};
+			try {
+				return JSON.parse(window.localStorage.getItem(SLOTHYX_PERSIST_PREFIX)) || {};
+			} catch(e) {
+				window.localStorage.clear(SLOTHYX_PERSIST_PREFIX);
+				slothyx.messages.addInfoMessage("Sorry, we could not parse your saved playlists :(");
+			}
+			return {};
 		}
 
 		return persister;

@@ -22,6 +22,7 @@
     <link href="css/introduction.css" rel="stylesheet">
     <link href="css/containers.css" rel="stylesheet">
     <link href="css/util.css" rel="stylesheet">
+    <link href="css/messages.css" rel="stylesheet">
 
     <link rel="icon" href="img/favicon.ico" type="image/x-icon">
 
@@ -33,6 +34,7 @@
 
     <script src="js/util.js"></script>
     <script src="js/knockout.js"></script>
+    <script src="js/messages.js"></script>
     <script src="js/persist.js"></script>
     <script src="js/player.js"></script>
     <script src="js/ytPlayer.js"></script>
@@ -80,6 +82,13 @@
 
 <!--the 'holder' keeps all contents in the center of the page -->
 <div id="holder">
+
+<ul id="messages" data-bind="foreach: $root.messages.messages">
+    <li >
+        <i class="glyphicon glyphicon-remove" data-bind="click: remove"></i>
+        <span data-bind="text: message"></span>
+    </li>
+</ul>
 
 <!-- 'results' contains all search results -->
 <div id="results">

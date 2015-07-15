@@ -1,0 +1,20 @@
+#messages {
+	list-style: none;
+}
+
+#messages li {
+	background-color: #f0f0f0;
+	border-radius: 8px;
+	margin: 10px 0;
+	padding: 4px 10px;
+	border: thin solid #395976;
+}
+
+#messages li span {
+	margin-right: 20px;
+}
+
+#messages li i {
+	float: right;
+	cursor: pointer;
+}
