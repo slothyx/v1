@@ -18,6 +18,28 @@ body {
 
 }
 
+#header button {
+    top: 0;
+    left: 0;
+    text-align: center;
+    vertical-align: middle;
+    float: left;
+    height: 100%;
+    width: 20%;
+    background-color: #dddddd;
+    border-style: none;
+}
+
+#header input {
+    box-sizing: border-box;
+    padding-left: 4px;
+    padding-right: 5px;
+    border-style: none;
+    float: right;
+    width: 80%;
+    height: 100%;
+    background-color: #ffffff;
+}
 #holder {
     margin-right: auto;
     margin-left: auto;
@@ -35,6 +57,8 @@ body {
     overflow-y: scroll;
     /*needed to hide add/search related buttons*/
     overflow-x: hidden;
+    border-radius: 20px;
+    box-shadow: -60px 0px 0px 0px #3b5a77;
 }
 
 #playlist {
@@ -42,6 +66,7 @@ body {
     height: 810px;
     width: 30%;
     background-color: #ffffff;
+    margin-bottom: 60px;
 }
 
 #introduction {
@@ -51,13 +76,10 @@ body {
     padding-right: 75px;
     clear: both;
     background-color: #ffffff;
-    /*  syntax: box-shadow: none|h-shadow v-shadow blur spread color |inset|initial|inherit;
-
-    Note: The box-shadow property attaches one or more shadows
-    to an element. The property is a comma-separated list of
-    shadows, each specified by 2-4 length values, an optional
-     color, and an optional inset keyword. Omitted lengths are 0. */
-    box-shadow: inset 0px 0px 0px 20px #3b5a77;;
+    /*  syntax: box-shadow: none|horizontal-shadow vertical-shadow BLUR SPREAD color |inset|initial|inherit;*/
+    box-shadow: inset 0px 20px 0px 0px #3b5a77, inset 0px -20px 0px 0px #3b5a77;
+    border-radius: 20px;
+    margin-bottom: 50px;
 
 }
 
@@ -68,7 +90,8 @@ body {
     padding-right: 75px;
     clear: both;
     background-color: #ffffff;
-    box-shadow: inset 0px 0px 0px 20px #3b5a77;;
+    box-shadow: inset 0px 20px 0px 0px #3b5a77, inset 0px -20px 0px 0px #3b5a77;
+    border-radius: 20px;
 }
 
 #footer {

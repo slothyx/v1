@@ -1,31 +1,26 @@
-.formed {
+.formedLeft {
     margin-top: 22.5px;
     height: 30px;
     width: 400px;
+
 }
 
-.formed button {
-    top: 0;
-    left: 0;
-    text-align: center;
-    vertical-align: middle;
-    float: left;
-    height: 100%;
-    width: 20%;
-    background-color: #dddddd;
-    border-style: none;
+.formedRight {
+    margin-top: 22.5px;
+    height: 30px;
+    width: 400px;
+
+}
+
+.formedLeft button{
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
 }
 .formed button:hover {
     background-color: #d2d2d2;
 }
 
-.formed input {
-    box-sizing: border-box;
-    padding-left: 4px;
-    padding-right: 5px;
-    border-style: none;
-    float: right;
-    width: 80%;
-    height: 100%;
-    background-color: #ffffff;
+.formedRight input {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
 }
