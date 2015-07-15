@@ -6,6 +6,10 @@
     text-align: center;
 }
 
+#contactbox h3 {
+    background-color: #c6d5e2;
+}
+
 .mails {
     font-size: 20px;
 }
