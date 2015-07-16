@@ -4,17 +4,27 @@
 
 #messages li {
 	background-color: #f0f0f0;
-	border-radius: 8px;
+	border-radius: 5px;
 	margin: 10px 0;
-	padding: 4px 10px;
 	border: thin solid #395976;
+    box-shadow: inset -20px 5px 0px 1px #3c5b78;
+    padding: 10px 3px 3px;
 }
 
-#messages li span {
-	margin-right: 20px;
+#messages span {
+    padding-right: 3px;
+}
+.removeMessage {
+    color:#f0f0f0;
+}
+
+.removeMessage:hover {
+    color: #d2d2d2;
 }
 
 #messages li i {
-	float: right;
 	cursor: pointer;
+    float:right;
+    margin-left: 15px;
+
 }

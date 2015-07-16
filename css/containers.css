@@ -15,6 +15,7 @@ body {
     width: 100%;
     /* z-index needed for buttons/slider */
     z-index: 999;
+    box-shadow: 1px 0px 5px 1px #3b5a77;
 
 }
 
