@@ -1,5 +1,5 @@
 /*globals jQuery, window, YT*/
-(function($, window) {
+(function($, window, undefined) {
 	"use strict";
 
 	var slothyx = window.slothyx || {};
@@ -51,23 +51,35 @@
 		self.isReady = function() {
 			if(player !== null) {
 				return player.isReady();
-			} else {
-				return false;
 			}
+			return false;
 		};
 		self.getProgress = function() {
 			if(player !== null) {
 				return player.getProgress();
 			}
+			return 0;
 		};
 		self.getState = function() {
 			if(player !== null) {
 				return player.getState();
 			}
+			return undefined;
 		};
 		self.requestFullscreen = function() {
 			if(player !== null) {
 				player.requestFullscreen();
+			}
+		};
+		self.getPlayerSnapshot = function() {
+			if(player !== null) {
+				return player.getPlayerSnapshot();
+			}
+			return undefined;
+		};
+		self.setPlayerSnapshot = function(playerSnapshot) {
+			if(player !== null) {
+				return player.setPlayerSnapshot(playerSnapshot);
 			}
 		};
 

@@ -6,9 +6,12 @@
 	var VIDEO_TEXTFIELD_SELECTOR = '#newVideoId';
 	var TVSET_SELECTOR = '#tvset';
 	var PROGRESS_SLIDER_SELECTOR = '#progressSlider';
+	var VOLUME_SLIDER_SELECTOR = '#volumeSlider';
 	var DEFAULT_WINDOW_TITLE = "Slothyx Music";
+	var SNAPSHOT_PERSIST_KEY = "playerState";
 
-	var UPDATE_INTERVAL_MS = 500;
+	var UPDATE_PROGRESS_INTERVAL_MS = 500;
+	var UPDATE_SNAPSHOT_INTERVAL_MS = 500;
 
 	var slothyx = window.slothyx || {};
 	window.slothyx = slothyx;
@@ -147,9 +150,11 @@
 		switch(state) {
 			case PLAYER_STATE.STOPPED:
 				getPlayList().selectNext();
+				$(PROGRESS_SLIDER_SELECTOR).slider('disable');
 				break;
 			case PLAYER_STATE.PLAYING:
 			case PLAYER_STATE.PAUSED:
+				$(PROGRESS_SLIDER_SELECTOR).slider('enable');
 				stateModel.internalState(state);
 				break;
 			case PLAYER_STATE.INVALID:
@@ -228,7 +233,7 @@
 
 	window.setInterval(function() {
 		progressChanged(getPlayer().getProgress());
-	}, UPDATE_INTERVAL_MS);
+	}, UPDATE_PROGRESS_INTERVAL_MS);
 	getPlayer().addStateListener(onYTPlayerStateChange);
 	slothyx.util.registerShortcuts([
 		{key: slothyx.util.KEYS.SPACE, action: onShortcutSpace},
@@ -264,6 +269,30 @@
 			$(TVSET_SELECTOR).show();
 		};
 	};
+
+	var playerSnapshot = slothyx.persist.getPersister().get(SNAPSHOT_PERSIST_KEY);
+	if(playerSnapshot !== undefined) {
+		slothyx.util.doWhenTrue(function() {
+			getPlayer().setPlayerSnapshot(playerSnapshot);
+			if(playerSnapshot.volume !== undefined) {
+				$(VOLUME_SLIDER_SELECTOR).slider('value', playerSnapshot.volume);
+			}
+			startSnapshotInterval();
+		}, function() {
+			return getPlayer().isReady();
+		});
+	} else {
+		startSnapshotInterval();
+	}
+
+	function startSnapshotInterval() {
+		setInterval(function() {
+			var playerSnapshot = getPlayer().getPlayerSnapshot();
+			if(playerSnapshot !== undefined) {
+				slothyx.persist.getPersister().put(SNAPSHOT_PERSIST_KEY, playerSnapshot);
+			}
+		}, UPDATE_SNAPSHOT_INTERVAL_MS);
+	}
 
 })(jQuery, window);
 

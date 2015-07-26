@@ -45,7 +45,7 @@
 		var player = new window.YT.Player(YT_PLAYER_ID, {
 			height: '250',
 			width: '100%',
-            minWidth: '250',
+			minWidth: '250',
 			playerVars: {'controls': 0},
 			events: {
 				'onStateChange': onStateChange,
@@ -76,7 +76,15 @@
 			player.setVolume(percentage);
 		};
 		playerObject.isReady = function() {
-			return player.setVolume && player.loadVideoById && player.pauseVideo && player.playVideo && player.seekTo && player.getDuration;
+			return player.setVolume !== undefined &&
+				player.loadVideoById !== undefined &&
+				player.pauseVideo !== undefined &&
+				player.playVideo !== undefined &&
+				player.stopVideo !== undefined &&
+				player.seekTo !== undefined &&
+				player.getDuration !== undefined &&
+				player.getCurrentTime !== undefined &&
+				player.getPlayerState !== undefined;
 		};
 		playerObject.getProgress = function() {
 			var progress = player.getCurrentTime() * 100 / player.getDuration();
@@ -100,18 +108,21 @@
 		};
 
 		playerObject.getPlayerSnapshot = function() {
-			return {
-				videoId: videoId,
-				progress: playerObject.getProgress(),
-				volumne: player.getVolume(),
-				state: playerObject.getState()
-			};
+			if(!currentlyUpdating) {
+				return {
+					videoId: videoId,
+					progress: playerObject.getProgress(),
+					volume: player.getVolume(),
+					state: playerObject.getState()
+				};
+			}
+			return undefined;
 		};
 
 		playerObject.setPlayerSnapshot = function(state) {
-			throwStateEvents = false;
-			if(state.volumne !== undefined) {
-				player.setVolume(state.volumne);
+			currentlyUpdating = true;
+			if(state.volume !== undefined) {
+				player.setVolume(state.volume);
 			}
 			if(state.videoId !== undefined) {
 				playerObject.load(state.videoId);
@@ -138,7 +149,8 @@
 			if(state.state === PLAYER_STATE.PAUSED) {
 				playerObject.pause();
 			}
-			throwStateEvents = true;
+			currentlyUpdating = false;
+			throwStateEvent(playerObject.getState());
 		}
 
 		function onStateChange(event) {
@@ -155,10 +167,10 @@
 			return TRANSLATIONTABLE[ytState];
 		}
 
-		var throwStateEvents = true;
+		var currentlyUpdating = false;
 
 		function throwStateEvent(newState) {
-			if(throwStateEvents) {
+			if(!currentlyUpdating) {
 				stateEvents.throwEvent(newState);
 			}
 			internalStateEvents.throwEvent(newState);
