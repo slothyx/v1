@@ -201,7 +201,19 @@
 
 }
 
-.selectStylePlaylist select {
+.selectStylePlaylist select.playlistSelect {
+    background: #bebebe;
+    padding: 0;
+    font-size: 16px;
+    line-height: 1;
+    border: 0;
+    border-radius: 0;
+    height: 40px;
+    -webkit-appearance: none;
+    width: 100%;
+}
+
+.selectStylePlaylist input.playlistSelect {
     background: #bebebe;
     padding: 0;
     font-size: 16px;

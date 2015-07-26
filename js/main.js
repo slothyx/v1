@@ -252,7 +252,7 @@
 
 	});
 
-	slothyx.ytPlayer.addReadyListener(function(ytPlayer){
+	slothyx.ytPlayer.addReadyListener(function(ytPlayer) {
 		getPlayer().setPlayer(ytPlayer);
 	});
 

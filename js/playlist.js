@@ -34,10 +34,13 @@
 		};
 
 		playlist.addPlaylist = function() {
-			var playlist = new PlaylistPlaylist(createNewPlaylist());
-			playlistModel.playlists.push(playlist);
-			playlistModel.playlist(playlist);
+			var newPlaylist = new PlaylistPlaylist(createNewPlaylist());
+			playlistModel.playlists.push(newPlaylist);
+			playlistModel.playlist(newPlaylist);
 			persistPlaylists();
+			setTimeout(function(){
+				playlist.renameCurrentPlaylist();
+			},0);
 		};
 
 		playlist.deleteCurrentPlaylist = function() {
@@ -80,7 +83,9 @@
 
 		playlist.markCurrentVideoInvalid = function() {
 			var currentVideo = playlistModel.video();
-			currentVideo.invalid(true);
+			if(currentVideo !== null) {
+				currentVideo.invalid(true);
+			}
 		};
 
 		var tmpSelectHolder;
