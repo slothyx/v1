@@ -2,6 +2,7 @@
 (function($, window, _, ko, undefined) {
 	"use strict";
 
+	var RESULTS_DIV_SELECTOR = "#results";
 	var MAX_RESULTS = "15";
 
 	var slothyx = window.slothyx || {};
@@ -101,6 +102,8 @@
 				youtube.getSearchResultList().addSearchResults(searchResults);
 			} else {
 				youtube.getSearchResultList().setSearchResults(searchResults);
+				$(RESULTS_DIV_SELECTOR).scrollTop(0);
+				window.scrollTo(0,0);
 			}
 		};
 	}
