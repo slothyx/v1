@@ -66,14 +66,15 @@
 .addtoPlaylist {
     color: #1d1d1d;
     font-size: 25px;
-    height: 50%;
+    height: 80%;
     width: 100%;
 }
 
 .searchRelated {
     color: #1d1d1d;
-    font-size: 18px;
-    height: 50%;
+    font-size: 12px;
+    text-align: center;
+    height: 20%;
     width: 100%;
 }
 
