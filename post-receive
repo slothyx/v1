@@ -11,23 +11,23 @@ exec 1>$LOG_FILE
 exec 2>&1
 
 function checkoutRepo {
-	cd $BASE_DIR
-	
-	echo "Delete old..."
-	rm -rf $2
-	
-	echo "Cloning..."
-	unset GIT_DIR
-	git clone -b $1 slothyx_tmp_dir
-	
-	echo "Move"
-	mv slothyx_tmp_dir/www $2
-	
-	echo "Change permissions"
-	chmod -R a+rx $2
-	
-	echo "Cleanup"
-	rm -rf slothyx_tmp_dir
+        cd $BASE_DIR
+
+        echo "Delete old..."
+        rm -rf $2
+
+        echo "Cloning..."
+        unset GIT_DIR
+        git clone -b $1 $REPOSITORY slothyx_tmp_dir
+
+        echo "Move"
+        mv slothyx_tmp_dir/www $2
+
+        echo "Change permissions"
+        chmod -R a+rx $2
+
+        echo "Cleanup"
+        rm -rf slothyx_tmp_dir
 }
 
 checkoutRepo release $RELEASE_DIR
