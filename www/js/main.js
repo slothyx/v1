@@ -93,14 +93,10 @@
 			setWindowTitle(video.title);
 			$(PROGRESS_SLIDER_SELECTOR).slider('enable');
 		} else {
-			if(stateModel.replay) {
-				getPlayList().selectNext();
-			} else {
-				stateModel.internalState(PLAYER_STATE.STOPPED);
-				getPlayer().stop();
-				setWindowTitle(DEFAULT_WINDOW_TITLE);
-				$(PROGRESS_SLIDER_SELECTOR).slider('disable');
-			}
+			stateModel.internalState(PLAYER_STATE.STOPPED);
+			getPlayer().stop();
+			setWindowTitle(DEFAULT_WINDOW_TITLE);
+			$(PROGRESS_SLIDER_SELECTOR).slider('disable');
 		}
 	}
 
@@ -190,22 +186,7 @@
 				{content: "Share playlist", action: sharePlaylist},
 				{content: "Rename current playlist", action: renameCurrentPlaylist},
 				{content: "Delete current playlist", action: deletePlaylist},
-				{content: "Open remote player", action: openRemotePlayer},
-				{
-					content: "<input id='test' type='checkbox'> Replay",
-					action: function(event) {
-						var element = $('#test');
-						var checked = element.is(":checked");
-						if(!$(event.target).is('#test')) {
-							checked = !checked;
-						}
-						setTimeout(function() {
-							element.prop("checked", checked);
-							stateModel.replay = checked;
-						}, 0);
-						return false;
-					}
-				}
+				{content: "Open remote player", action: openRemotePlayer}
 			]
 		},
 		toggle: toggle,
