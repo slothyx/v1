@@ -174,12 +174,12 @@
 		}
 
 		function removeVideoByInternalId(id) {
-			if(playlistModel.video() !== null && playlistModel.video().id === id) {
-				playlist.selectNext();
-			}
 			playlistModel.playlist().videos.remove(function(item) {
 				return id === item.id;
 			});
+			if(playlistModel.video() !== null && playlistModel.video().id === id) {
+				playlist.selectNext();
+			}
 			persistPlaylists();
 		}
 
@@ -242,8 +242,8 @@
 				} else {
 					video = findNextNormalVideo();
 				}
-				selectVideo(video);
 			}
+			selectVideo(video);
 		}
 
 		function findNextNormalVideo() {
@@ -264,6 +264,8 @@
 					}
 				}
 			}
+			//no video found (maybe deleted)
+			return videos[0];
 		}
 
 
@@ -294,7 +296,9 @@
 
 		function selectVideo(video) {
 			if(playlistModel.video() === null || video === null || playlistModel.video().id !== video.id) {
-				alreadyPlayedVideoIds.push(video.id);
+				if(video !== null){
+					alreadyPlayedVideoIds.push(video.id);
+				}
 				playlistModel.video(video);
 				videoSelectedEventHelper.throwEvent(video !== null ? video.video : null);
 			}
