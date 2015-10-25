@@ -6,5 +6,3 @@ cd /etc/apache2
 rm -r sites-enabled
 
 ln -s /vagrant/config sites-enabled
-
-service apache2 restart
