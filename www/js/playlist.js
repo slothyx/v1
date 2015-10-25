@@ -11,21 +11,25 @@
 
 		var PLAYLIST_SELECT_HOLDER_SELECTOR = "#playlistSelectHolder";
 		var PLAYLISTS_PERSIST_ID = "playlists";
+		var PLAYLIST_SETTINGS_PERSIST_ID = "playlistSettings";
 		var PLAYLIST_DEFAULT_NAME = "Slothyx Playlist";
 
 		var videoIdCount = 1;
 		var playlistIdCount = 1;
 
+		//TODO remove model from public api
 		var playlistModel = lists.playlistModel = {
 			playlists: null,
 			playlist: null,
-			video: null,
-			playStrategies: null,
-			playStrategy: null
+			video: null
 		};
 
 		var playlist = {};
 		var videoSelectedEventHelper = createNewEventHelper(playlist, "VideoSelected");
+
+		playlist.selectNext = function() {
+			selectNext();
+		};
 
 		playlist.addVideo = function(video) {
 			var playListVideo = new PlaylistVideo(video);
@@ -38,9 +42,9 @@
 			playlistModel.playlists.push(newPlaylist);
 			playlistModel.playlist(newPlaylist);
 			persistPlaylists();
-			setTimeout(function(){
+			setTimeout(function() {
 				playlist.renameCurrentPlaylist();
-			},0);
+			}, 0);
 		};
 
 		playlist.deleteCurrentPlaylist = function() {
@@ -60,25 +64,12 @@
 			persistPlaylists();
 		};
 
-		playlist.getPlaylists = function() {
-			return _.map(ko.unwrap(playlistModel.playlists), function(playlist) {
-				return playlist.getPlaylist();
-			});
-		};
-
 		playlist.getCurrentPlaylist = function() {
 			return playlistModel.playlist().getPlaylist();
 		};
 
 		playlist.changed = function() {
 			persistPlaylists();
-		};
-
-		playlist.selectNext = function() {
-			var strategy = playlistModel.playStrategy();
-			if(strategy !== null) {
-				strategy.selectNext();
-			}
 		};
 
 		playlist.markCurrentVideoInvalid = function() {
@@ -175,21 +166,6 @@
 			playlistModel.video = ko.observable(null);
 		}
 
-		function initPlayStrategies() {
-			playlistModel.playStrategies = ko.observableArray();
-			playlistModel.playStrategies.push(new ForwardStrategy());
-			playlistModel.playStrategies.push(new BackwardStrategy());
-			playlistModel.playStrategies.push(new ShuffleStrategy());
-
-			playlistModel.playStrategy = ko.observable(playlistModel.playStrategies()[0]);
-			playlistModel.playStrategy.subscribe(function(strategy) {
-				strategy.reset();
-				if(playlistModel.video() !== null) {
-					strategy.select(playlistModel.video());
-				}
-			});
-		}
-
 		function createNewPlaylist() {
 			return {
 				name: PLAYLIST_DEFAULT_NAME + " " + playlistIdCount,
@@ -207,27 +183,18 @@
 			persistPlaylists();
 		}
 
-		function selectVideo(video) {
-			if(playlistModel.video() === null || video === null || playlistModel.video().id !== video.id) {
-				playlistModel.video(video);
-				var strategy = playlistModel.playStrategy();
-				if(strategy !== null) {
-					if(video !== null) {
-						strategy.select(video);
-					} else {
-						strategy.reset();
-					}
-				}
-				videoSelectedEventHelper.throwEvent(video !== null ? video.video : null);
-			}
-		}
-
 		function loadPlaylists() {
 			return getPersister().get(PLAYLISTS_PERSIST_ID);
 		}
 
 		function persistPlaylists() {
-			getPersister().put(PLAYLISTS_PERSIST_ID, playlist.getPlaylists());
+			getPersister().put(PLAYLISTS_PERSIST_ID, getPlaylists());
+		}
+
+		function getPlaylists() {
+			return _.map(ko.unwrap(playlistModel.playlists), function(playlist) {
+				return playlist.getPlaylist();
+			});
 		}
 
 		function getIndexOfPlaylist(playlistId) {
@@ -240,87 +207,120 @@
 			return -1;
 		}
 
-		/******PLAYSTRATEGIES******/
-		function ForwardStrategy() {
-			var self = this;
-			self.name = "Default";
-			self.select = function(video) {
-			};
-			self.reset = function() {
-			};
-			self.selectNext = function() {
-				var videos = playlistModel.playlist().videos();
-				if(playlistModel.video() === null) {
-					if(videos.length !== 0) {
-						selectVideo(videos[0]);
-					}
+		/******PLAYSETTINGS******/
+
+		//TODO remove from public api
+		var playlistSettings = lists.playlistSettings = {
+			shuffle: ko.observable(false),
+			replay: ko.observable(false)
+		};
+
+		function initPlaylistSettings() {
+			playlistSettings.shuffle.subscribe(function(value) {
+				if(value === true) {
+					//shuffle activated
+					activateShuffle();
+				}
+			});
+
+			var settings = loadPlaylistSettings();
+			if(settings !== undefined && settings !== null) {
+				playlistSettings.shuffle(settings.shuffle || false);
+				playlistSettings.replay(settings.replay || false);
+			}
+
+			playlistSettings.shuffle.subscribe(persistPlaylistSettings);
+			playlistSettings.replay.subscribe(persistPlaylistSettings);
+		}
+
+		function selectNext() {
+			var video = null;
+
+			if(playlistModel.playlist().videos().length !== 0) {
+				if(playlistSettings.shuffle()) {
+					video = findNextShuffleVideo();
 				} else {
-					var videoId = playlistModel.video().id;
-					for(var i = 0; i < videos.length; i++) {
-						if(videos[i].id === videoId) {
-							selectVideo(videos[i + 1] || null);
+					video = findNextNormalVideo();
+				}
+				selectVideo(video);
+			}
+		}
+
+		function findNextNormalVideo() {
+			var videos = playlistModel.playlist().videos();
+			if(playlistModel.video() === null) {
+				return videos[0];
+			} else {
+				var videoId = playlistModel.video().id;
+				for(var i = 0; i < videos.length; i++) {
+					if(videos[i].id === videoId) {
+						var video = videos[i + 1];
+						if(video === undefined && playlistSettings.replay()) {
+							//was last video and we do have replay active
+							return videos[0];
+						} else {
+							return video || null;
 						}
 					}
 				}
-			};
+			}
 		}
 
-		function ShuffleStrategy() {
-			var self = this;
-			self.name = "Shuffle";
-			self.select = function(video) {
-				alreadyPlayed.push(video.id);
-			};
-			self.reset = function() {
-				alreadyPlayed = [];
-			};
-			var alreadyPlayed = [];
-			self.selectNext = function() {
-				var available = [];
-				_.forEach(playlistModel.playlist().videos(), function(video) {
-					if(!_.contains(alreadyPlayed, video.id)) {
-						available.push(video);
-					}
-				});
-				if(available.length === 0) {
-					self.reset();
-					selectVideo(null);
-				} else {
-					var random = _.random(0, available.length - 1);
-					selectVideo(available[random]);
-				}
-			};
+
+		var alreadyPlayedVideoIds = [];
+
+		function activateShuffle() {
+			alreadyPlayedVideoIds = [];
 		}
 
-		function BackwardStrategy() {
-			var self = this;
-			self.name = "Backward";
-			self.select = function(video) {
-			};
-			self.reset = function() {
-			};
-			self.selectNext = function() {
-				var videos = playlistModel.playlist().videos();
-				if(playlistModel.video() === null) {
-					if(videos.length !== 0) {
-						selectVideo(videos[videos.length - 1]);
-					}
-				} else {
-					var videoId = playlistModel.video().id;
-					for(var i = 0; i < videos.length; i++) {
-						if(videos[i].id === videoId) {
-							selectVideo(videos[i - 1] || null);
-						}
-					}
+		function findNextShuffleVideo() {
+			var available = [];
+			_.forEach(playlistModel.playlist().videos(), function(video) {
+				if(!_.contains(alreadyPlayedVideoIds, video.id)) {
+					available.push(video);
 				}
-			};
+			});
+			if(available.length === 0) {
+				alreadyPlayedVideoIds = [];
+				if(!playlistSettings.replay()) {
+					return null;
+				} else {
+					return findNextShuffleVideo();
+				}
+			}
+
+			return available[_.random(0, available.length - 1)];
+		}
+
+		function selectVideo(video) {
+			if(playlistModel.video() === null || video === null || playlistModel.video().id !== video.id) {
+				alreadyPlayedVideoIds.push(video.id);
+				playlistModel.video(video);
+				videoSelectedEventHelper.throwEvent(video !== null ? video.video : null);
+			}
+		}
+
+		function loadPlaylistSettings() {
+			return getPersister().get(PLAYLIST_SETTINGS_PERSIST_ID);
+		}
+
+		function persistPlaylistSettings() {
+			getPersister().put(PLAYLIST_SETTINGS_PERSIST_ID, {
+				shuffle: playlistSettings.shuffle(),
+				replay: playlistSettings.replay()
+			});
 		}
 
 		/******INIT******/
 		initPlaylists();
-		initPlayStrategies();
+		initPlaylistSettings();
 
-		slothyx.knockout.getModel().contribute({playlist: {playlistModel: playlistModel}});
+		slothyx.knockout.getModel().contribute({
+			playlist: {
+				playlistModel: playlistModel,
+				playlistSettings: playlistSettings
+			}
+		});
 
 		return playlist;
 	})();

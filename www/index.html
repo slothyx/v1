@@ -183,8 +183,10 @@
             </td>
 
             <td>
-                <div class="selectStylePlayOrder">
-                    <select data-bind="options:	playStrategies, optionsText: 'name', value: playStrategy"></select>
+                <div class="selectStylePlayOrder" data-bind="with: $root.playlist.playlistSettings">
+                    <button class="" data-bind="toggleButton: {value: shuffle, trueClass: 'glyphicon glyphicon-random', falseClass: 'glyphicon glyphicon-sort-by-attributes'}"></button><!--
+                    this line break is commented because otherwise layouting fucks up
+                    --><button class="" data-bind="toggleButton: {value: replay, trueClass: 'glyphicon glyphicon-repeat', falseClass: 'glyphicon glyphicon-arrow-right'}"></button>
                 </div>
             </td>
 

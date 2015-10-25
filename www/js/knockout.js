@@ -64,4 +64,11 @@
 		}
 	};
 
+	ko.bindingHandlers.toggleButton = {
+		init: function(element, valueAccessor) {
+			var options = valueAccessor();
+			$(element).toggleButton(options.value, options.trueClass, options.falseClass);
+		}
+	};
+
 })(jQuery, window, ko);

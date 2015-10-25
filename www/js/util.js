@@ -171,6 +171,26 @@
 		});
 	};
 
+	$.fn.toggleButton = function(value, trueClass, falseClass) {
+		var self = this;
+		$(self).on("click", function() {
+			value(!value());
+			updateClass();
+			return false;
+		});
+		value.subscribe(updateClass);
+		updateClass();
+		function updateClass(){
+			if(value()){
+				$(self).removeClass(falseClass);
+				$(self).addClass(trueClass);
+			}else{
+				$(self).removeClass(trueClass);
+				$(self).addClass(falseClass);
+			}
+		}
+	};
+
 	util.openTextBox = function(text) {
 		var dialog = $(
 			"<div class='dialog'>" +
