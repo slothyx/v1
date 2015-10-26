@@ -12,6 +12,7 @@
 		var PLAYLIST_SELECT_HOLDER_SELECTOR = "#playlistSelectHolder";
 		var PLAYLISTS_PERSIST_ID = "playlists";
 		var PLAYLIST_SETTINGS_PERSIST_ID = "playlistSettings";
+		var PLAYLIST_STATE_PERSIST_ID = "playlistState";
 		var PLAYLIST_DEFAULT_NAME = "Slothyx Playlist";
 
 		var videoIdCount = 1;
@@ -49,10 +50,10 @@
 
 		playlist.deleteCurrentPlaylist = function() {
 			var currentPlaylists = playlistModel.playlists();
-			var currentPlaylistId = playlistModel.playlist().id;
-			var currentIndex = getIndexOfPlaylist(currentPlaylistId);
+			var currentPlaylist = playlistModel.playlist();
+			var currentIndex = getIndexOfPlaylist(currentPlaylist);
 			playlistModel.playlists.remove(function(playlist) {
-				return playlist.id === currentPlaylistId;
+				return playlist.id === currentPlaylist.id;
 			});
 			if(currentPlaylists.length === 0) {
 				playlist.addPlaylist();
@@ -197,10 +198,26 @@
 			});
 		}
 
-		function getIndexOfPlaylist(playlistId) {
+		function getIndexOfPlaylist(playlist) {
+			if(playlist === null || playlist === undefined) {
+				return -1;
+			}
 			var playlists = playlistModel.playlists();
 			for(var i = 0; i < playlists.length; i++) {
-				if(playlists[i].id === playlistId) {
+				if(playlists[i].id === playlist.id) {
+					return i;
+				}
+			}
+			return -1;
+		}
+
+		function getIndexOfVideo(video) {
+			if(video === null || video === undefined) {
+				return -1;
+			}
+			var videos = playlistModel.playlist().videos();
+			for(var i = 0; i < videos.length; i++) {
+				if(videos[i].id === video.id) {
 					return i;
 				}
 			}
@@ -296,10 +313,11 @@
 
 		function selectVideo(video) {
 			if(playlistModel.video() === null || video === null || playlistModel.video().id !== video.id) {
-				if(video !== null){
+				if(video !== null) {
 					alreadyPlayedVideoIds.push(video.id);
 				}
 				playlistModel.video(video);
+				persistPlaylistState();
 				videoSelectedEventHelper.throwEvent(video !== null ? video.video : null);
 			}
 		}
@@ -315,9 +333,33 @@
 			});
 		}
 
+		function loadPlaylistState() {
+			return getPersister().get(PLAYLIST_STATE_PERSIST_ID);
+		}
+
+		function persistPlaylistState() {
+			getPersister().put(PLAYLIST_STATE_PERSIST_ID, {
+				currentPlaylistIndex: getIndexOfPlaylist(playlistModel.playlist()),
+				currentVideoIndex: getIndexOfVideo(playlistModel.video())
+			});
+		}
+
+		function initPlaylistState() {
+			var playlistState = loadPlaylistState();
+			if(playlistState !== undefined){
+				if(playlistState.currentPlaylistIndex !== -1){
+					playlistModel.playlist(playlistModel.playlists()[playlistState.currentPlaylistIndex]);
+					if(playlistState.currentVideoIndex !== -1){
+						playlistModel.video(playlistModel.playlist().videos()[playlistState.currentVideoIndex]);
+					}
+				}
+			}
+		}
+
 		/******INIT******/
 		initPlaylists();
 		initPlaylistSettings();
+		initPlaylistState();
 
 		slothyx.knockout.getModel().contribute({
 			playlist: {
