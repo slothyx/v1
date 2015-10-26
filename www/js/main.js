@@ -226,7 +226,7 @@
 		var emails = [
 			["Codemonkey", "Y29kZW1vbmtleUBzbG90aHl4LmNvbQ=="],
 			["Styleparrot", "c3R5bGVwYXJyb3RAc2xvdGh5eC5jb20="],
-			["Info", "aW5mb0BzbG90aHl4LmNvbQ=="],
+			["Info", "aW5mb0BzbG90aHl4LmNvbQ=="]
 		];
 
 		_.forEach(emails, function(item) {
@@ -254,6 +254,8 @@
 	var playerSnapshot = slothyx.persist.getPersister().get(SNAPSHOT_PERSIST_KEY);
 	if(playerSnapshot !== undefined) {
 		slothyx.util.doWhenTrue(function() {
+			//it's strange when it starts autoplaying
+			playerSnapshot.state = PLAYER_STATE.PAUSED;
 			getPlayer().setPlayerSnapshot(playerSnapshot);
 			if(playerSnapshot.volume !== undefined) {
 				$(VOLUME_SLIDER_SELECTOR).slider('value', playerSnapshot.volume);
