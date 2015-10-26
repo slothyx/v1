@@ -32,6 +32,10 @@
 			selectNext();
 		};
 
+		playlist.selectPrevious = function() {
+			selectPrevious();
+		};
+
 		playlist.addVideo = function(video) {
 			var playListVideo = new PlaylistVideo(video);
 			playlistModel.playlist().videos.push(playListVideo);
@@ -224,6 +228,16 @@
 			return -1;
 		}
 
+		function findVideoById(videoId) {
+			var currentPlaylist = playlistModel.playlist().videos();
+			for(var videoIndex in currentPlaylist) {
+				if(currentPlaylist[videoIndex].id === videoId) {
+					return currentPlaylist[videoIndex];
+				}
+			}
+			return null;
+		}
+
 		/******PLAYSETTINGS******/
 
 		//TODO remove from public api
@@ -263,6 +277,54 @@
 			selectVideo(video);
 		}
 
+		var alreadyPlayedVideoIds = [];
+
+		function selectPrevious() {
+			if(playlistModel.playlist().videos().length !== 0) {
+				if(playlistSettings.shuffle()) {
+					if(playlistModel.video() !== null && playlistModel.video() !== undefined) {
+						var currentVideoId = playlistModel.video().id;
+						for(var i = 0; i < alreadyPlayedVideoIds.length; i++) {
+							if(alreadyPlayedVideoIds[i] === currentVideoId) {
+								if(i !== 0) {
+									var newVideo = findVideoById(alreadyPlayedVideoIds[i - 1]);
+									alreadyPlayedVideoIds.splice(i, 1);
+									if(newVideo !== null && newVideo !== undefined) {
+										alreadyPlayedVideoIds.splice(i, 1);
+										selectVideo(newVideo);
+									} else {
+										//video was deleted
+										selectPrevious();
+									}
+									return;
+								}
+							}
+						}
+					}
+					//not really backwards able
+					alreadyPlayedVideoIds = [];
+					selectNext();
+				} else {
+					if(playlistModel.video() === null || playlistModel.video() === undefined) {
+						selectLastVideo();
+					} else {
+						var currentVideoIndex = getIndexOfVideo(playlistModel.video());
+						if(currentVideoIndex === 0) {
+							selectLastVideo();
+						} else {
+							selectVideo(playlistModel.playlist().videos()[currentVideoIndex - 1]);
+						}
+					}
+				}
+			} else {
+				selectVideo(null);
+			}
+		}
+
+		function selectLastVideo() {
+			selectVideo(playlistModel.playlist().videos()[playlistModel.playlist().videos().length - 1]);
+		}
+
 		function findNextNormalVideo() {
 			var videos = playlistModel.playlist().videos();
 			if(playlistModel.video() === null) {
@@ -284,9 +346,6 @@
 			//no video found (maybe deleted)
 			return videos[0];
 		}
-
-
-		var alreadyPlayedVideoIds = [];
 
 		function activateShuffle() {
 			alreadyPlayedVideoIds = [];
@@ -315,6 +374,8 @@
 			if(playlistModel.video() === null || video === null || playlistModel.video().id !== video.id) {
 				if(video !== null) {
 					alreadyPlayedVideoIds.push(video.id);
+				} else {
+					alreadyPlayedVideoIds = [];
 				}
 				playlistModel.video(video);
 				persistPlaylistState();
@@ -346,10 +407,10 @@
 
 		function initPlaylistState() {
 			var playlistState = loadPlaylistState();
-			if(playlistState !== undefined){
-				if(playlistState.currentPlaylistIndex !== -1){
+			if(playlistState !== undefined) {
+				if(playlistState.currentPlaylistIndex !== -1) {
 					playlistModel.playlist(playlistModel.playlists()[playlistState.currentPlaylistIndex]);
-					if(playlistState.currentVideoIndex !== -1){
+					if(playlistState.currentVideoIndex !== -1) {
 						playlistModel.video(playlistModel.playlist().videos()[playlistState.currentVideoIndex]);
 					}
 				}

@@ -130,6 +130,10 @@
 		getPlayList().selectNext();
 	}
 
+	function onShortcutLeft() {
+		getPlayList().selectPrevious();
+	}
+
 	function onShortcutSpace() {
 		toggle();
 	}
@@ -215,10 +219,13 @@
 	window.setInterval(function() {
 		progressChanged(getPlayer().getProgress());
 	}, UPDATE_PROGRESS_INTERVAL_MS);
+
 	getPlayer().addStateListener(onYTPlayerStateChange);
+
 	slothyx.util.registerShortcuts([
 		{key: slothyx.util.KEYS.SPACE, action: onShortcutSpace},
-		{key: slothyx.util.KEYS.RIGHT, action: onShortcutRight}
+		{key: slothyx.util.KEYS.RIGHT, action: onShortcutRight},
+		{key: slothyx.util.KEYS.LEFT, action: onShortcutLeft}
 	]);
 
 	slothyx.util.onStartUp(function() {
