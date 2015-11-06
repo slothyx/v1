@@ -264,6 +264,8 @@
 			playlistSettings.replay.subscribe(persistPlaylistSettings);
 		}
 
+		var history = [];
+
 		function selectNext() {
 			var video = null;
 
@@ -277,52 +279,58 @@
 			selectVideo(video);
 		}
 
+		//for shuffle
 		var alreadyPlayedVideoIds = [];
 
 		function selectPrevious() {
 			if(playlistModel.playlist().videos().length !== 0) {
-				if(playlistSettings.shuffle()) {
-					if(playlistModel.video() !== null && playlistModel.video() !== undefined) {
-						var currentVideoId = playlistModel.video().id;
-						for(var i = 0; i < alreadyPlayedVideoIds.length; i++) {
-							if(alreadyPlayedVideoIds[i] === currentVideoId) {
-								if(i !== 0) {
-									var newVideo = findVideoById(alreadyPlayedVideoIds[i - 1]);
-									alreadyPlayedVideoIds.splice(i, 1);
-									if(newVideo !== null && newVideo !== undefined) {
-										alreadyPlayedVideoIds.splice(i, 1);
-										selectVideo(newVideo);
-									} else {
-										//video was deleted
-										selectPrevious();
-									}
-									return;
-								}
-							}
-						}
-					}
-					//not really backwards able
-					alreadyPlayedVideoIds = [];
-					selectNext();
-				} else {
-					if(playlistModel.video() === null || playlistModel.video() === undefined) {
-						selectLastVideo();
+				var video = findPreviousHistoryVideo();
+				if(video === null) {
+					if(playlistSettings.shuffle()) {
+						video = findPreviousShuffleVideo();
 					} else {
-						var currentVideoIndex = getIndexOfVideo(playlistModel.video());
-						if(currentVideoIndex === 0) {
-							selectLastVideo();
-						} else {
-							selectVideo(playlistModel.playlist().videos()[currentVideoIndex - 1]);
-						}
+						video = findPreviousNormalVideo();
 					}
 				}
+				selectVideo(video);
 			} else {
 				selectVideo(null);
 			}
 		}
 
-		function selectLastVideo() {
-			selectVideo(playlistModel.playlist().videos()[playlistModel.playlist().videos().length - 1]);
+		function findPreviousHistoryVideo() {
+			if(history.length === 1) {
+				history = [];
+			} else if(history.length >= 2) {
+				var video = findVideoById(history[history.length - 2]);
+				if(video === null) {
+					//video not found = maybe deleted?
+					history.splice(history.length - 1, 1);
+					return findPreviousHistoryVideo();
+				}
+				//minus two because selectVideo will readd it
+				history.splice(history.length - 2, 2);
+				return video;
+			}
+			return null;
+		}
+
+		function findPreviousShuffleVideo() {
+			//forward/backward is the same in shuffle
+			return findNextShuffleVideo();
+		}
+
+		function findPreviousNormalVideo() {
+			var currentVideoIndex = getIndexOfVideo(playlistModel.video());
+			if(currentVideoIndex > 0) {
+				return playlistModel.playlist().videos()[currentVideoIndex - 1];
+			} else {
+				return getLastVideo();
+			}
+		}
+
+		function getLastVideo() {
+			return playlistModel.playlist().videos()[playlistModel.playlist().videos().length - 1];
 		}
 
 		function findNextNormalVideo() {
@@ -373,9 +381,8 @@
 		function selectVideo(video) {
 			if(playlistModel.video() === null || video === null || playlistModel.video().id !== video.id) {
 				if(video !== null) {
+					history.push(video.id);
 					alreadyPlayedVideoIds.push(video.id);
-				} else {
-					alreadyPlayedVideoIds = [];
 				}
 				playlistModel.video(video);
 				persistPlaylistState();

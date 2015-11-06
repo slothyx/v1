@@ -131,7 +131,12 @@
 	}
 
 	function onShortcutLeft() {
-		getPlayList().selectPrevious();
+		//more then 5% done of video
+		if(getPlayer().getProgress() > 5) {
+			getPlayer().setProgress(0);
+		} else {
+			getPlayList().selectPrevious();
+		}
 	}
 
 	function onShortcutSpace() {
