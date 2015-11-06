@@ -11,6 +11,9 @@
 
 	var Video = slothyx.util.Video;
 
+	//youtube-api initialized;
+	var initialized = false;
+
 	youtube.loadVideoData = function(videoIds, callback) {
 		if(callback === undefined) {
 			callback = getDefaultSearchCallback(false);
@@ -39,10 +42,7 @@
 			fields: "items/id,nextPageToken",
 			type: "video",
 			q: youtubeModel.searchQuery(),
-			maxResults: MAX_RESULTS,
-			safeSearch: "moderate",
-			videoEmbeddable: "true",
-			videoSyndicated: "true"
+			maxResults: MAX_RESULTS
 		};
 
 		doOptionOverride(options, optionOverride);
@@ -103,7 +103,7 @@
 			} else {
 				youtube.getSearchResultList().setSearchResults(searchResults);
 				$(RESULTS_DIV_SELECTOR).scrollTop(0);
-				window.scrollTo(0,0);
+				window.scrollTo(0, 0);
 			}
 		};
 	}
@@ -170,22 +170,15 @@
 
 	slothyx.knockout.getModel().contribute({youtube: youtubeModel});
 
+	window.googleApiCallback = function() {
+		var API_KEY = "AIzaSyCdRfueQo-4w42pTRur9gFC0ammNREQ8QM";
+		gapi.client.setApiKey(API_KEY);
+		gapi.client.load('youtube', 'v3', youTubeApiCallback);
+	};
+
+	//Youtube Data API loaded
+	function youTubeApiCallback() {
+		initialized = true;
+	}
 
 })(jQuery, window, _, ko);
-
-
-//TODO move inside
-function googleApiCallback() {
-	"use strict";
-	var API_KEY = "AIzaSyCdRfueQo-4w42pTRur9gFC0ammNREQ8QM";
-	gapi.client.setApiKey(API_KEY);
-	gapi.client.load('youtube', 'v3', youTubeApiCallback);
-}
-
-//Youtube Data API loaded
-function youTubeApiCallback() {
-	"use strict";
-	//TODO not nice
-	$("#searchButton").fadeIn();
-	//TODO callback?
-}
