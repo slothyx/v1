@@ -7,6 +7,7 @@ RELEASE_DIR=$BASE_DIR/$PROJECT_NAME
 DEV_DIR=$BASE_DIR/$PROJECT_NAME-dev
 LOG_FILE=$BASE_DIR/$PROJECT_NAME.log
 REPOSITORY=/opt/git/repositories/$PROJECT_NAME.git
+TOMCAT_DIR=/var/lib/tomcat7/webapps
 
 exec 1>$LOG_FILE
 exec 2>&1
@@ -32,6 +33,14 @@ function checkoutRepo {
                 rm -rf "$targetDir"
                 cp -rf "out/www" "$targetDir"
                 chmod -R a+rx "$targetDir"
+        fi
+        if [ -f "out/service.war" ]; then
+                echo "service.war detected!"
+				warname="slothyx_${branch}.war"
+				warpath="$TOMCAT_DIR/$warname"
+                rm -f "$warpath"
+                cp -f "out/service.war" "$warpath"
+                chmod a+rx "$warpath"
         fi
 
         cd ..
