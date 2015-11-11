@@ -120,7 +120,7 @@
 #playstop {
     top: 0;
     background-color: #e25547;
-    padding-top: 6px;
+    padding: 6px;
     height: 40px;
     text-align: center;
     cursor: pointer;
@@ -134,15 +134,9 @@
 
 #fullscreen {
     background-color: #dddddd;
-    top: 0;
-    width: 100%;
-    height: 40px;
     cursor: pointer;
     font-size: 22px;
     text-align: center;
-    padding-top: 10px;
-    position: relative;
-
 }
 
 #fullscreen:hover {

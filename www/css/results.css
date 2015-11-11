@@ -34,16 +34,6 @@
 
 }
 
-.results-title {
-    float: left;
-    display: inline-block;
-    color: #0d141b;
-    font-size: 18px;
-    width: 55%;
-    height: 23px;
-    overflow: hidden;
-}
-
 .results-description {
     overflow: hidden;
     color: #0d141b;
@@ -81,12 +71,9 @@
 
 .loadmoreButton {
     /*text given by body*/
-    border: medium none;
     background-color: #c6d5e2;
-    padding: 10px 15px;
-    margin: auto;
+    display: inline-block;
     box-shadow: 0px 2px 6px gray;
-    width: 100%;
 }
 
 .loadmoreButton:hover {
@@ -108,9 +95,10 @@
 }
 
 #progressSlider {
-    margin: 10px;
+    width: 300px;
 }
 
 #volumeSlider {
-    margin: 10px;
+
+    width: 300px;
 }
