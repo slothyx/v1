@@ -1,0 +1,44 @@
+/*header*/
+
+header ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+header ul li {
+    display: inline;
+}
+
+.input_group {
+    padding: 0;
+    display: inline;
+}
+
+header ul li .input_group button {
+    border:none;
+    margin-left: 0;
+}
+
+.input_group input {
+    background-color: rgba(217, 206, 217, 0.62);
+    box-shadow: none;
+    border:none;
+    min-width: 120px;
+    margin: 0;
+    padding: 0;
+    color: inherit;
+    width:23%;
+}
+
+header .bars {
+    display: inline;
+    margin-left: 35px;
+    margin-right: 60px;
+}
+
+header .bars:hover {
+    transition: color 2s;
+    color: #ba4cff;
+    cursor: pointer;
+}
