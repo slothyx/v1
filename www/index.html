@@ -160,8 +160,8 @@
 
         <li>
             <button>
-                <li class="selectStylePlayOrder"
-                    data-bind="with: $root.playlist.playlistSettings, toggleButton: {value: shuffle, trueClass: 'fa fa-random', falseClass: 'fa fa-sort-amount-asc'}"></li>
+                <i class="selectStylePlayOrder"
+                   data-bind="with: $root.playlist.playlistSettings, toggleButton: {value: $root.playlist.playlistSettings.replay.shuffle, trueClass: 'fa fa-random', falseClass: 'fa fa-sort-amount-asc'}"></i>
             </button>
         </li>
         <!--
@@ -169,7 +169,7 @@
                             -->
         <li>
             <button>
-                <i class="fa" data-bind="toggleButton: {value: replay, trueClass: 'fa fa-repeat', falseClass: 'fa
+                <i class="fa" data-bind="toggleButton: {value: root.playlist.playlistSettings.replay, trueClass: 'fa fa-repeat', falseClass: 'fa
                 fa-arrow-right'}"></i>
             </button>
         </li>
