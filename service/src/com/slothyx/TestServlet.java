@@ -13,14 +13,14 @@ public class TestServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		try{
+		try {
 			JSONObject json = new JSONObject();
-			json.put("url",request.getRequestURL());
-			json.put("uri",request.getRequestURI());
-			json.put("contextPath",request.getContextPath());
+			json.put("url", request.getRequestURL());
+			json.put("uri", request.getRequestURI());
+			json.put("contextPath", request.getContextPath());
 			writeJSONResponse(response, json.toString());
-		}catch (JSONException ignored){
-
+		} catch (JSONException ignored) {
+			log("error", ignored);
 		}
 	}
 
