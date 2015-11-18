@@ -24,16 +24,6 @@
 
 }
 
-.slider {
-    height: 100%;
-    width: 100px;
-    position: absolute;
-    right: -100px;
-    background-color: rgba(140, 153, 165, 0.60);
-    cursor: pointer;
-
-}
-
 .results-description {
     overflow: hidden;
     color: #0d141b;
@@ -44,13 +34,6 @@
 }
 
 .results-image {
-    padding: 5px;
-    float: left;
-    height: 100%;
-    width: 20%;
-    min-width: 140px;
-    max-width: 150px;
-    margin-right: 8px;
 }
 
 .addtoPlaylist {
@@ -95,10 +78,10 @@
 }
 
 #progressSlider {
-    width: 300px;
+    /*toDO recalc pxs*/
+    width: calc(100% - (300px + 12px + 80px + 67px));
 }
 
 #volumeSlider {
-
-    width: 300px;
+    width: 61px;
 }

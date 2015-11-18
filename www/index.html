@@ -5,8 +5,8 @@
     <title>This is the new Slothyx</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-    <link href="stylesheets/layout.css" rel="stylesheet">
     <link href="stylesheets/style.css" rel="stylesheet">
+    <link href="stylesheets/layout.css" rel="stylesheet">
 
     <link href="css/jquery-ui.min.css" rel="stylesheet">
     <link href="css/theme.css" rel="stylesheet">
@@ -41,33 +41,35 @@
 <body>
 <header>
 
+    <nav>
+        <ul>
 
-    <ul>
+            <!--option menue-->
+            <li class="bars">
+                <form>
+                    <button><i class="fa fa-bars"></i></button>
+                </form>
+            </li>
 
-        <!--option menue-->
-        <li class="bars">
-            <div class="menu">
-            </div>
-            <i class="fa fa-bars"></i>
-        </li>
-        <li>
-            <i class="fa fa-magic"></i>
-        </li>
+            <!--search bar-->
+            <li>
+                <form>
+                    <input autofocus="autofocus" type="text" placeholder=""
+                           data-bind="onKey: {key: $root.util.keys.ENTER, action: $root.magicInputGo}, textInput: $root.magicInputQuery"><!--
+           -->
+                    <button type="button" title="Search video"
+                            data-bind="click: $root.magicInputGo"><i
+                            class="fa fa-magic"></i>
+                    </button>
+                </form>
 
-        <!--search bar-->
-        <li class="input_group">
-            <input type="text" placeholder=""
-                   data-bind="onKey: {key: $root.util.keys.ENTER, action: $root.magicInputGo}, textInput: $root.magicInputQuery"><!--
-           --><button title="Search video" data-bind="click: $root.magicInputGo"><i class="fa fa-magic"></i>
-            </button>
-
-            <button class="loadmoreButton"
-                    data-bind="click: $root.youtube.loadMore, visible: $root.youtube.showLoadMoreButton"
-                    style="display: none">Load More
-            </button>
-        </li>
-    </ul>
-
+                <!--<button class="loadmoreButton"
+                        data-bind="click: $root.youtube.loadMore, visible: $root.youtube.showLoadMoreButton"
+                        style="display: none">Load More
+                </button>-->
+            </li>
+        </ul>
+    </nav>
 </header>
 
 <!--main-->
@@ -125,32 +127,31 @@
         </div>
 
     </div>
-    <div class="results">
-        <span style="color:white;">Copyright &copy; by Böhringer Friedrich (2014)</span>
-    </div>
+    <div class="results"></div>
 
 </div>
 
 <!-- current song / controls -->
 <div class="controls">
     <ul>
-        <li>
-            <!-- TODO change to button-->
-            <div id="playstop" data-bind="with: $root.stateModel, click: $root.toggle"><i
-                    class="fa"
-                    data-bind="css: {'fa-play': !playing(), 'fa-pause': playing()}"></i>
-            </div>
-        </li>
 
         <li>
             <button data-bind="click: $root.selectPrevious" class="fa fa-step-backward"></button>
+        </li>
+        <li>
+            <!-- TODO change to button-->
+            <button id="playstop" data-bind="with: $root.stateModel, click: $root.toggle">
+                <i class="fa" data-bind="css: {'fa-play': !playing(), 'fa-pause': playing()}"></i>
+            </button>
+        </li>
+
+        <li>
             <button data-bind="click: $root.selectNext" class="fa fa-step-forward"></button>
         </li>
 
         <li>
             <!-- 'progressSlider' enables the user to control the video -->
             <div id="progressSlider" data-bind="slider: $root.progressSlider"></div>
-
         </li>
 
         <li>
@@ -158,17 +159,25 @@
         </li>
 
         <li>
-            <div id="fullscreen"
-                 data-bind="click: $root.requestFullscreen"><i class="fa fa-arrows-alt"></i>
-            </div>
+            <button>
+                <li class="selectStylePlayOrder"
+                    data-bind="with: $root.playlist.playlistSettings, toggleButton: {value: shuffle, trueClass: 'fa fa-random', falseClass: 'fa fa-sort-amount-asc'}"></li>
+            </button>
+        </li>
+        <!--
+                            this line break is commented because otherwise layouting fucks up
+                            -->
+        <li>
+            <button>
+                <i class="fa" data-bind="toggleButton: {value: replay, trueClass: 'fa fa-repeat', falseClass: 'fa
+                fa-arrow-right'}"></i>
+            </button>
         </li>
 
         <li>
-            <div class="selectStylePlayOrder" data-bind="with: $root.playlist.playlistSettings">
-                <button class="" data-bind="toggleButton: {value: shuffle, trueClass: 'fa fa-random', falseClass: 'fa fa-sort-amount-asc'}"></button><!--
-                    this line break is commented because otherwise layouting fucks up
-                    --><button class="" data-bind="toggleButton: {value: replay, trueClass: 'fa fa-repeat', falseClass: 'fa fa-arrow-right'}"></button>
-            </div>
+            <button id="fullscreen"
+                    data-bind="click: $root.requestFullscreen"><i class="fa fa-arrows-alt"></i>
+            </button>
         </li>
 
     </ul>

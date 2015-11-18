@@ -46,9 +46,13 @@
 .listItem tr td:nth-child(2) {
     width: 4%;
 }
+#playlistItems div div:nth-child(odd) {
+    background-color: rgba(14, 15, 14, 0);
+    color: white;
+}
 
-#playlistItems div:nth-child(2n) {
-    background-color: #c6d5e2;
+#playlistItems div div:nth-child(even) {
+    background-color: #e1e1e1;
 }
 
 #playlistItems div {
@@ -117,26 +121,12 @@
 #primControl {
 }
 
-#playstop {
-    top: 0;
-    background-color: #e25547;
-    padding: 6px;
-    height: 40px;
-    text-align: center;
-    cursor: pointer;
-    font-size: 22px;
-    width: 100%;
-}
-
-#playstop:hover {
-    background-color: #ff5b4c;
-}
-
 #fullscreen {
     background-color: #dddddd;
+    padding: 5px 8px;
     cursor: pointer;
-    font-size: 22px;
-    text-align: center;
+    font-size: inherit;
+    border: none;
 }
 
 #fullscreen:hover {
@@ -163,26 +153,6 @@
 
 .playlistAdd:hover {
     background-color: #a6ff45;
-}
-
-.selectStylePlayOrder {
-    overflow: hidden;
-    border: 0;
-    border-radius: 0;
-    width: 100%;
-    position: relative;
-}
-
-.selectStylePlayOrder button {
-    background: #bebebe;
-    padding: 0;
-	margin: 0;
-    font-size: 16px;
-    line-height: 1;
-    border: 0;
-    border-radius: 0;
-    height: 40px;
-    width: 50%;
 }
 
 .selectStylePlaylist {
