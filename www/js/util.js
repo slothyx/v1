@@ -171,22 +171,25 @@
 		});
 	};
 
-	$.fn.toggleButton = function(value, trueClass, falseClass) {
-		var self = this;
-		$(self).on("click", function() {
+	$.fn.toggleButton = function(value, trueClass, falseClass, selector) {
+		var self = $(this);
+		self.on("click", function() {
 			value(!value());
 			updateClass();
 			return false;
 		});
+		if(selector !== undefined){
+			self = self.find(selector);
+		}
 		value.subscribe(updateClass);
 		updateClass();
 		function updateClass(){
 			if(value()){
-				$(self).removeClass(falseClass);
-				$(self).addClass(trueClass);
+				self.removeClass(falseClass);
+				self.addClass(trueClass);
 			}else{
-				$(self).removeClass(trueClass);
-				$(self).addClass(falseClass);
+				self.removeClass(trueClass);
+				self.addClass(falseClass);
 			}
 		}
 	};

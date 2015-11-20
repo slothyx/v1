@@ -159,18 +159,14 @@
         </li>
 
         <li>
-            <button>
-                <i class="selectStylePlayOrder"
-                   data-bind="with: $root.playlist.playlistSettings, toggleButton: {value: $root.playlist.playlistSettings.replay.shuffle, trueClass: 'fa fa-random', falseClass: 'fa fa-sort-amount-asc'}"></i>
+            <button data-bind="toggleButton: {value: $root.playlist.playlistSettings.shuffle, trueClass: 'fa fa-random', falseClass: 'fa fa-sort-amount-asc', selector: 'i'}">
+                <i></i>
             </button>
         </li>
-        <!--
-                            this line break is commented because otherwise layouting fucks up
-                            -->
-        <li>
-            <button>
-                <i class="fa" data-bind="toggleButton: {value: root.playlist.playlistSettings.replay, trueClass: 'fa fa-repeat', falseClass: 'fa
-                fa-arrow-right'}"></i>
+
+		<li>
+            <button data-bind="toggleButton: {value: $root.playlist.playlistSettings.replay, trueClass: 'fa fa-repeat', falseClass: 'fa fa-arrow-right', selector: 'i'}">
+                <i></i>
             </button>
         </li>
 
