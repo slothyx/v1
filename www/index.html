@@ -1,39 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>This is the new Slothyx</title>
+	<meta charset="UTF-8">
+	<title>This is the new Slothyx</title>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-    <link href="stylesheets/style.css" rel="stylesheet">
-    <link href="stylesheets/layout.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+	<link href="stylesheets/style.css" rel="stylesheet">
+	<link href="stylesheets/layout.css" rel="stylesheet">
 
-    <link href="css/jquery-ui.min.css" rel="stylesheet">
-    <link href="css/theme.css" rel="stylesheet">
-    <link href="css/options.css" rel="stylesheet">
-    <link href="css/results.css" rel="stylesheet">
-    <link href="css/playlist.css" rel="stylesheet">
-    <link href="css/prim.css" rel="stylesheet">
-    <link href="css/util.css" rel="stylesheet">
-    <link href="css/messages.css" rel="stylesheet">
+	<link href="css/jquery-ui.min.css" rel="stylesheet">
+	<link href="css/theme.css" rel="stylesheet">
+	<link href="css/options.css" rel="stylesheet">
+	<link href="css/results.css" rel="stylesheet">
+	<link href="css/playlist.css" rel="stylesheet">
+	<link href="css/prim.css" rel="stylesheet">
+	<link href="css/util.css" rel="stylesheet">
+	<link href="css/messages.css" rel="stylesheet">
 
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/knockout/3.2.0/knockout-min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/knockout-sortable/0.8.1/knockout-sortable.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/knockout/3.2.0/knockout-min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/knockout-sortable/0.8.1/knockout-sortable.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js"></script>
 
-    <script src="js/util.js"></script>
-    <script src="js/knockout.js"></script>
-    <script src="js/messages.js"></script>
-    <script src="js/persist.js"></script>
-    <script src="js/player.js"></script>
-    <script src="js/ytPlayer.js"></script>
-    <script src="js/youtube.js"></script>
-    <script src="js/playlist.js"></script>
-    <script src="js/main.js"></script>
-    <script src="https://www.youtube.com/iframe_api"></script>
-    <script src="https://apis.google.com/js/client.js?onload=googleApiCallback"></script>
+	<script src="js/util.js"></script>
+	<script src="js/knockout.js"></script>
+	<script src="js/messages.js"></script>
+	<script src="js/persist.js"></script>
+	<script src="js/player.js"></script>
+	<script src="js/ytPlayer.js"></script>
+	<script src="js/youtube.js"></script>
+	<script src="js/playlist.js"></script>
+	<script src="js/main.js"></script>
+	<script src="https://www.youtube.com/iframe_api"></script>
+	<script src="https://apis.google.com/js/client.js?onload=googleApiCallback"></script>
 
 
 </head>
@@ -41,142 +41,142 @@
 <body>
 <header>
 
-    <nav>
-        <ul>
+	<nav>
+		<ul>
 
-            <!--option menue-->
-            <li class="bars">
-                <form>
-                    <button><i class="fa fa-bars"></i></button>
-                </form>
-            </li>
+			<!--option menue-->
+			<li class="bars">
+				<form>
+					<button><i class="fa fa-bars"></i></button>
+				</form>
+			</li>
 
-            <!--search bar-->
-            <li>
-                <form>
-                    <input autofocus="autofocus" type="text" placeholder=""
-                           data-bind="onKey: {key: $root.util.keys.ENTER, action: $root.magicInputGo}, textInput: $root.magicInputQuery"><!--
+			<!--search bar-->
+			<li>
+				<form>
+					<input autofocus="autofocus" type="text" placeholder=""
+						   data-bind="onKey: {key: $root.util.keys.ENTER, action: $root.magicInputGo}, textInput: $root.magicInputQuery"><!--
            -->
-                    <button type="button" title="Search video"
-                            data-bind="click: $root.magicInputGo"><i
-                            class="fa fa-magic"></i>
-                    </button>
-                </form>
+					<button type="button" title="Search video"
+							data-bind="click: $root.magicInputGo"><i
+							class="fa fa-magic"></i>
+					</button>
+				</form>
 
-                <!--<button class="loadmoreButton"
-                        data-bind="click: $root.youtube.loadMore, visible: $root.youtube.showLoadMoreButton"
-                        style="display: none">Load More
-                </button>-->
-            </li>
-        </ul>
-    </nav>
+				<!--<button class="loadmoreButton"
+						data-bind="click: $root.youtube.loadMore, visible: $root.youtube.showLoadMoreButton"
+						style="display: none">Load More
+				</button>-->
+			</li>
+		</ul>
+	</nav>
 </header>
 
 <!--main-->
 <div class="main">
 
-    <div class="results" id="searchResults" data-bind="foreach: $root.youtube.searchResultsModel.searchResults">
-        <div class="results-item">
-            <div class="results-item-top">
-                <img class="results-image" data-bind="attr: {src: video.image}">
-            </div>
-            <div class="results-item-bottom">
-                <p data-bind="text: video.title"></p>
-            </div>
-            <button data-bind="click: addToPlaylist">+</button>
-            <button data-bind="click: searchRelated">Search Related</button>
-        </div>
-    </div>
+	<div class="results" id="searchResults" data-bind="foreach: $root.youtube.searchResultsModel.searchResults">
+		<div class="results-item">
+			<div class="results-item-top">
+				<img class="results-image" data-bind="attr: {src: video.image}">
+			</div>
+			<div class="results-item-bottom">
+				<p data-bind="text: video.title"></p>
+			</div>
+			<button data-bind="click: addToPlaylist">+</button>
+			<button data-bind="click: searchRelated">Search Related</button>
+		</div>
+	</div>
 
-    <div class="major-console" data-bind="with: $root.playlist.playlistModel">
-        <div class="tv-container" id="tvset" data-bind="click: $root.toggle">
-            <div id="ytPlayer">
-                You need Flash player 8+ and JavaScript enabled to play videos.
-            </div>
-        </div>
+	<div class="major-console" data-bind="with: $root.playlist.playlistModel">
+		<div class="tv-container" id="tvset" data-bind="click: $root.toggle">
+			<div id="ytPlayer">
+				You need Flash player 8+ and JavaScript enabled to play videos.
+			</div>
+		</div>
 
         <span id="playlistSelectHolder">
 							<select class="playlistSelect"
-                                    data-bind="options: playlists, optionsText: 'name', value: playlist"></select></span>
+									data-bind="options: playlists, optionsText: 'name', value: playlist"></select></span>
 
-        <div id="playlistItems" data-bind="if: (playlist() !== null && playlist() !== undefined)">
+		<div id="playlistItems" data-bind="if: (playlist() !== null && playlist() !== undefined)">
 
-            <!-- this div contains all added videos-->
-            <div data-bind="sortable: {data: playlist().videos, afterMove: slothyx.lists.getPlaylist().changed, options: {helper: 'clone', distance: 10}}">
+			<!-- this div contains all added videos-->
+			<div data-bind="sortable: {data: playlist().videos, afterMove: slothyx.lists.getPlaylist().changed, options: {helper: 'clone', distance: 10}}">
 
-                <!-- shows a single video -->
-                <div class="listItem" data-bind="click: select, css: {selected: isSelected()}">
-                    <table>
-                        <tr>
-                            <td>
-                                <!-- video title -->
+				<!-- shows a single video -->
+				<div class="listItem" data-bind="click: select, css: {selected: isSelected()}">
+					<table>
+						<tr>
+							<td>
+								<!-- video title -->
                                 <span
-                                        data-bind="text: video.title, css: {invalid: invalid}"></span>
-                            </td>
+										data-bind="text: video.title, css: {invalid: invalid}"></span>
+							</td>
 
-                            <td>
-                                <!-- remove button-->
-                                <i class="xdelete fa fa-trash"
-                                   data-bind="click: remove"></i>
-                            </td>
-                        </tr>
-                    </table>
+							<td>
+								<!-- remove button-->
+								<i class="xdelete fa fa-trash"
+								   data-bind="click: remove"></i>
+							</td>
+						</tr>
+					</table>
 
-                </div>
-            </div>
-        </div>
+				</div>
+			</div>
+		</div>
 
-    </div>
-    <div class="results"></div>
+	</div>
+	<div class="results"></div>
 
 </div>
 
 <!-- current song / controls -->
 <div class="controls">
-    <ul>
-
-        <li>
-            <button data-bind="click: $root.selectPrevious" class="fa fa-step-backward"></button>
-        </li>
-        <li>
-            <!-- TODO change to button-->
-            <button id="playstop" data-bind="with: $root.stateModel, click: $root.toggle">
-                <i class="fa" data-bind="css: {'fa-play': !playing(), 'fa-pause': playing()}"></i>
-            </button>
-        </li>
-
-        <li>
-            <button data-bind="click: $root.selectNext" class="fa fa-step-forward"></button>
-        </li>
-
-        <li>
-            <!-- 'progressSlider' enables the user to control the video -->
-            <div id="progressSlider" data-bind="slider: $root.progressSlider"></div>
-        </li>
-
-        <li>
-            <div id="volumeSlider" data-bind="slider: $root.volumeSlider"></div>
-        </li>
-
-        <li>
-            <button data-bind="toggleButton: {value: $root.playlist.playlistSettings.shuffle, trueClass: 'fa fa-random', falseClass: 'fa fa-sort-amount-asc', selector: 'i'}">
-                <i></i>
-            </button>
-        </li>
+	<ul>
 
 		<li>
-            <button data-bind="toggleButton: {value: $root.playlist.playlistSettings.replay, trueClass: 'fa fa-repeat', falseClass: 'fa fa-arrow-right', selector: 'i'}">
-                <i></i>
-            </button>
-        </li>
+			<button data-bind="click: $root.selectPrevious" class="fa fa-step-backward"></button>
+		</li>
+		<li>
+			<!-- TODO change to button-->
+			<button id="playstop" data-bind="with: $root.stateModel, click: $root.toggle">
+				<i class="fa" data-bind="css: {'fa-play': !playing(), 'fa-pause': playing()}"></i>
+			</button>
+		</li>
 
-        <li>
-            <button id="fullscreen"
-                    data-bind="click: $root.requestFullscreen"><i class="fa fa-arrows-alt"></i>
-            </button>
-        </li>
+		<li>
+			<button data-bind="click: $root.selectNext" class="fa fa-step-forward"></button>
+		</li>
 
-    </ul>
+		<li>
+			<!-- 'progressSlider' enables the user to control the video -->
+			<div id="progressSlider" data-bind="slider: $root.progressSlider"></div>
+		</li>
+
+		<li>
+			<div id="volumeSlider" data-bind="slider: $root.volumeSlider"></div>
+		</li>
+
+		<li>
+			<button data-bind="toggleButton: {value: $root.playlist.playlistSettings.shuffle, trueClass: 'fa fa-random', falseClass: 'fa fa-sort-amount-asc', selector: 'i'}">
+				<i></i>
+			</button>
+		</li>
+
+		<li>
+			<button data-bind="toggleButton: {value: $root.playlist.playlistSettings.replay, trueClass: 'fa fa-repeat', falseClass: 'fa fa-arrow-right', selector: 'i'}">
+				<i></i>
+			</button>
+		</li>
+
+		<li>
+			<button id="fullscreen"
+					data-bind="click: $root.requestFullscreen"><i class="fa fa-arrows-alt"></i>
+			</button>
+		</li>
+
+	</ul>
 </div>
 
 </body>

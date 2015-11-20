@@ -1,5 +1,5 @@
 /*globals jQuery, window, YT, ko, _*/
-(function ($, window, undefined) {
+(function($, window, undefined) {
 	"use strict";
 
 	/***** CONSTANTS *****/
@@ -28,7 +28,7 @@
 	}
 
 	function sharePlaylist() {
-		var code = _.reduce(getPlayList().getCurrentPlaylist().videos, function (code, video) {
+		var code = _.reduce(getPlayList().getCurrentPlaylist().videos, function(code, video) {
 			return code + video.id;
 		}, "");
 		slothyx.util.openTextBox(SLOTHYX_PLAYLIST_SHARE_PREFIX + code);
@@ -47,7 +47,7 @@
 	}
 
 	function toggle() {
-		if (stateModel.internalState() === PLAYER_STATE.PLAYING) {
+		if(stateModel.internalState() === PLAYER_STATE.PLAYING) {
 			pause();
 		} else {
 			play();
@@ -55,7 +55,7 @@
 	}
 
 	function play() {
-		if (stateModel.internalState() === PLAYER_STATE.STOPPED) {
+		if(stateModel.internalState() === PLAYER_STATE.STOPPED) {
 			getPlayList().selectNext();
 		} else {
 			stateModel.internalState(PLAYER_STATE.PLAYING);
@@ -87,7 +87,7 @@
 	}
 
 	function onSelectedVideo(video) {
-		if (video !== null) {
+		if(video !== null) {
 			stateModel.internalState(PLAYER_STATE.PLAYING);
 			getPlayer().load(video.id);
 			setWindowTitle(video.title);
@@ -105,20 +105,20 @@
 	}
 
 	function magicInputGo() {
-		var callback = function (result) {
-			_.forEach(result, function (video) {
+		var callback = function(result) {
+			_.forEach(result, function(video) {
 				getPlayList().addVideo(video);
 			});
 		};
 		var text = magicInputQuery();
 		magicInputQuery('');
 		var regexResult = /v=([A-Za-z0-9_-]{11})/.exec(text);
-		if (regexResult !== null) {
+		if(regexResult !== null) {
 			slothyx.youtube.loadVideoData([regexResult[1]], callback);
-		} else if (text.length >= SLOTHYX_PLAYLIST_SHARE_PREFIX.length + 11 && text.indexOf(SLOTHYX_PLAYLIST_SHARE_PREFIX) === 0 && text.substring(SLOTHYX_PLAYLIST_SHARE_PREFIX.length, text.length).length % 11 === 0) {
+		} else if(text.length >= SLOTHYX_PLAYLIST_SHARE_PREFIX.length + 11 && text.indexOf(SLOTHYX_PLAYLIST_SHARE_PREFIX) === 0 && text.substring(SLOTHYX_PLAYLIST_SHARE_PREFIX.length, text.length).length % 11 === 0) {
 			text = text.substring(SLOTHYX_PLAYLIST_SHARE_PREFIX.length, text.length);
 			var videoIds = [];
-			for (var i = 0; i <= text.length; i += 11) {
+			for(var i = 0; i <= text.length; i += 11) {
 				videoIds.push(text.substring(i, i + 11));
 			}
 			slothyx.youtube.loadVideoData(videoIds, callback);
@@ -150,12 +150,12 @@
 		internalState: ko.observable(PLAYER_STATE.STOPPED),
 		replay: false
 	};
-	stateModel.playing = ko.pureComputed(function () {
+	stateModel.playing = ko.pureComputed(function() {
 		return stateModel.internalState() === PLAYER_STATE.PLAYING;
 	});
 
 	function onYTPlayerStateChange(state) {
-		switch (state) {
+		switch(state) {
 			case PLAYER_STATE.STOPPED:
 				getPlayList().selectNext();
 				$(PROGRESS_SLIDER_SELECTOR).slider('disable');
@@ -175,7 +175,7 @@
 	var progressSliderDragging = false;
 
 	function progressChanged(progress) {
-		if (!progressSliderDragging) {
+		if(!progressSliderDragging) {
 			$(PROGRESS_SLIDER_SELECTOR).slider("value", progress);
 		}
 	}
@@ -204,10 +204,10 @@
 		toggle: toggle,
 		progressSlider: {
 			disabled: true,
-			start: function () {
+			start: function() {
 				progressSliderDragging = true;
 			},
-			stop: function (event, ui) {
+			stop: function(event, ui) {
 				progressSliderDragging = false;
 				getPlayer().setProgress(ui.value);
 			}
@@ -215,7 +215,7 @@
 		volumeSlider: {
 			orientation: "horizontal",
 			value: 100,
-			slide: function (event, ui) {
+			slide: function(event, ui) {
 				getPlayer().setVolume(ui.value);
 			}
 		},
@@ -227,7 +227,7 @@
 		selectNext: onShortcutRight
 	});
 
-	window.setInterval(function () {
+	window.setInterval(function() {
 		progressChanged(getPlayer().getProgress());
 	}, UPDATE_PROGRESS_INTERVAL_MS);
 
@@ -239,7 +239,7 @@
 		{key: slothyx.util.KEYS.LEFT, action: onShortcutLeft}
 	]);
 
-	slothyx.util.onStartUp(function () {
+	slothyx.util.onStartUp(function() {
 
 		var emails = [
 			["Codemonkey", "Y29kZW1vbmtleUBzbG90aHl4LmNvbQ=="],
@@ -247,7 +247,7 @@
 			["Info", "aW5mb0BzbG90aHl4LmNvbQ=="]
 		];
 
-		_.forEach(emails, function (item) {
+		_.forEach(emails, function(item) {
 			var link = $('#emailTo' + item[0]);
 			var email = atob(item[1]);
 			link.attr("href", "mailto: " + email);
@@ -256,30 +256,30 @@
 
 	});
 
-	slothyx.ytPlayer.addReadyListener(function (ytPlayer) {
+	slothyx.ytPlayer.addReadyListener(function(ytPlayer) {
 		getPlayer().setPlayer(ytPlayer);
 	});
 
-	slothyx.registerRemoteWindow = function (player) {
+	slothyx.registerRemoteWindow = function(player) {
 		getPlayer().setPlayer(player);
 		$(TVSET_SELECTOR).hide();
-		return function () {
+		return function() {
 			getPlayer().setPlayer(slothyx.ytPlayer.getYTPlayer());
 			$(TVSET_SELECTOR).show();
 		};
 	};
 
 	var playerSnapshot = slothyx.persist.getPersister().get(SNAPSHOT_PERSIST_KEY);
-	if (playerSnapshot !== undefined) {
-		slothyx.util.doWhenTrue(function () {
+	if(playerSnapshot !== undefined) {
+		slothyx.util.doWhenTrue(function() {
 			//it's strange when it starts autoplaying
 			playerSnapshot.state = PLAYER_STATE.PAUSED;
 			getPlayer().setPlayerSnapshot(playerSnapshot);
-			if (playerSnapshot.volume !== undefined) {
+			if(playerSnapshot.volume !== undefined) {
 				$(VOLUME_SLIDER_SELECTOR).slider('value', playerSnapshot.volume);
 			}
 			startSnapshotInterval();
-		}, function () {
+		}, function() {
 			return getPlayer().isReady();
 		});
 	} else {
@@ -287,9 +287,9 @@
 	}
 
 	function startSnapshotInterval() {
-		setInterval(function () {
+		setInterval(function() {
 			var playerSnapshot = getPlayer().getPlayerSnapshot();
-			if (playerSnapshot !== undefined) {
+			if(playerSnapshot !== undefined) {
 				slothyx.persist.getPersister().put(SNAPSHOT_PERSIST_KEY, playerSnapshot);
 			}
 		}, UPDATE_SNAPSHOT_INTERVAL_MS);

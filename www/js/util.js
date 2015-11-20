@@ -178,16 +178,16 @@
 			updateClass();
 			return false;
 		});
-		if(selector !== undefined){
+		if(selector !== undefined) {
 			self = self.find(selector);
 		}
 		value.subscribe(updateClass);
 		updateClass();
-		function updateClass(){
-			if(value()){
+		function updateClass() {
+			if(value()) {
 				self.removeClass(falseClass);
 				self.addClass(trueClass);
-			}else{
+			} else {
 				self.removeClass(trueClass);
 				self.addClass(falseClass);
 			}
@@ -196,9 +196,9 @@
 
 	util.openTextBox = function(text) {
 		var dialog = $(
-			"<div class='dialog'>" +
-			"<textarea>" + text + "</textarea>" +
-			"</div>");
+				"<div class='dialog'>" +
+				"<textarea>" + text + "</textarea>" +
+				"</div>");
 		var textArea = dialog.find("textarea");
 		var closeFunction = function() {
 			setTimeout(function() {
