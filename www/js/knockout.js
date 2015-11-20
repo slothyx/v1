@@ -58,17 +58,20 @@
 		}
 	};
 
-	ko.bindingHandlers.slider = {
-		init: function(element, valueAccessor) {
-			$(element).slider(valueAccessor());
-		}
-	};
-
 	ko.bindingHandlers.toggleButton = {
 		init: function(element, valueAccessor) {
 			var options = valueAccessor();
 			$(element).toggleButton(options.value, options.trueClass, options.falseClass, options.selector);
 		}
 	};
+
+	ko.bindingHandlers.grabber = {
+		init: function(element, valueAccessor) {
+			var grabber = valueAccessor();
+			if(grabber !== undefined) {
+				grabber(element);
+			}
+		}
+	}
 
 })(jQuery, window, ko);

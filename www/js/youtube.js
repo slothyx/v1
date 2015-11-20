@@ -2,7 +2,6 @@
 (function($, window, _, ko, undefined) {
 	"use strict";
 
-	var RESULTS_DIV_SELECTOR = "#results";
 	var MAX_RESULTS = "15";
 
 	var slothyx = window.slothyx || {};
@@ -13,6 +12,7 @@
 
 	//youtube-api initialized;
 	var initialized = false;
+	var resultsDiv;
 
 	youtube.loadVideoData = function(videoIds, callback) {
 		if(callback === undefined) {
@@ -104,7 +104,7 @@
 				youtube.getSearchResultList().addSearchResults(searchResults);
 			} else {
 				youtube.getSearchResultList().setSearchResults(searchResults);
-				$(RESULTS_DIV_SELECTOR).scrollTop(0);
+				resultsDiv.scrollTop(0);
 				window.scrollTo(0, 0);
 			}
 		};
@@ -146,7 +146,14 @@
 		}
 
 		/******INIT******/
-		slothyx.knockout.getModel().contribute({youtube: {searchResultsModel: searchResultsModel}});
+		slothyx.knockout.getModel().contribute({
+			youtube: {
+				searchResultsModel: searchResultsModel,
+				resultsDivGrabber: function(grabbedResultsDiv) {
+					resultsDiv = grabbedResultsDiv;
+				}
+			}
+		});
 		return searchResultList;
 	})();
 

@@ -3,9 +3,6 @@
 	"use strict";
 
 	/***** CONSTANTS *****/
-	var TVSET_SELECTOR = '#tvset';
-	var PROGRESS_SLIDER_SELECTOR = '#progressSlider';
-	var VOLUME_SLIDER_SELECTOR = '#volumeSlider';
 	var DEFAULT_WINDOW_TITLE = "Slothyx Music";
 	var SNAPSHOT_PERSIST_KEY = "playerState";
 	var SLOTHYX_PLAYLIST_SHARE_PREFIX = "SLOTHYXPLAYLIST";
@@ -91,12 +88,12 @@
 			stateModel.internalState(PLAYER_STATE.PLAYING);
 			getPlayer().load(video.id);
 			setWindowTitle(video.title);
-			$(PROGRESS_SLIDER_SELECTOR).slider('enable');
+			progressSlider.slider('enable');
 		} else {
 			stateModel.internalState(PLAYER_STATE.STOPPED);
 			getPlayer().stop();
 			setWindowTitle(DEFAULT_WINDOW_TITLE);
-			$(PROGRESS_SLIDER_SELECTOR).slider('disable');
+			progressSlider.slider('disable');
 		}
 	}
 
@@ -158,11 +155,11 @@
 		switch(state) {
 			case PLAYER_STATE.STOPPED:
 				getPlayList().selectNext();
-				$(PROGRESS_SLIDER_SELECTOR).slider('disable');
+				progressSlider.slider('disable');
 				break;
 			case PLAYER_STATE.PLAYING:
 			case PLAYER_STATE.PAUSED:
-				$(PROGRESS_SLIDER_SELECTOR).slider('enable');
+				progressSlider.slider('enable');
 				stateModel.internalState(state);
 				break;
 			case PLAYER_STATE.INVALID:
@@ -172,11 +169,14 @@
 		}
 	}
 
+	var progressSlider;
+	var volumeSlider;
+	var tvSet;
 	var progressSliderDragging = false;
 
 	function progressChanged(progress) {
 		if(!progressSliderDragging) {
-			$(PROGRESS_SLIDER_SELECTOR).slider("value", progress);
+			progressSlider.slider("value", progress);
 		}
 	}
 
@@ -202,29 +202,40 @@
 			]
 		},
 		toggle: toggle,
-		progressSlider: {
-			disabled: true,
-			start: function() {
-				progressSliderDragging = true;
-			},
-			stop: function(event, ui) {
-				progressSliderDragging = false;
-				getPlayer().setProgress(ui.value);
-			}
+		progressSliderGrabber: function(grabbedProgressSlider) {
+			progressSlider = $(grabbedProgressSlider);
+			progressSlider.slider(
+				{
+					disabled: true,
+					start: function() {
+						progressSliderDragging = true;
+					},
+					stop: function(event, ui) {
+						progressSliderDragging = false;
+						getPlayer().setProgress(ui.value);
+					}
+				});
 		},
-		volumeSlider: {
-			orientation: "horizontal",
-			value: 100,
-			slide: function(event, ui) {
-				getPlayer().setVolume(ui.value);
-			}
+		volumeSliderGrabber: function(grabbedVolumeSlider) {
+			volumeSlider = $(grabbedVolumeSlider);
+			$(volumeSlider).slider(
+				{
+					orientation: "horizontal",
+					value: 100,
+					slide: function(event, ui) {
+						getPlayer().setVolume(ui.value);
+					}
+				});
 		},
 		addPlaylist: addPlaylist,
 		requestFullscreen: requestFullscreen,
 		magicInputQuery: magicInputQuery,
 		magicInputGo: magicInputGo,
 		selectPrevious: onShortcutLeft,
-		selectNext: onShortcutRight
+		selectNext: onShortcutRight,
+		tvSetGrabber: function(grabbedTvSetElement) {
+			tvSet = grabbedTvSetElement;
+		}
 	});
 
 	window.setInterval(function() {
@@ -262,10 +273,10 @@
 
 	slothyx.registerRemoteWindow = function(player) {
 		getPlayer().setPlayer(player);
-		$(TVSET_SELECTOR).hide();
+		$(tvSet).hide();
 		return function() {
 			getPlayer().setPlayer(slothyx.ytPlayer.getYTPlayer());
-			$(TVSET_SELECTOR).show();
+			$(tvSet).show();
 		};
 	};
 
@@ -276,7 +287,7 @@
 			playerSnapshot.state = PLAYER_STATE.PAUSED;
 			getPlayer().setPlayerSnapshot(playerSnapshot);
 			if(playerSnapshot.volume !== undefined) {
-				$(VOLUME_SLIDER_SELECTOR).slider('value', playerSnapshot.volume);
+				volumeSlider.slider('value', playerSnapshot.volume);
 			}
 			startSnapshotInterval();
 		}, function() {

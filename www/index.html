@@ -76,7 +76,8 @@
 <!--main-->
 <div class="main">
 
-	<div class="results" id="searchResults" data-bind="foreach: $root.youtube.searchResultsModel.searchResults">
+	<div class="results"
+		 data-bind="foreach: $root.youtube.searchResultsModel.searchResults, grabber: $root.youtube.resultsDivGrabber">
 		<div class="results-item">
 			<div class="results-item-top">
 				<img class="results-image" data-bind="attr: {src: video.image}">
@@ -90,13 +91,13 @@
 	</div>
 
 	<div class="major-console" data-bind="with: $root.playlist.playlistModel">
-		<div class="tv-container" id="tvset" data-bind="click: $root.toggle">
+		<div class="tv-container" id="tvset" data-bind="click: $root.toggle, grabber: $root.tvSetGrabber">
 			<div id="ytPlayer">
 				You need Flash player 8+ and JavaScript enabled to play videos.
 			</div>
 		</div>
 
-        <span id="playlistSelectHolder">
+        <span id="playlistSelectHolder" data-bind="grabber: $root.playlist.playlistSelectHolderGrabber">
 							<select class="playlistSelect"
 									data-bind="options: playlists, optionsText: 'name', value: playlist"></select>
 		</span>
@@ -156,11 +157,11 @@
 
 		<li>
 			<!-- 'progressSlider' enables the user to control the video -->
-			<div id="progressSlider" data-bind="slider: $root.progressSlider"></div>
+			<div id="progressSlider" data-bind="grabber: $root.progressSliderGrabber"></div>
 		</li>
 
 		<li>
-			<div id="volumeSlider" data-bind="slider: $root.volumeSlider"></div>
+			<div id="volumeSlider" data-bind="grabber: $root.volumeSliderGrabber"></div>
 		</li>
 
 		<li>

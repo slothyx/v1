@@ -9,7 +9,6 @@
 	/*****PLAYLIST API*****/
 	var playlist = (function() {
 
-		var PLAYLIST_SELECT_HOLDER_SELECTOR = "#playlistSelectHolder";
 		var PLAYLISTS_PERSIST_ID = "playlists";
 		var PLAYLIST_SETTINGS_PERSIST_ID = "playlistSettings";
 		var PLAYLIST_STATE_PERSIST_ID = "playlistState";
@@ -84,11 +83,12 @@
 			}
 		};
 
+		var playlistSelectHolder;
 		var tmpSelectHolder;
 		var focusListener;
 		playlist.renameCurrentPlaylist = function() {
 
-			tmpSelectHolder = $(PLAYLIST_SELECT_HOLDER_SELECTOR + ' .playlistSelect');
+			tmpSelectHolder = playlistSelectHolder.find('.playlistSelect');
 			tmpSelectHolder.detach();
 
 			focusListener = function() {
@@ -103,12 +103,12 @@
 			textField.on('click', function() {
 				return false;
 			});
-			$(PLAYLIST_SELECT_HOLDER_SELECTOR).append(textField);
+			playlistSelectHolder.append(textField);
 			textField.get(0).select();
 		};
 
 		function finishRenameCurrentPlaylist(save) {
-			var selectWrapper = $(PLAYLIST_SELECT_HOLDER_SELECTOR);
+			var selectWrapper = playlistSelectHolder;
 			var selectTextField = selectWrapper.find('.playlistSelect');
 			var select = tmpSelectHolder;
 			var newName = selectTextField.val();
@@ -432,7 +432,10 @@
 		slothyx.knockout.getModel().contribute({
 			playlist: {
 				playlistModel: playlistModel,
-				playlistSettings: playlistSettings
+				playlistSettings: playlistSettings,
+				playlistSelectHolderGrabber: function(grabbedPlaylistSelectHolder) {
+					playlistSelectHolder = $(grabbedPlaylistSelectHolder);
+				}
 			}
 		});
 
