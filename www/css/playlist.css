@@ -138,16 +138,9 @@
 }
 
 .playlistAdd {
-    top: 0;
     background-color: #93e23b;
-    float: left;
-    padding-top: 5px;
-    padding-left: 4px;
-    height: 40px;
-    width: 100%;
-    font-size: 22px;
+    padding: 5px;
     text-align: center;
-    position: relative;
     cursor: pointer;
 }
 

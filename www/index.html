@@ -97,7 +97,11 @@
 
         <span id="playlistSelectHolder">
 							<select class="playlistSelect"
-									data-bind="options: playlists, optionsText: 'name', value: playlist"></select></span>
+									data-bind="options: playlists, optionsText: 'name', value: playlist"></select>
+		</span>
+		<span class="playlistAdd" title="Add" data-bind="click: $root.addPlaylist">
+		                    <span class="fa fa-plus"></span>
+		</span>
 
 		<div id="playlistItems" data-bind="if: (playlist() !== null && playlist() !== undefined)">
 
