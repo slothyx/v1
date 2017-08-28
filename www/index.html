@@ -47,17 +47,14 @@
 
 			<!--option menue-->
 			<li class="bars">
-				<form>
-					<button><i class="fa fa-bars"></i></button>
-				</form>
+				<button><i class="fa fa-bars"></i></button>
 			</li>
 
 			<!--search bar-->
 			<li>
 				<form>
 					<input autofocus="autofocus" type="text" placeholder=""
-						   data-bind="onKey: {key: $root.util.keys.ENTER, action: $root.magicInputGo}, textInput: $root.magicInputQuery"><!--
-           -->
+						   data-bind="onKey: {key: $root.util.keys.ENTER, action: $root.magicInputGo}, textInput: $root.magicInputQuery">
 					<button type="button" title="Search video"
 							data-bind="click: $root.magicInputGo"><i
 							class="fa fa-magic"></i>
@@ -116,14 +113,12 @@
 						<tr>
 							<td>
 								<!-- video title -->
-                                <span
-										data-bind="text: video.title, css: {invalid: invalid}"></span>
+								<span data-bind="text: video.title, css: {invalid: invalid}"></span>
 							</td>
 
 							<td>
 								<!-- remove button-->
-								<i class="xdelete fa fa-trash"
-								   data-bind="click: remove"></i>
+								<i class="xdelete fa fa-trash"  data-bind="click: remove"></i>
 							</td>
 						</tr>
 					</table>
@@ -145,7 +140,6 @@
 			<button data-bind="click: $root.selectPrevious" class="fa fa-step-backward"></button>
 		</li>
 		<li>
-			<!-- TODO change to button-->
 			<button id="playstop" data-bind="with: $root.stateModel, click: $root.toggle">
 				<i class="fa" data-bind="css: {'fa-play': !playing(), 'fa-pause': playing()}"></i>
 			</button>

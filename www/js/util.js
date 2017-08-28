@@ -166,7 +166,8 @@
 	$.fn.onKey = function(key, callback) {
 		$(this).on("keydown", function(event) {
 			if(event.which === key) {
-				return callback(event) || false;
+				callback(event)
+				return false;
 			}
 		});
 	};
@@ -221,13 +222,13 @@
 				return actionMap;
 			}, {}
 		);
-		$(document).on("keydown", function(event) {
+		document.addEventListener("keydown", function(event) {
 			if(_.indexOf(keys, event.which) !== -1 && event.ctrlKey) {
 				actionMap[event.which]();
 				event.preventDefault();
 				event.stopPropagation();
 			}
-		});
+		}, true);
 	};
 
 })
